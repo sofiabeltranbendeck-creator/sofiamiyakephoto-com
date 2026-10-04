@@ -31,3 +31,7 @@ build/
 *.NEF
 *.ARW
 *.dng
+
+# Backups and archives (old site copies live outside this repo)
+*.bak
+*.zip

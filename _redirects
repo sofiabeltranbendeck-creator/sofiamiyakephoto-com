@@ -1,0 +1,28 @@
+# clean URLs — .html versions stop competing with the canonical ones
+/index.html / 301!
+/families.html /families 301!
+/fall-minis.html /fall-minis 301!
+/weddings.html /weddings 301!
+/wedding-gallery.html /wedding-gallery 301!
+/engagements.html /engagements 301!
+/portraits.html /portraits 301!
+/seniors.html /seniors 301!
+/birth-stories.html /birth-stories 301!
+/recent-shoots.html /recent-shoots 301!
+/miyake-vision.html /miyake-vision 301!
+/bookings.html /bookings 301!
+/miyake-rant.html /miyake-rant 301!
+/the-artists-escape.html /the-artists-escape 301!
+
+# old Squarespace URLs
+/bookings-1 /bookings 301
+/weddings-1 /weddings 301
+/weddings-1-1 /weddings 301
+/gallery-1 /birth-stories 301
+/store/p/the-full-story /weddings 301
+/store/* / 301
+/packages /bookings 301!
+/packages.html /bookings 301!
+
+# consolidate the netlify.app subdomain onto the apex domain
+https://sofiamiyakephoto.netlify.app/* https://sofiamiyakephoto.com/:splat 301!
