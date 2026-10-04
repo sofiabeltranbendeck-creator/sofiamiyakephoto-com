@@ -26,3 +26,6 @@
 
 # consolidate the netlify.app subdomain onto the apex domain
 https://sofiamiyakephoto.netlify.app/* https://sofiamiyakephoto.com/:splat 301!
+
+# repo notes are not part of the site
+/README.md /404.html 404!
