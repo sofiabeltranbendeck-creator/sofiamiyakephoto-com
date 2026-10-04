@@ -28,7 +28,7 @@ rather than uploading camera originals.
 If you'd rather work on the files on your own computer:
 
 ```bash
-git clone https://github.com/landinmiyake/sofiamiyakephoto-com.git
+git clone https://github.com/sofiabeltranbendeck-creator/sofiamiyakephoto-com.git
 cd sofiamiyakephoto-com
 ```
 
@@ -53,5 +53,5 @@ images/           photographs and graphics
 
 ## Notes
 
-- This repository is **private**. Only the owner and invited collaborators can see it.
+- This repository is **public** (Netlify's free plan only auto-deploys private repos from one account). Only the owner and invited collaborators can change it.
 - Don't commit passwords, API keys, or client contracts here.
