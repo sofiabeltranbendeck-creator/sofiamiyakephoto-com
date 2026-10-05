@@ -7,10 +7,41 @@
 /SEASONAL-SWAP.md  /404.html  404!
 /REBRAND-CHECKLIST.md  /404.html  404!
 /TODO-NEXT.md  /404.html  404!
+/30-DAY-PLAN.md  /404.html  404!
+/LEGAL-SETUP.md  /404.html  404!
+/AUDIT-2026-09-25.md  /404.html  404!
+/AUDIT-2026-09-30-COMBINED.md  /404.html  404!
+/AUDIT-2026-09-30-claude.md  /404.html  404!
+/AUDIT-2026-09-30-gpt.md  /404.html  404!
+/SOCIAL-POST-2026-10-04.md  /404.html  404!
+/AUDIT-2026-10-04-seo.md  /404.html  404!
+/AUDIT-2026-10-03.md  /404.html  404!
+/BUILD-PROMPT-2026-10-05.md  /404.html  404!
+/AUDIT-2026-10-05-COMBINED.md  /404.html  404!
+/CLAUDE.md  /404.html  404!
+#
+# Catch-all backstop, so the next working doc is blocked the day it lands
+# instead of the day someone remembers this file. Netlify matches top-down and
+# the first match wins, so this goes AFTER the explicit lines: those keep firing
+# for the docs we know about, and a future "this one .md IS meant to be
+# served" exception can be added above this line and actually take effect.
+#
+# TODO(sofia): this line is UNVERIFIED and must not be trusted on its own.
+# Netlify's splat matches the remainder of a path, and a trailing literal after
+# the splat (the ".md" here) is not a documented pattern - it may match nothing
+# at all. Every .md in the repo is now listed explicitly above, so the site is
+# safe either way, but check this against a real deploy by requesting
+# /CLAUDE.md with that explicit line temporarily removed. Until then, add an
+# explicit line for every new working doc rather than relying on this.
+/*.md  /404.html  404!
 
 # build scripts live in the repo so the sitemap cannot drift, but they are not
 # part of the site. Netlify has no build step here, so they ship with the upload.
 /tools/*  /404.html  404!
+
+# the build-pass specs and measurement scripts. Untracked and not gitignored,
+# so a folder upload would serve them at /.work/spec-jsonld.md and friends.
+/.work/*  /404.html  404!
 
 # the Netlify subdomain serves the whole site a second time (verified 200 on
 # every path). Every page canonicals to the apex, so Google consolidates — this
@@ -33,6 +64,7 @@ https://sofiamiyakephoto.netlify.app/* https://sofiamiyakephoto.com/:splat 301!
 /miyake-rant.html /miyake-rant 301!
 /the-artists-escape.html /the-artists-escape 301!
 /privacy.html /privacy 301!
+/thank-you.html /thank-you 301!
 /sitemap.html /sitemap 301!
 /recent-shoots/roseville-golden-hour-family-session.html /recent-shoots/roseville-golden-hour-family-session 301!
 /recent-shoots/sacramento-golden-hour-family-session.html /recent-shoots/sacramento-golden-hour-family-session 301!

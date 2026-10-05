@@ -1,5 +1,14 @@
 // Sofia Miyake Photography — site behavior
 
+// Signals that this file actually arrived and parsed. The inline script in each
+// <head> adds the `js` class (which is what hides .reveal content) and then
+// starts a timer; if that timer fires without seeing `js-ready`, it removes `js`
+// again and everything becomes visible. Without this, a dropped request or a
+// parse error here leaves 169 reveal elements stuck at opacity:0 site-wide —
+// `html:not(.js)` only covers JavaScript being switched off, not this file
+// failing to load.
+document.documentElement.classList.add('js-ready');
+
 document.addEventListener('DOMContentLoaded', function () {
 
   // Reveal-on-scroll
@@ -12,7 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    // threshold:0 , NOT 0.15. A threshold asks for a percentage of the TARGET to
+    // be visible, so any element taller than root/0.15 can never satisfy it. The
+    // homepage gallery is one 3,721px .reveal; on a 375x568 phone the root is
+    // 568-60=508px, so the ratio peaks at 0.1365 and the element never reveals —
+    // 3,721px of blank page. With 0 it fires as soon as the top edge clears the
+    // bottom margin, which is what the -60px rootMargin was already expressing.
+    }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
     targets.forEach(function (t) { io.observe(t); });
   } else {
     targets.forEach(function (t) { t.classList.add('in-view'); });
@@ -69,6 +84,31 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       form.reset();
     });
+  }
+
+  // Promo bar — the current offer, dismissed once and then stays gone.
+  //
+  // PROMO_ID is part of the storage key, so when the deal changes, bump it and
+  // the bar comes back for everyone, including people who dismissed the last
+  // one. A plain "promo-dismissed" key would silently hide every future offer
+  // from your most engaged visitors.
+  //
+  // Every storage call is wrapped: Safari private mode throws on setItem, and
+  // a thrown error here would stop the rest of this file from running.
+  var PROMO_ID = 'fall-minis-2026';
+  var promo = document.getElementById('promo-bar');
+  if (promo) {
+    var promoKey = 'promo-dismissed:' + PROMO_ID;
+    var wasDismissed = false;
+    try { wasDismissed = localStorage.getItem(promoKey) === '1'; } catch (e) {}
+    if (!wasDismissed) promo.hidden = false;
+    var promoClose = promo.querySelector('.promo-dismiss');
+    if (promoClose) {
+      promoClose.addEventListener('click', function () {
+        promo.hidden = true;
+        try { localStorage.setItem(promoKey, '1'); } catch (e) {}
+      });
+    }
   }
 
   // Hero carousel (homepage) — crossfading slides with dots

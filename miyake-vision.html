@@ -15,6 +15,8 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About Sofia Miyake | Roseville Photographer">
+<meta name="twitter:description" content="Sofia Miyake is a Roseville-based documentary photographer working in digital, film and video across Sacramento and California.">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -26,13 +28,19 @@
  "telephone": "+1-805-422-0130",
  "email": "contact@sofiamiyakephoto.com",
  "image": "https://sofiamiyakephoto.com/images/og/home.jpg",
- "priceRange": "$100-$2600",
+ "logo": "https://sofiamiyakephoto.com/images/logo-white.png",
+ "priceRange": "$100-$3925",
  "address": {
   "@type": "PostalAddress",
   "addressLocality": "Roseville",
   "addressRegion": "CA",
   "postalCode": "95678",
   "addressCountry": "US"
+ },
+ "geo": {
+  "@type": "GeoCoordinates",
+  "latitude": 38.7521,
+  "longitude": -121.288
  },
  "areaServed": [
   "Roseville",
@@ -53,13 +61,33 @@
  ]
 }
 </script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Home",
+   "item": "https://sofiamiyakephoto.com/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Miyake Vision",
+   "item": "https://sofiamiyakephoto.com/miyake-vision"
+  }
+ ]
+}
+</script>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
 <link rel="stylesheet" href="css/style.css">
-<script>document.documentElement.classList.add('js');</script>
+<script>document.documentElement.classList.add('js');setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('js-ready')){d.classList.remove('js');}},3000);</script>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-43D75ZN3B7"></script>
 <script>
@@ -91,6 +119,12 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
+<div class="promo-bar" id="promo-bar" hidden>
+  <div class="promo-inner">
+    <a href="/fall-minis">Book your fall mini sessions <span class="promo-price">$200</span> <span class="promo-arrow" aria-hidden="true">&rarr;</span></a>
+    <button type="button" class="promo-dismiss" aria-label="Dismiss this offer">&times;</button>
+  </div>
+</div>
 <header class="site-header">
   <div class="header-inner">
     <div class="site-title"><a href="/">Sofia Miyake <span class="accent">Photography</span></a></div>
@@ -143,7 +177,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 <section>
   <div class="container two-col">
     <div class="img-frame tall reveal">
-      <img src="images/DSC06249.jpg" alt="Sofia Miyake photographing on a mountain road, a snow-capped peak in the distance" loading="lazy" width="1478" height="988" srcset="/.netlify/images?url=/images/DSC06249.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=1478 1478w" sizes="(max-width:1080px) calc(100vw - 64px), calc((min(1180px,100vw) - 124px)/2)">
+      <img src="images/DSC06249.jpg" alt="Sofia Miyake photographing on a mountain road, a snow-capped peak in the distance" fetchpriority="high" width="1478" height="988" srcset="/.netlify/images?url=/images/DSC06249.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=1478 1478w" sizes="(max-width:1080px) calc(100vw - 64px), calc((min(1180px,100vw) - 124px)/2)">
     </div>
     <div class="reveal">
       <p class="section-label left">My Story</p>
@@ -152,6 +186,23 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
       <p style="margin-top:16px;font-size:1.05rem;">My commitment to the client is to be a genuine storyteller. Every moment I capture will be a mix of organic chemistry and photographic skill.</p>
       <p style="margin-top:16px;font-size:1.05rem;">I travel and shoot anywhere in California and its surrounding states, and offer personalized rates that ensure working together is enjoyable and stress-free.</p>
       <p style="margin-top:16px;font-size:1.05rem;">Whether you are a couple looking to immortalize their engagement, or a busy family wanting to send creative Christmas cards, I will execute your vision and help you preserve life's worthwhile moments.</p>
+      <!-- TODO(sofia): four biography facts, none of which exist anywhere in this repo, in the git
+           history or in the live HTML, so none of them can be written without you. They are what
+           would turn this column into a real "My Story" instead of a restatement of the service
+           pages:
+           1. The year you started shooting professionally, and the year you started shooting in
+              the Sacramento area. One sentence does it.
+           2. Any formal training, apprenticeship or mentorship - or an explicit "self-taught" if
+              that is the honest answer. Either one is a sentence; the silence is not.
+           3. What turned you toward documentary work instead of posed work - the one shoot, the
+              one photograph or the one moment you can point at. Every service page argues for
+              the documentary approach and no page says what convinced you. Name the single
+              example and it is a sentence.
+           4. Whether there is a count worth publishing (weddings, families, births photographed
+              to date). If the honest number is small, publish nothing - do not let anyone
+              estimate one on your behalf.
+           Related open items already on record: spec-facts.md section 1.3 and
+           COMPETITOR-PLAN.md:123. -->
       <a href="/bookings" class="btn btn-gold">Book a Consultation</a>
     </div>
   </div>
@@ -180,6 +231,22 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
         <h3>Lasting Impact</h3>
         <p>Your event should not be limited to digital images, which is why I offer a printing service that ranges from framed prints to photo books curated to decorate your spaces.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="cream">
+  <div class="container narrow">
+    <div class="reveal">
+      <p class="section-label">Working Together</p>
+      <h2 class="center">What happens after you write to me</h2>
+      <p class="section-intro">I shoot in Roseville and Lincoln, Rocklin and Granite Bay, Folsom and Sacramento. Elsewhere in California, or a state next to it, I quote personalized rates.</p>
+    </div>
+    <div class="reveal">
+      <p>I read every inquiry myself and reply personally, usually within one or two business days. Contracts and scheduling run through HoneyBook, so there is one place to sign and one calendar to look at.</p>
+      <p>Before I pick up a camera we talk about what you actually want out of the session. That is the consultation, and it is the part that keeps the final gallery from being a guess. On the day I direct only when it helps and otherwise stay out of the way — anything we settled beforehand is there to fall back on, not a list to work through in order.</p>
+      <p>Your photographs come back in a private online gallery, fully edited, with high-resolution downloads. Prints, framed work and photo books are available when you'd rather have the pictures off a screen and on a wall.</p>
+      <p>If you would sooner see how a session actually goes than read about how I work, the <a href="/recent-shoots">recent shoots</a> journal walks through a few of them. <a href="/miyake-rant">The Miyake Rant</a> is where I write about why any of it matters.</p>
     </div>
   </div>
 </section>

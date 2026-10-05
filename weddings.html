@@ -4,17 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sacramento & Roseville Wedding Photographer | Sofia Miyake</title>
-<meta name="description" content="Documentary wedding photography in Sacramento, Roseville and across California. Collections from $950 for four hours to $2,350 with two photographers and an album.">
+<meta name="description" content="Documentary wedding photography in Sacramento, Roseville and across California. Collections from $1,075 for four hours to $3,925 for a full day with two photographers.">
 <link rel="canonical" href="https://sofiamiyakephoto.com/weddings">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sofia Miyake Photography">
 <meta property="og:url" content="https://sofiamiyakephoto.com/weddings">
 <meta property="og:title" content="Sacramento &amp; Roseville Wedding Photographer | Sofia Miyake">
-<meta property="og:description" content="Documentary wedding photography in Sacramento, Roseville and across California. Collections from $950 for four hours to $2,350 with two photographers and an album.">
+<meta property="og:description" content="Documentary wedding photography in Sacramento, Roseville and across California. Collections from $1,075 for four hours to $3,925 for a full day with two photographers.">
 <meta property="og:image" content="https://sofiamiyakephoto.com/images/og/weddings.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sacramento &amp; Roseville Wedding Photographer | Sofia Miyake">
+<meta name="twitter:description" content="Documentary wedding photography in Sacramento, Roseville and across California. Collections from $1,075 for four hours to $3,925 for a full day with two photographers.">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -26,13 +28,19 @@
  "telephone": "+1-805-422-0130",
  "email": "contact@sofiamiyakephoto.com",
  "image": "https://sofiamiyakephoto.com/images/og/home.jpg",
- "priceRange": "$100-$2600",
+ "logo": "https://sofiamiyakephoto.com/images/logo-white.png",
+ "priceRange": "$100-$3925",
  "address": {
   "@type": "PostalAddress",
   "addressLocality": "Roseville",
   "addressRegion": "CA",
   "postalCode": "95678",
   "addressCountry": "US"
+ },
+ "geo": {
+  "@type": "GeoCoordinates",
+  "latitude": 38.7521,
+  "longitude": -121.288
  },
  "areaServed": [
   "Roseville",
@@ -53,6 +61,12 @@
  ]
 }
 </script>
+<!-- TODO(sofia): confirm logo-white.png is the logo you want search engines to show, or supply a dark-on-light version. -->
+<!-- Wedding prices resolved 2026-10-05: Sofia confirmed the LIVE prices are current, so this repo
+     adopted them. They are seasonal ranges, not single figures - low end off-peak (Nov-Apr), high end
+     peak season (May-Oct) - which is why each Offer below uses priceSpecification minPrice/maxPrice
+     and carries no scalar "price": no single number is correct. The three visible cards, the three
+     meta descriptions, these three Offers and priceRange on every page all move together. -->
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -79,29 +93,152 @@
    {
     "@type": "Offer",
     "name": "The Intimate",
-    "price": "950",
     "priceCurrency": "USD",
+    "priceSpecification": {
+     "@type": "PriceSpecification",
+     "priceCurrency": "USD",
+     "minPrice": 1075,
+     "maxPrice": 1600
+    },
     "availability": "https://schema.org/InStock",
     "url": "https://sofiamiyakephoto.com/weddings"
    },
    {
     "@type": "Offer",
     "name": "The Full Story",
-    "price": "1500",
     "priceCurrency": "USD",
+    "priceSpecification": {
+     "@type": "PriceSpecification",
+     "priceCurrency": "USD",
+     "minPrice": 1700,
+     "maxPrice": 2500
+    },
     "availability": "https://schema.org/InStock",
     "url": "https://sofiamiyakephoto.com/weddings"
    },
    {
     "@type": "Offer",
     "name": "The Heirloom",
-    "price": "2350",
     "priceCurrency": "USD",
+    "priceSpecification": {
+     "@type": "PriceSpecification",
+     "priceCurrency": "USD",
+     "minPrice": 2675,
+     "maxPrice": 3925
+    },
     "availability": "https://schema.org/InStock",
     "url": "https://sofiamiyakephoto.com/weddings"
    }
   ]
  }
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Home",
+   "item": "https://sofiamiyakephoto.com/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Weddings",
+   "item": "https://sofiamiyakephoto.com/weddings"
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How many photographs will we get?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It depends on how long I'm with you. The Intimate delivers 250+ edited images across four hours, The Full Story 500+ across eight, and The Heirloom 700+ across a full ten-hour day. Every one is fully edited and delivered at high resolution \u2014 there is no separate \"proofs versus finals\" step."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How long until we see them?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Five weeks for The Intimate, six for The Full Story and The Heirloom. You won't wait that long to see anything, though \u2014 The Intimate includes a day-after sneak peek, The Full Story includes a same-day set of five photographs you can share that night, and The Heirloom a same-day set of ten."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do you work alone or bring a second photographer?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The Intimate and The Full Story are photographed solo \u2014 one person moving quietly through the day, which is usually what documentary coverage wants. The Heirloom includes two photographers, so the getting-ready rooms and the ceremony can be covered from more than one angle at once."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is an engagement session included?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It's included with The Full Story and The Heirloom. With The Intimate it's booked separately \u2014 engagement sessions start at $195, and they're genuinely useful: an hour in front of a camera together before the wedding makes the day itself far less strange."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How far ahead should we book?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Wedding dates book up quickly, especially in peak season, so the honest answer is as soon as you have a date and a venue. Before that, look through the wedding gallery and decide whether this way of photographing a day is what you want. Then reach out \u2014 I reply to every inquiry personally, within one or two business days."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What's actually different between the three collections?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Mostly hours, and what you keep afterwards. The Intimate is four hours with one photographer and up to two locations. The Full Story runs eight, from getting ready through the reception. The Heirloom is ten hours with two photographers across the complete day, and it includes a custom 10 \u00d7 10 fine art album. The two longer collections add timeline planning; The Intimate includes a style consultation."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do you travel outside the Sacramento area?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. I'm based in Roseville and work across Rocklin, Granite Bay, Lincoln, Folsom and greater Sacramento, and beyond that I travel anywhere in California and the states around it. Travel is quoted at personalized rates rather than a flat fee, so tell me where your day is and I'll put a real number in front of you."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What happens if it rains?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "We photograph it. A wedding date doesn't move, and rain usually makes a day more interesting to look at afterwards, not less \u2014 umbrellas, the dash between cars, everyone crowded under one awning. I'll work out covered options with you and your venue for anything that needs them, and keep documenting the rest exactly the way I would in sun."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do we actually hold our date?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Reach out, we talk it through, and then the agreement and the deposit are signed through HoneyBook. Your date isn't held until that part is done, which is worth knowing if you're weighing up two photographers. Pricing for every collection is published on this page, so there's nothing to find out later."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "We're not good in front of a camera. Does that matter?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not much, because most of a wedding day isn't in front of a camera \u2014 it's getting ready, the ceremony, your uncle holding the floor at the bar. Nearly every couple tells me this before the day, and ten minutes in there's too much happening for anyone to remember they said it. If you want the practice first, an engagement session helps."
+   }
+  }
+ ]
 }
 </script>
 <link rel="icon" href="images/favicon.png" type="image/png">
@@ -111,7 +248,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
 <link rel="preload" as="image" href="images/DSC03038.jpg" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
-<script>document.documentElement.classList.add('js');</script>
+<script>document.documentElement.classList.add('js');setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('js-ready')){d.classList.remove('js');}},3000);</script>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-43D75ZN3B7"></script>
 <script>
@@ -143,6 +280,12 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
+<div class="promo-bar" id="promo-bar" hidden>
+  <div class="promo-inner">
+    <a href="/fall-minis">Book your fall mini sessions <span class="promo-price">$200</span> <span class="promo-arrow" aria-hidden="true">&rarr;</span></a>
+    <button type="button" class="promo-dismiss" aria-label="Dismiss this offer">&times;</button>
+  </div>
+</div>
 <header class="site-header">
   <div class="header-inner">
     <div class="site-title"><a href="/">Sofia Miyake <span class="accent">Photography</span></a></div>
@@ -234,14 +377,15 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
   <div class="container">
     <div class="reveal">
       <p class="section-label">Investment</p>
-      <h2 class="center" style="margin-bottom:60px;">Wedding Collections</h2>
+      <h2 class="center" style="margin-bottom:18px;">Wedding Collections</h2>
+      <p class="center" style="max-width:640px;margin:0 auto 52px;color:var(--ink-soft);">Prices reflect the season — the lower end for off-peak dates (Nov–Apr), the higher end for peak wedding season (May–Oct).</p>
     </div>
     <div class="three-col pricing-grid reveal-group">
 
       <div class="price-card popular">
         <div class="popular-badge">Popular</div>
         <p class="card-label">The Intimate</p>
-        <div class="price">$950</div>
+        <div class="price">$1,075–$1,600</div>
         <p class="price-tag">The two of you, perfectly captured</p>
         <p class="price-meta">4 hours · Solo photographer</p>
         <ul class="price-features">
@@ -259,7 +403,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 
       <div class="price-card">
         <p class="card-label">The Full Story</p>
-        <div class="price">$1,500</div>
+        <div class="price">$1,700–$2,500</div>
         <p class="price-tag">From getting ready to the last dance</p>
         <p class="price-meta">8 hours · 1 photographer</p>
         <ul class="price-features">
@@ -277,7 +421,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 
       <div class="price-card">
         <p class="card-label">The Heirloom</p>
-        <div class="price">$2,350</div>
+        <div class="price">$2,675–$3,925</div>
         <p class="price-tag">Full day coverage + a keepsake to keep forever</p>
         <p class="price-meta">10 hours · Two photographers</p>
         <ul class="price-features">
@@ -321,7 +465,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
   <div class="container" style="max-width:840px;">
     <div class="reveal">
       <p class="section-label">Practical Details</p>
-      <h2 class="center" style="margin-bottom:14px;">A Few Things to Know</h2>
+      <h2 class="center" style="margin-bottom:44px;">What couples ask before booking</h2>
     </div>
     <div class="faq-list reveal">
       <details class="faq-item">
@@ -330,7 +474,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
       </details>
       <details class="faq-item">
         <summary>How long until we see them?</summary>
-        <div class="faq-answer">Five weeks for The Intimate, six for The Full Story and The Heirloom. You won't wait that long to see anything, though &mdash; The Intimate includes a day-after sneak peek, and the two larger collections include a same-day set of five photographs you can share that night.</div>
+        <div class="faq-answer">Five weeks for The Intimate, six for The Full Story and The Heirloom. You won't wait that long to see anything, though &mdash; The Intimate includes a day-after sneak peek, The Full Story includes a same-day set of five photographs you can share that night, and The Heirloom a same-day set of ten.</div>
       </details>
       <details class="faq-item">
         <summary>Do you work alone or bring a second photographer?</summary>
@@ -338,8 +482,37 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
       </details>
       <details class="faq-item">
         <summary>Is an engagement session included?</summary>
-        <div class="faq-answer">It's included with The Full Story. With the other collections it's booked separately &mdash; engagement sessions start at $195, and they're genuinely useful: an hour in front of a camera together before the wedding makes the day itself far less strange.</div>
+        <div class="faq-answer">It's included with The Full Story and The Heirloom. With The Intimate it's booked separately &mdash; engagement sessions start at $195, and they're genuinely useful: an hour in front of a camera together before the wedding makes the day itself far less strange.</div>
       </details>
+      <details class="faq-item">
+        <summary>How far ahead should we book?</summary>
+        <div class="faq-answer">Wedding dates book up quickly, especially in peak season, so the honest answer is as soon as you have a date and a venue. Before that, look through the <a href="/wedding-gallery">wedding gallery</a> and decide whether this way of photographing a day is what you want. Then reach out &mdash; I reply to every inquiry personally, within one or two business days.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What's actually different between the three collections?</summary>
+        <div class="faq-answer">Mostly hours, and what you keep afterwards. The Intimate is four hours with one photographer and up to two locations. The Full Story runs eight, from getting ready through the reception. The Heirloom is ten hours with two photographers across the complete day, and it includes a custom 10 × 10 fine art album. The two longer collections add timeline planning; The Intimate includes a style consultation.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you travel outside the Sacramento area?</summary>
+        <div class="faq-answer">Yes. I'm based in Roseville and work across Rocklin, Granite Bay, Lincoln, Folsom and greater Sacramento, and beyond that I travel anywhere in California and the states around it. Travel is quoted at personalized rates rather than a flat fee, so tell me where your day is and I'll put a real number in front of you.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What happens if it rains?</summary>
+        <div class="faq-answer">We photograph it. A wedding date doesn't move, and rain usually makes a day more interesting to look at afterwards, not less &mdash; umbrellas, the dash between cars, everyone crowded under one awning. I'll work out covered options with you and your venue for anything that needs them, and keep documenting the rest exactly the way I would in sun.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How do we actually hold our date?</summary>
+        <div class="faq-answer">Reach out, we talk it through, and then the agreement and the deposit are signed through HoneyBook. Your date isn't held until that part is done, which is worth knowing if you're weighing up two photographers. Pricing for every collection is published on this page, so there's nothing to find out later.</div>
+      </details>
+      <details class="faq-item">
+        <summary>We're not good in front of a camera. Does that matter?</summary>
+        <div class="faq-answer">Not much, because most of a wedding day isn't in front of a camera &mdash; it's getting ready, the ceremony, your uncle holding the floor at the bar. Nearly every couple tells me this before the day, and ten minutes in there's too much happening for anyone to remember they said it. If you want the practice first, <a href="/engagements">an engagement session</a> helps.</div>
+      </details>
+      <!-- TODO(sofia): how far ahead do wedding couples actually need to book? Nothing on the site states a wedding lead time, so this answer says "as soon as you have a date and a venue" rather than a number. -->
+      <!-- Consult length confirmed by Sofia 2026-10-05: 15 minutes, used consistently sitewide.
+           See the matching note in wedding-gallery.html. -->
+      <!-- TODO(sofia): there is no written weather, reschedule or force majeure policy for weddings. The rain answer describes the approach only. Supply the actual contract wording. -->
+      <!-- TODO(sofia): deposit or retainer amount, refundability, and when the balance is due. The deposit is named but never defined anywhere on the site. -->
     </div>
   </div>
 </section>

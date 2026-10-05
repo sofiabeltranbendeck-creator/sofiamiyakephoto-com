@@ -71,6 +71,43 @@ section.dark .section-label{color:var(--gold-light);}
 html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 
 /* Header */
+/* Promo bar — the current offer, dismissible once per campaign.
+   It sits above the sticky header and scrolls away with the page rather than
+   pinning, so it never eats viewport height on a phone. It ships hidden and JS
+   reveals it, which avoids the dismissed-then-flashes-anyway problem; a promo
+   is an enhancement, so no-JS visitors simply not seeing it is the right
+   failure mode (unlike a hero image, which must never depend on a script). */
+.promo-bar{background:var(--charcoal);color:var(--cream);}
+.promo-inner{
+  max-width:1280px;margin:0 auto;padding:0 12px 0 32px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:44px;position:relative;
+}
+.promo-bar a{
+  color:var(--cream);text-decoration:none;
+  font-size:0.84rem;letter-spacing:0.07em;text-transform:uppercase;
+  padding:11px 0;display:inline-flex;align-items:center;gap:9px;
+  text-align:center;
+}
+.promo-bar a:hover{color:var(--gold-light);}
+.promo-bar a .promo-price{color:var(--gold-light);font-weight:600;letter-spacing:0.05em;}
+.promo-bar a .promo-arrow{transition:transform 0.3s ease;}
+.promo-bar a:hover .promo-arrow{transform:translateX(4px);}
+/* 44x44 hit area with a visually smaller glyph, matching the nav-toggle fix. */
+.promo-dismiss{
+  position:absolute;right:4px;top:50%;transform:translateY(-50%);
+  width:44px;height:44px;padding:0;border:none;background:none;cursor:pointer;
+  color:var(--cream);opacity:0.65;font-size:1.1rem;line-height:1;
+}
+.promo-dismiss:hover{opacity:1;}
+@media (max-width:700px){
+  .promo-inner{padding:0 48px 0 16px;}
+  .promo-bar a{font-size:0.76rem;letter-spacing:0.05em;gap:7px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .promo-bar a .promo-arrow{transition:none;}
+}
+
 .site-header{
   position:sticky;top:0;z-index:50;
   background:rgba(247,242,234,0.92);
@@ -110,7 +147,7 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 .nav-group:hover .nav-dropdown,.nav-group:focus-within .nav-dropdown{
   opacity:1;visibility:visible;transform:translateX(-50%) translateY(4px);
 }
-.nav-dropdown a{display:block;padding:10px 22px;border-bottom:none;}
+.nav-dropdown a{display:flex;align-items:center;min-height:44px;padding:10px 22px;border-bottom:none;}
 .nav-dropdown a:hover,.nav-dropdown a.active{color:var(--gold);border-bottom:none;}
 .social-icons{display:flex;gap:14px;}
 .social-icons svg{width:18px;height:18px;fill:var(--ink);}
@@ -136,6 +173,39 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 .hero.compact{min-height:56vh;align-items:center;}
 .hero-bg{
   position:absolute;inset:0;background-size:cover;background-position:center;
+}
+/* Lead hero slide. The hero is min-height:88vh, so it is roughly 2:1 on a desktop
+   but PORTRAIT on a phone — one crop cannot serve both. A single wide file would
+   scale to fill the phone's height and show a narrow centre slice with her face
+   outside it. So: a 16:9 crop for wide viewports, the full frame for narrow ones,
+   swapped at the same 700px breakpoint the nav uses. Both are preloaded in <head>
+   with matching media attributes, so only the one that will be used is fetched. */
+.hero-bg-lead{
+  background-image:url('/.netlify/images?url=/images/DSC09951-hero.jpg&w=1600');
+  background-position:center 20%;
+}
+@media (max-width:700px){
+  .hero-bg-lead{
+    background-image:url('/.netlify/images?url=/images/DSC09951-hero-tall.jpg&w=800');
+    background-position:center;
+  }
+}
+/* Minis slide: a three-up triptych on wide viewports, a single frame on phones,
+   where three panels would be about 125px each and lose their faces.
+   These URLs are set unconditionally, NOT behind a JS-applied class. Slides 2+
+   normally defer their image via data-bg to keep it off the critical path, but
+   that makes the image contingent on a script: if the JS is stale, blocked or
+   slow, the slide paints blank white. For one slide that is the wrong trade —
+   a blank hero is a far worse failure than a slightly later LCP. Slide 3 still
+   uses data-bg and keeps the optimisation. Keeping both URLs in CSS also means
+   the media query keeps deciding, so a phone rotation re-picks correctly. */
+.hero-bg-minis{
+  background-image:url('/.netlify/images?url=/images/DSC09843-minis-triptych.jpg&w=1600');
+}
+@media (max-width:700px){
+  .hero-bg-minis{
+    background-image:url('/.netlify/images?url=/images/DSC09843-minis-tall.jpg&w=700');
+  }
 }
 .hero-bg::after{
   content:"";position:absolute;inset:0;
@@ -204,7 +274,7 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 .story-card-content p{color:#f7f3ec;font-size:0.95rem;text-shadow:0 1px 6px rgba(0,0,0,0.45);}
 .card-booking{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.25);}
 .card-price{color:#fff;font-size:0.95rem;letter-spacing:0.04em;}
-.card-book-btn{padding:10px 22px;font-size:0.8rem;}
+.card-book-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 22px;font-size:0.8rem;}
 .card-label{font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px;}
 .arrow{transition:transform 0.25s ease;}
 .story-card:hover .arrow{transform:translateX(6px);display:inline-block;}
@@ -256,7 +326,7 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 .carousel-arrow:hover{background:var(--gold);color:#fff;}
 @media (max-width:640px){
   .carousel{gap:10px;}
-  .carousel-arrow{width:40px;height:40px;}
+  .carousel-arrow{width:44px;height:44px;}
 }
 
 /* Masonry gallery */
@@ -323,10 +393,15 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 
 /* FAQ */
 .faq-list{border-top:1px solid var(--line);}
-.faq-item{border-bottom:1px solid var(--line);padding:20px 0;}
+/* padding was 20px around a 37px summary: 40px of each 78px row was dead
+   space beside the one thing you can click. 16px around a 44px summary puts
+   the row back at 77px, so the list keeps its rhythm and the clickable band
+   grows from 37px to 44px. */
+.faq-item{border-bottom:1px solid var(--line);padding:16px 0;}
 .faq-item summary{
   cursor:pointer;font-family:var(--serif);font-size:1.15rem;list-style:none;
   display:flex;justify-content:space-between;align-items:center;
+  min-height:44px;
 }
 .faq-item summary::-webkit-details-marker{display:none;}
 .faq-item summary::after{content:"+";font-size:1.4rem;color:var(--gold);transition:transform 0.25s ease;}
@@ -457,7 +532,14 @@ html:not(.js) .price-features li{opacity:1;transform:none;}
   .nav-group{width:100%;}
   .nav-group-toggle{display:block;width:100%;text-align:left;padding:14px 32px;border-bottom:1px solid var(--line);color:var(--gold);}
   .nav-group-toggle .caret{display:none;}
-  .nav-dropdown{
+  /* The hover/focus rule up at .nav-group:hover .nav-dropdown is top-level, so it
+     applies on phones too, and at (0,3,0) it outranks a bare .nav-dropdown (0,1,0).
+     Without those two selectors here, touching a nav group re-applies
+     translateX(-50%) and shoves the open submenu half its own width to the left,
+     into the .main-nav overflow:hidden. Keep all three in this list. */
+  .nav-dropdown,
+  .nav-group:hover .nav-dropdown,
+  .nav-group:focus-within .nav-dropdown{
     position:static;transform:none;opacity:1;visibility:visible;min-width:0;
     border:none;box-shadow:none;padding:0;background:transparent;
   }
@@ -529,20 +611,33 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
 .hero-carousel .hero-slide:not(.is-active) a,
 .hero-carousel .hero-slide:not(.is-active) button{pointer-events:none;}
 
+/* The dots were 9x9 buttons with a 12px gap: a 9px tap target, and three of
+   them close enough together that even 24px circles centred on each would
+   overlap. The dot is now drawn by ::before at its original 9px, and the
+   button around it is a transparent 28x44 hit box with no gap. Pitch goes
+   from 21px to 28px — seven pixels wider apart, which is about the smallest
+   change that lets the targets stop colliding. */
 .hero-dots{
   position:absolute;left:0;right:0;bottom:34px;z-index:6;
-  display:flex;justify-content:center;align-items:center;gap:12px;
+  display:flex;justify-content:center;align-items:center;gap:0;
 }
 .hero-dots button{
-  width:9px;height:9px;padding:0;border-radius:50%;cursor:pointer;
+  width:28px;height:44px;padding:0;border:none;background:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-dots button::before{
+  content:"";width:9px;height:9px;border-radius:50%;
   border:1px solid rgba(242,237,228,0.75);background:transparent;
   transition:background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
 }
-.hero-dots button:hover{background:rgba(242,237,228,0.6);}
-.hero-dots button[aria-selected="true"]{
+.hero-dots button:hover::before{background:rgba(242,237,228,0.6);}
+.hero-dots button[aria-selected="true"]::before{
   background:var(--gold);border-color:var(--gold);transform:scale(1.25);
 }
-.hero-dots button:focus-visible{outline:2px solid var(--gold-light);outline-offset:3px;}
+/* Ring the dot, not the 44px hit box, so the focus state looks the same as
+   it did before the hit box existed. */
+.hero-dots button:focus-visible{outline:none;}
+.hero-dots button:focus-visible::before{outline:2px solid var(--gold-light);outline-offset:3px;}
 
 @media (max-width:640px){
   .hero-carousel .hero-content{padding-bottom:92px;}
@@ -741,3 +836,269 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
 @media (max-width:700px){
   .sitemap-list li{grid-template-columns:1fr;gap:4px;padding:14px 0;}
 }
+
+/* ── Testimonials ──────────────────────────────────────────────────────────
+   A contained quote block, as against the full-bleed .quote-strip already on
+   /weddings, /engagements and /birth-stories. This one sits inside a normal
+   <section> > .container, so it can go between two blocks of copy without
+   taking over the viewport.
+
+   One quote, one attribution line. No stars, no avatar, no rating: Google
+   restricts self-serving business-level aggregateRating, and a star widget
+   would be the only thing on the site that looks like a marketing widget.
+
+   Everything is class-driven — a testimonial needs no inline style on any
+   page. */
+.testimonial{
+  max-width:760px;margin:0 auto;padding:44px 48px 36px;
+  background:#fff;border:1px solid var(--line);border-radius:2px;
+  text-align:center;
+}
+.testimonial .quote-mark{font-size:2.4rem;margin-bottom:2px;}
+.testimonial blockquote{
+  margin:0;
+  font-family:var(--serif);font-style:italic;font-size:1.3rem;line-height:1.55;
+  color:var(--ink);text-wrap:pretty;
+}
+.testimonial-attrib{
+  display:block;margin-top:26px;
+  font-family:var(--sans);font-style:normal;
+  font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold-text);
+}
+/* The same short gold rule the hero and the footer use, at list scale. */
+.testimonial-attrib::before{
+  content:"";display:block;width:36px;height:2px;background:var(--gold);
+  margin:0 auto 16px;
+}
+.testimonial-attrib a{border-bottom:1px solid var(--line);}
+
+/* Google review cards. Laid out like a review listing — avatar, name, star row,
+   then the quote — so a visitor reads them as what they are rather than as
+   marketing copy a photographer wrote about herself.
+   Two deliberate omissions: no dates, because the review dates are not recorded
+   anywhere and inventing them would be inventing evidence; and no review count,
+   because four is a weak number and the quotes carry more weight on their own.
+   Every star shown is real: the profile is 5.0 across all four reviews, so each
+   of these three is a five. */
+/* Four reviews, so 2x2 rather than a 3+1 orphan row. stretch (not start) keeps the
+   two cards in each row the same height despite very different quote lengths. */
+.review-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:20px;
+  max-width:1040px;margin:0 auto;align-items:stretch;
+}
+.review-card{
+  margin:0;padding:26px 26px 28px;
+  background:#fff;border:1px solid var(--line);border-radius:2px;
+  display:flex;flex-direction:column;gap:14px;min-width:0;
+}
+.review-head{display:flex;align-items:center;gap:12px;}
+.review-avatar{
+  flex:0 0 auto;width:40px;height:40px;border-radius:50%;
+  background:var(--linen);color:var(--gold-text);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--sans);font-size:1rem;font-weight:600;
+}
+.review-who{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.review-name{
+  font-family:var(--sans);font-size:0.9rem;font-weight:500;color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.review-stars{color:var(--gold);font-size:0.82rem;letter-spacing:0.12em;line-height:1;}
+.review-card blockquote{
+  margin:0;font-family:var(--sans);font-size:0.93rem;line-height:1.62;
+  color:var(--ink-soft);text-wrap:pretty;
+}
+.review-src{
+  margin-left:auto;flex:0 0 auto;
+  font-family:var(--sans);font-size:0.68rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+.reviews-footer{
+  text-align:center;margin:26px 0 0;
+  font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;
+}
+.reviews-footer a{color:var(--gold-text);border-bottom:1px solid var(--line);}
+@media (max-width:980px){
+  .review-grid{grid-template-columns:1fr;max-width:620px;}
+}
+.testimonial-attrib a:hover{border-bottom-color:var(--gold);}
+
+/* Two or three quotes across: wrap them in the existing .two-col or
+   .three-col grid and the block drops its own measure. */
+.two-col > .testimonial,.three-col > .testimonial{max-width:none;}
+
+/* On a dark band. Both forms work: the descendant selector so a page needs no
+   extra class, and .on-dark to match .quote-strip.on-dark. */
+section.dark .testimonial,.testimonial.on-dark{
+  background:rgba(242,237,228,0.05);
+  border-color:rgba(242,237,228,0.18);
+}
+section.dark .testimonial blockquote,.testimonial.on-dark blockquote{color:#f2ede4;}
+section.dark .testimonial .quote-mark,.testimonial.on-dark .quote-mark{color:var(--gold-light);}
+section.dark .testimonial-attrib,.testimonial.on-dark .testimonial-attrib{color:var(--gold-light);}
+section.dark .testimonial-attrib::before,.testimonial.on-dark .testimonial-attrib::before{background:var(--gold-light);}
+section.dark .testimonial-attrib a,.testimonial.on-dark .testimonial-attrib a{border-bottom-color:rgba(242,237,228,0.32);}
+
+@media (max-width:700px){
+  .testimonial{padding:32px 24px 26px;}
+  .testimonial blockquote{font-size:1.15rem;}
+}
+
+/* ── Dated session list (/fall-minis) ──────────────────────────────────────
+   A <dl> on CSS grid rather than a <table>. Reasons, for the record:
+   a table of three short columns either overflows 375px or needs its type
+   shrunk to fit, and un-shrinking it means a horizontal scroller, which is
+   the one thing this block cannot have. A <dl> re-flows: three columns on a
+   desktop, date and spots on one line with the location under them on a
+   tablet, and a plain stack under 480px. One <dt> with two <dd>s also reads
+   in a sensible order to a screen reader — the date, then what goes with it —
+   whereas the same data as a table needs header scoping to say as much. The
+   dates are not a comparison grid; they are a list of one thing each, which
+   is what a definition list is for. */
+.session-dates{
+  margin:40px 0 36px;padding:0;list-style:none;
+  border-top:1px solid var(--line);
+  text-align:left;
+}
+.session-date{
+  display:grid;
+  grid-template-columns:minmax(190px,0.9fr) 1.4fr auto;
+  gap:4px 32px;align-items:baseline;
+  padding:18px 0;border-bottom:1px solid var(--line);
+}
+.session-date-day{
+  margin:0;font-family:var(--serif);font-size:1.22rem;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+/* The two rules below render a per-date location and a remaining-spot count. Both are
+   intentionally UNUSED right now: no per-date location and no spot count is recorded anywhere
+   in this project, and publishing an invented count on a page built to create urgency would be
+   fabricating scarcity. Do not add markup for these until fall-minis.html TODO(sofia) lines are
+   answered from HoneyBook. Kept because they are exactly what those answers will need. */
+.session-date-where{margin:0;color:var(--ink-soft);font-size:0.95rem;}
+.session-date-spots{
+  margin:0;justify-self:end;white-space:nowrap;
+  font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold-text);
+}
+/* A booked-out date stays on the page — it is the clearest evidence that the
+   dates are real — but it stops shouting. */
+.session-date.is-full .session-date-day{color:var(--ink-soft);}
+.session-date.is-full .session-date-spots{color:var(--ink-soft);}
+.session-dates-note{max-width:600px;margin:0 0 8px;color:var(--ink-soft);}
+
+@media (max-width:700px){
+  .session-date{grid-template-columns:1fr auto;gap:2px 16px;padding:16px 0;}
+  .session-date-day{grid-column:1;grid-row:1;}
+  .session-date-spots{grid-column:2;grid-row:1;justify-self:end;}
+  .session-date-where{grid-column:1 / -1;grid-row:2;}
+}
+/* Under 480px the date and the spot count no longer both fit on one line
+   without clipping, so everything gets its own row. At 375px the widest line
+   is the date, well inside the 311px the container leaves. */
+@media (max-width:480px){
+  .session-date{grid-template-columns:1fr;gap:3px;}
+  .session-date-day,.session-date-where,.session-date-spots{
+    grid-column:1;grid-row:auto;justify-self:start;
+  }
+  .session-date-day{font-size:1.15rem;}
+}
+
+/* ── Shared utilities ──────────────────────────────────────────────────────
+   The two measures currently repeated as style="max-width:840px" and
+   style="max-width:760px" on about a dozen containers, plus a
+   screen-reader-only class so nobody has to invent one. */
+.container.narrow{max-width:840px;}
+.container.narrower{max-width:760px;}
+.visually-hidden{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);
+  white-space:nowrap;border:0;
+}
+
+/* ── Tap targets ───────────────────────────────────────────────────────────
+   Every interactive element on the site that was under 44x44. Where growing
+   the box would move the design, the box stays and a transparent hit area is
+   grown around it instead — either an absolutely positioned ::before, or
+   padding cancelled by an equal negative margin, which leaves the line box
+   exactly where it was.
+   Four more are fixed at their own rules further up this file:
+   .nav-dropdown a, .faq-item summary, .card-book-btn and .hero-dots button. */
+
+/* Hamburger: 26x20. The three bars are absolutely positioned against the
+   button padding box, so padding would slide them down and sideways. A
+   centred 44x44 ::before leaves both the icon and the header layout
+   untouched — it overflows 9px into the 24px header gap and 12px into the
+   18px header padding, so it reaches nothing else. It is the first child, so
+   it paints under the bars. */
+.nav-toggle::before{
+  content:"";position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  width:44px;height:44px;
+}
+
+/* Wordmark: a 35.6px line box. */
+.site-title a{display:inline-block;position:relative;}
+.site-title a::before{
+  content:"";position:absolute;left:0;right:0;top:50%;
+  transform:translateY(-50%);height:44px;
+}
+
+/* Desktop nav: 26.6px tall, because the 4px of padding under the text is
+   holding the hover underline and cannot be grown. Below 700px these are
+   already 50.6px tall from .main-nav a{padding:14px 32px}, and a ::before on
+   the group toggle there would hang over the first dropdown link and steal
+   its taps, so this is deliberately desktop-only. */
+@media (min-width:701px){
+  .main-nav > a,.nav-group-toggle{position:relative;}
+  .main-nav > a::before,.nav-group-toggle::before{
+    content:"";position:absolute;left:0;right:0;top:50%;
+    transform:translateY(-50%);height:44px;
+  }
+}
+
+/* Instagram icon: an 18px svg in an inline anchor. Sizing the anchor itself
+   changes the flex container cross size and drops the icon 4px down the
+   header, so the anchor is left inline and an overlay does the work. The
+   nudge is because the svg sits on the text baseline rather than in the
+   middle of the line box. */
+.social-icons a{position:relative;}
+.social-icons a::before{
+  content:"";position:absolute;left:50%;top:50%;
+  transform:translate(-50%,calc(-50% - 5px));
+  width:44px;height:44px;
+}
+
+/* Standalone phone and email links — the whole of their paragraph, in the
+   footer of every page and again in the body of /bookings. These are the only
+   tap-to-call on the site and they were a 26.4px line. :only-child keeps this
+   off the same href written inside a sentence, where an expanded hit area
+   would overlap the lines above and below it. */
+p > a[href^="tel:"]:only-child,
+p > a[href^="mailto:"]:only-child{
+  display:inline-block;padding:9px 12px;margin:-9px -12px;
+}
+
+/* The back link on /the-artists-escape, which is a .section-label paragraph
+   rather than the .post-back idiom the session posts use: a 22.4px line. */
+p.section-label > a:only-child{display:inline-block;padding:11px 10px;margin:-11px -10px;}
+/* Privacy / Site Map in the fine print: 20.6px. 4px of horizontal padding, so
+   the two of them do not reach across the middot between them. */
+.site-footer .fine a{display:inline-block;padding:12px 4px;margin:-12px -4px;}
+
+/* The "verified on Zola" link in a .quote-strip attribution. */
+.quote-strip cite a{display:inline-block;padding:12px 8px;margin:-12px -8px;}
+
+/* Site map links are grid items on a shared baseline, so padding would drag
+   the title off the baseline its description is sitting on. */
+.sitemap-list a{position:relative;}
+.sitemap-list a::before{
+  content:"";position:absolute;left:0;right:0;top:50%;
+  transform:translateY(-50%);height:44px;
+}
+
+/* "All recent sessions" back link on a session post: a 20px inline box on a
+   30px line (.session-post p is setting the size here, not .post-back).
+   7px of padding lands it on 44.2. */
+.post-back a{display:inline-block;padding:7px 10px;margin:-7px -10px;}
