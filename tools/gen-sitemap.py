@@ -33,20 +33,60 @@ ORDER = [
 ]
 
 # Site chrome, not content. Everything else on a photography site is the point.
-SKIP_IMAGES = {'/images/favicon.png'}
+# logo-white.png arrives via the JSON-LD logo property, so it is referenced on
+# every page — 18 copies of a wordmark in an image sitemap only dilutes it.
+SKIP_IMAGES = {'/images/favicon.png', '/images/logo-white.png'}
+
+
+def dirty_paths():
+    """Paths whose working copy differs from HEAD, plus untracked ones.
+
+    git's own commit date is the honest lastmod for a file that has not been
+    touched since it was committed. For a file carrying uncommitted edits the
+    newest commit predates the content, so the only true answer is the working
+    copy's own modification time. Returns None when git is unavailable, which
+    means "trust mtime for everything".
+    """
+    try:
+        out = subprocess.check_output(
+            ['git', 'status', '--porcelain', '--untracked-files=all'],
+            stderr=subprocess.STDOUT).decode('utf-8', 'replace')
+    except Exception:
+        return None
+    paths = set()
+    for line in out.splitlines():
+        if len(line) < 4:
+            continue
+        p = line[3:]
+        if ' -> ' in p:            # staged rename: the new path is the live one
+            p = p.split(' -> ', 1)[1]
+        paths.add(p.strip('"'))
+    return paths
+
+
+DIRTY = dirty_paths()
+ISO = re.compile(r'^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d[+-]\d\d:\d\d$')
 
 
 def lastmod(path):
-    """Date of the last commit that touched the file; today if untracked."""
-    try:
-        out = subprocess.check_output(
-            ['git', 'log', '-1', '--format=%cs', '--', path],
-            stderr=subprocess.STDOUT).decode().strip()
-        if re.match(r'^\d{4}-\d\d-\d\d$', out):
-            return out
-    except Exception:
-        pass
-    return datetime.date.today().isoformat()
+    """One page's real last-modified instant, as a W3C datetime.
+
+    Per file, and a full timestamp rather than a bare date. Google only trusts
+    lastmod where it is verifiably accurate, and this repo's entire history
+    carries a single commit date — bare dates would put every URL on the same
+    value, which is the pattern that gets the field ignored outright.
+    """
+    if DIRTY is not None and path not in DIRTY:
+        try:
+            out = subprocess.check_output(
+                ['git', 'log', '-1', '--format=%cI', '--', path],
+                stderr=subprocess.STDOUT).decode().strip()
+            if ISO.match(out):
+                return out
+        except Exception:
+            pass
+    stamp = datetime.datetime.fromtimestamp(os.path.getmtime(path))
+    return stamp.astimezone().isoformat(timespec='seconds')
 
 
 def images_in(path):

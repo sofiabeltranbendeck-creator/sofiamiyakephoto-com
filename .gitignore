@@ -5,3 +5,12 @@ Thumbs.db
 
 # Local Netlify folder
 .netlify
+
+# live-site evidence snapshot for offline auditing — not part of the site
+.seo-evidence/
+
+# scratch evidence for the headshot edit (not part of the site)
+.headshot-evidence/
+
+# scratch brief for the GPT ad review (not part of the site)
+.ads-evidence/
