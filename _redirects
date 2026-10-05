@@ -1,3 +1,22 @@
+# internal working docs — never public. These live in the publish directory,
+# so without this they would be readable at sofiamiyakephoto.com/FOR-SOFIA.md.
+/FOR-SOFIA.md  /404.html  404!
+/SEO-AUDIT.md  /404.html  404!
+/COMPETITOR-PLAN.md  /404.html  404!
+/STRATEGY.md  /404.html  404!
+/SEASONAL-SWAP.md  /404.html  404!
+/REBRAND-CHECKLIST.md  /404.html  404!
+/TODO-NEXT.md  /404.html  404!
+
+# build scripts live in the repo so the sitemap cannot drift, but they are not
+# part of the site. Netlify has no build step here, so they ship with the upload.
+/tools/*  /404.html  404!
+
+# the Netlify subdomain serves the whole site a second time (verified 200 on
+# every path). Every page canonicals to the apex, so Google consolidates — this
+# just stops the duplicate being reachable at all.
+https://sofiamiyakephoto.netlify.app/* https://sofiamiyakephoto.com/:splat 301!
+
 # clean URLs — .html versions stop competing with the canonical ones
 /index.html / 301!
 /families.html /families 301!
@@ -13,6 +32,15 @@
 /bookings.html /bookings 301!
 /miyake-rant.html /miyake-rant 301!
 /the-artists-escape.html /the-artists-escape 301!
+/privacy.html /privacy 301!
+/sitemap.html /sitemap 301!
+/recent-shoots/roseville-golden-hour-family-session.html /recent-shoots/roseville-golden-hour-family-session 301!
+/recent-shoots/sacramento-golden-hour-family-session.html /recent-shoots/sacramento-golden-hour-family-session 301!
+/recent-shoots/roseville-afternoon-family-session.html /recent-shoots/roseville-afternoon-family-session 301!
+
+# retired pages — forced, so they still fire if the file ever comes back
+/packages /birth-stories 301!
+/packages.html /birth-stories 301!
 
 # old Squarespace URLs
 /bookings-1 /bookings 301
@@ -21,11 +49,3 @@
 /gallery-1 /birth-stories 301
 /store/p/the-full-story /weddings 301
 /store/* / 301
-/packages /bookings 301!
-/packages.html /bookings 301!
-
-# consolidate the netlify.app subdomain onto the apex domain
-https://sofiamiyakephoto.netlify.app/* https://sofiamiyakephoto.com/:splat 301!
-
-# repo notes are not part of the site
-/README.md /404.html 404!

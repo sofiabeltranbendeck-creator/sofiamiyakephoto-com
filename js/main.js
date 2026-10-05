@@ -98,8 +98,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     hero.appendChild(dots);
 
+    // Slides 2+ carry their image in data-bg, not an inline background-image.
+    // A visibility:hidden box still generates a layout box, so the browser
+    // fetches its background in the same style-recalc tick as the LCP image —
+    // slides nobody sees for 9 and 18 seconds competing for the same bandwidth.
+    function applyBg(slide) {
+      var el = slide && slide.querySelector('.hero-bg[data-bg]');
+      if (!el) return;
+      el.style.backgroundImage = "url('" + el.dataset.bg + "')";
+      el.removeAttribute('data-bg');
+    }
+
     function go(n) {
       index = (n + slides.length) % slides.length;
+      applyBg(slides[index]);
       slides.forEach(function (s, i) {
         s.classList.toggle('is-active', i === index);
         s.setAttribute('aria-hidden', i === index ? 'false' : 'true');
@@ -109,7 +121,10 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    function start() { if (!reduced) timer = setInterval(function () { go(index + 1); }, DELAY); }
+    // The !timer guard matters: hover fires stop(), then a tab switch and
+    // return fires start(), then mouseleave fires start() again — without it
+    // the first interval is orphaned and runs a full-viewport crossfade forever.
+    function start() { if (!reduced && !timer) timer = setInterval(function () { go(index + 1); }, DELAY); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function restart() { stop(); start(); }
 
@@ -128,6 +143,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     go(0);
     start();
+
+    // Warm the deferred slides once the page is idle, so the 1.1s crossfade
+    // never plays against an empty slide. go() also applies on demand, which
+    // covers a dot click that lands before this runs.
+    var warm = function () { slides.forEach(applyBg); };
+    if (window.requestIdleCallback) { requestIdleCallback(warm, { timeout: 3000 }); }
+    else { setTimeout(warm, 2000); }
   });
 
   // Gallery carousel arrows
@@ -161,8 +183,9 @@ document.addEventListener('click', function (e) {
   if (!a || !a.href) return;
   var ga = (typeof gtag === 'function') ? gtag : function () {};
   if (a.href.indexOf('hbportal.co') !== -1) {
-    fbq('track', 'Schedule'); // opened booking scheduler (Lead reserved for real form submissions)
-    ga('event', 'scheduler_opened', { method: 'honeybook_scheduler', link_url: a.href, page_location: location.href });
+    fbq('track', 'Schedule'); // opened booking scheduler — NOT a completed inquiry.
+                              // 'Lead' fires only on thank-you.html, after the form is submitted.
+    ga('event', 'schedule_start', { method: 'honeybook_scheduler', link_url: a.href, page_location: location.href });
   } else if (a.href.indexOf('mailto:') === 0) {
     fbq('track', 'Contact');
     ga('event', 'contact_click', { method: 'email' });

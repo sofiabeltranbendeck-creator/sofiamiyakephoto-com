@@ -18,7 +18,7 @@
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
- "@type": "LocalBusiness",
+ "@type": "PhotographyBusiness",
  "@id": "https://sofiamiyakephoto.com/#business",
  "name": "Sofia Miyake Photography",
  "description": "Documentary family, wedding, engagement, senior and birth photographer based in Roseville, serving Rocklin, Granite Bay, Folsom and greater Sacramento.",
@@ -26,7 +26,7 @@
  "telephone": "+1-805-422-0130",
  "email": "contact@sofiamiyakephoto.com",
  "image": "https://sofiamiyakephoto.com/images/og/home.jpg",
- "priceRange": "$100-$3925",
+ "priceRange": "$100-$2600",
  "address": {
   "@type": "PostalAddress",
   "addressLocality": "Roseville",
@@ -49,7 +49,7 @@
  "sameAs": [
   "https://www.instagram.com/sofiamiyakephoto/",
   "https://www.zola.com/wedding-vendors/wedding-photographers/sofia-miyake-photo",
-  "https://maps.google.com/?cid=3984129550021780191"
+  "https://www.google.com/maps/place/?cid=3984129550021780191"
  ]
 }
 </script>
@@ -57,9 +57,9 @@
 {
  "@context": "https://schema.org",
  "@type": "Service",
- "name": "Portrait & Headshot Photography",
- "serviceType": "Portrait photographer",
- "description": "Guided portrait sessions and headshots in Roseville and Sacramento.",
+ "name": "Portrait Photography",
+ "description": "Portrait and headshot sessions in Roseville and Sacramento.",
+ "serviceType": "Portrait Photography",
  "url": "https://sofiamiyakephoto.com/portraits",
  "provider": {
   "@id": "https://sofiamiyakephoto.com/#business"
@@ -68,42 +68,48 @@
   "Roseville",
   "Rocklin",
   "Granite Bay",
+  "Lincoln",
+  "Folsom",
   "Sacramento"
  ],
- "offers": {
-  "@type": "Offer",
-  "priceCurrency": "USD",
-  "priceSpecification": {
-   "@type": "PriceSpecification",
-   "minPrice": 225,
-   "priceCurrency": "USD"
-  },
-  "url": "https://sofiamiyakephoto.com/portraits"
+ "hasOfferCatalog": {
+  "@type": "OfferCatalog",
+  "name": "Portrait Photography collections",
+  "itemListElement": [
+   {
+    "@type": "Offer",
+    "name": "The Mini",
+    "price": "225",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/portraits"
+   },
+   {
+    "@type": "Offer",
+    "name": "The Signature",
+    "price": "395",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/portraits"
+   },
+   {
+    "@type": "Offer",
+    "name": "The Editorial",
+    "price": "650",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/portraits"
+   }
+  ]
  }
-}
-</script>
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "BreadcrumbList",
- "itemListElement": [
-  {
-   "@type": "ListItem",
-   "position": 1,
-   "name": "Home",
-   "item": "https://sofiamiyakephoto.com/"
-  },
-  {
-   "@type": "ListItem",
-   "position": 2,
-   "name": "Portrait & Headshot Photography",
-   "item": "https://sofiamiyakephoto.com/portraits"
-  }
- ]
 }
 </script>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
+<link rel="preload" as="image" href="images/DSC01118.jpg" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
 <script>document.documentElement.classList.add('js');</script>
 <!-- Google Analytics 4 -->
@@ -125,11 +131,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '27779095678410253');
+fbq('init', '1368697491897106');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" alt=""
+src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt=""
 /></noscript>
 <!-- End Meta Pixel Code -->
 </head>
@@ -144,7 +150,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       <div class="nav-group">
         <button type="button" class="nav-group-toggle active">Choose Your Story <span class="caret">▾</span></button>
         <div class="nav-dropdown">
-        <a href="/fall-minis">Fall Mini Sessions</a>
+        <a href="/fall-minis">Mini Sessions</a>
         <a href="/weddings">Weddings</a>
         <a href="/engagements">Engagements</a>
         <a href="/portraits" class="active">Portraits</a>
@@ -181,8 +187,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     <h1 style="font-size:clamp(2.2rem, 4.6vw, 3.4rem);">Portraits and headshots in Roseville and Sacramento</h1>
     <p class="subhead">You deserve photos that make you stop scrolling</p>
     <p class="lede">Whether you're stepping into your next chapter, celebrating love, or simply doing something for yourself — our portrait sessions are warm, unhurried, and made to show the world exactly who you are.</p>
-    <a href="/bookings" class="btn btn-gold">Inquire Now</a>
-    <p style="margin-top:14px;"><a href="#headshot" style="color:inherit;text-decoration:underline;">Just need a professional headshot? See the $100 session &darr;</a></p>
+    <a href="/bookings#inquire" class="btn btn-gold">Inquire Now</a>
   </div>
 </section>
 
@@ -201,7 +206,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       </ul>
     </div>
     <div class="img-frame tall reveal">
-      <img src="images/DSC06101.jpg" alt="Couple dancing on a riverside walkway at sunset beneath dramatic orange clouds" loading="lazy" width="1600" height="1489">
+      <img src="images/DSC06101.jpg" alt="A couple holding each other on a footbridge above the river as the sky turns gold" loading="lazy" width="1600" height="1489" srcset="/.netlify/images?url=/images/DSC06101.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC06101.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC06101.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC06101.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC06101.jpg&amp;w=1600 1600w" sizes="(max-width:1080px) calc(100vw - 64px), calc((min(1180px,100vw) - 124px)/2)">
     </div>
   </div>
 </section>
@@ -252,7 +257,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>Online gallery with download</li>
           <li>Delivered within 1 week</li>
         </ul>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
       </div>
 
       <div class="price-card popular">
@@ -269,7 +274,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>Pre-session style consultation</li>
           <li>Delivered within 2 weeks</li>
         </ul>
-        <a href="/bookings" class="btn btn-gold">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-gold">Inquire Now</a>
       </div>
 
       <div class="price-card">
@@ -286,14 +291,14 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>10 fine art prints included</li>
           <li>Delivered within 2 weeks</li>
         </ul>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
       </div>
 
     </div>
 
-    <div class="price-banner reveal" id="headshot">
+    <div class="price-banner reveal">
       <div class="pb-photo">
-        <img src="images/DSC03931.jpg" alt="Black and white headshot of a woman with curly hair holding a film camera, looking straight at the viewer" loading="lazy" width="1470" height="1600">
+        <img src="images/DSC03931.jpg" alt="Black and white portrait of a woman holding a film camera, looking straight down the lens" loading="lazy" width="1470" height="1600" srcset="/.netlify/images?url=/images/DSC03931.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC03931.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC03931.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC03931.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC03931.jpg&amp;w=1470 1470w" sizes="(max-width:860px) calc(100vw - 64px), 420px">
         <p class="card-label pb-overlay-label">The Headshot</p>
       </div>
       <div class="pb-info">
@@ -307,7 +312,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       </ul>
       <div class="pb-action">
         <div class="price">$100</div>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
       </div>
     </div>
   </div>
@@ -319,14 +324,14 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     <div class="carousel reveal" data-carousel>
       <button class="carousel-arrow prev" type="button" aria-label="Previous image">←</button>
       <div class="carousel-track">
-        <div class="carousel-slide img-frame tall"><img src="images/DSC01243.jpg" alt="Parents holding their newborn in front of a decorated Christmas tree, nutcracker statues on either side" loading="lazy" width="1600" height="1066"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC00772-2.jpg" alt="Multigenerational family portrait under a large oak tree celebrating a graduate in cap and gown" loading="lazy" width="1600" height="1345"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC04991-3.jpg" alt="Soft-focus family portrait of a mother and father holding their two young children" loading="lazy" width="1383" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC07131-2.jpg" alt="Woman seated at an outdoor table, arms crossed, evening light" loading="lazy" width="1249" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC07406.jpg" alt="A couple seated together on a courtyard sofa" loading="lazy" width="1566" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC07181.jpg" alt="Man seated on the edge of a pool table, cue in hand" loading="lazy" width="995" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC07419.jpg" alt="Woman in a white shirt, chin on her hand, city courtyard behind" loading="lazy" width="1158" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC07372.jpg" alt="Black and white portrait, eyes down, hair catching the light" loading="lazy" width="1600" height="1446"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC01243.jpg" alt="Parents holding their baby in front of a lit Christmas tree flanked by tall nutcrackers" loading="lazy" width="1600" height="1066" srcset="/.netlify/images?url=/images/DSC01243.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC01243.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC01243.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC01243.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC01243.jpg&amp;w=1600 1600w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC00772-2.jpg" alt="Three generations of a family gathered under a spreading oak for a graduation portrait" loading="lazy" width="1600" height="1345" srcset="/.netlify/images?url=/images/DSC00772-2.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC00772-2.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC00772-2.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC00772-2.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC00772-2.jpg&amp;w=1600 1600w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC04991-3.jpg" alt="Soft-focus portrait of two parents with their toddler and their newborn" loading="lazy" width="1383" height="1600" srcset="/.netlify/images?url=/images/DSC04991-3.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC04991-3.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC04991-3.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC04991-3.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC04991-3.jpg&amp;w=1383 1383w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07131-2.jpg" alt="Woman seated at an outdoor table, arms crossed, evening light" loading="lazy" width="1249" height="1600" srcset="/.netlify/images?url=/images/DSC07131-2.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07131-2.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07131-2.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07131-2.jpg&amp;w=1249 1249w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07406.jpg" alt="A couple seated together on a courtyard sofa" loading="lazy" width="1566" height="1600" srcset="/.netlify/images?url=/images/DSC07406.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07406.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07406.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07406.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC07406.jpg&amp;w=1566 1566w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07181.jpg" alt="Man seated on the edge of a pool table, cue in hand" loading="lazy" width="995" height="1600" srcset="/.netlify/images?url=/images/DSC07181.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07181.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07181.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07181.jpg&amp;w=995 995w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07419.jpg" alt="Woman in a white shirt, chin on her hand, city courtyard behind" loading="lazy" width="1158" height="1600" srcset="/.netlify/images?url=/images/DSC07419.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07419.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07419.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07419.jpg&amp;w=1158 1158w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07372.jpg" alt="Black and white portrait, eyes down, hair catching the light" loading="lazy" width="1600" height="1446" srcset="/.netlify/images?url=/images/DSC07372.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07372.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07372.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07372.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC07372.jpg&amp;w=1600 1600w" sizes="min(420px, 80vw)"></div>
       </div>
       <button class="carousel-arrow next" type="button" aria-label="Next image">→</button>
     </div>
@@ -334,6 +339,12 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
 </section>
 
 
+
+<section>
+  <div class="container reveal" style="max-width:760px;">
+    <p class="center">Graduating this year? <a href="/seniors">Senior and grad sessions</a> are built for that. Getting married? <a href="/engagements">Engagement sessions</a> cover the two of you together.</p>
+  </div>
+</section>
 
 <section class="cta-band">
   <div class="container reveal center">
@@ -351,7 +362,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
   <p class="role">Photographer</p>
   <p><a href="tel:+18054220130">(805) 422-0130</a></p>
   <p><a href="mailto:contact@sofiamiyakephoto.com">contact@sofiamiyakephoto.com</a></p>
-  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a></p>
+  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a> · <a href="/sitemap" style="text-decoration:underline;">Site Map</a></p>
 </footer>
 
 <script src="js/main.js"></script>

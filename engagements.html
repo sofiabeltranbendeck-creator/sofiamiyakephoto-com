@@ -18,7 +18,7 @@
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
- "@type": "LocalBusiness",
+ "@type": "PhotographyBusiness",
  "@id": "https://sofiamiyakephoto.com/#business",
  "name": "Sofia Miyake Photography",
  "description": "Documentary family, wedding, engagement, senior and birth photographer based in Roseville, serving Rocklin, Granite Bay, Folsom and greater Sacramento.",
@@ -26,7 +26,7 @@
  "telephone": "+1-805-422-0130",
  "email": "contact@sofiamiyakephoto.com",
  "image": "https://sofiamiyakephoto.com/images/og/home.jpg",
- "priceRange": "$100-$3925",
+ "priceRange": "$100-$2600",
  "address": {
   "@type": "PostalAddress",
   "addressLocality": "Roseville",
@@ -49,7 +49,7 @@
  "sameAs": [
   "https://www.instagram.com/sofiamiyakephoto/",
   "https://www.zola.com/wedding-vendors/wedding-photographers/sofia-miyake-photo",
-  "https://maps.google.com/?cid=3984129550021780191"
+  "https://www.google.com/maps/place/?cid=3984129550021780191"
  ]
 }
 </script>
@@ -58,8 +58,8 @@
  "@context": "https://schema.org",
  "@type": "Service",
  "name": "Engagement Photography",
- "serviceType": "Engagement photographer",
- "description": "Relaxed engagement sessions, proposals and save-the-dates in Sacramento and Roseville.",
+ "description": "Engagement, proposal and save-the-date sessions in Sacramento and Roseville.",
+ "serviceType": "Engagement Photography",
  "url": "https://sofiamiyakephoto.com/engagements",
  "provider": {
   "@id": "https://sofiamiyakephoto.com/#business"
@@ -68,42 +68,48 @@
   "Roseville",
   "Rocklin",
   "Granite Bay",
+  "Lincoln",
+  "Folsom",
   "Sacramento"
  ],
- "offers": {
-  "@type": "Offer",
-  "priceCurrency": "USD",
-  "priceSpecification": {
-   "@type": "PriceSpecification",
-   "minPrice": 195,
-   "priceCurrency": "USD"
-  },
-  "url": "https://sofiamiyakephoto.com/engagements"
+ "hasOfferCatalog": {
+  "@type": "OfferCatalog",
+  "name": "Engagement Photography collections",
+  "itemListElement": [
+   {
+    "@type": "Offer",
+    "name": "The Golden Hour",
+    "price": "195",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/engagements"
+   },
+   {
+    "@type": "Offer",
+    "name": "The Adventure",
+    "price": "250",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/engagements"
+   },
+   {
+    "@type": "Offer",
+    "name": "The Proposal",
+    "price": "320",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/engagements"
+   }
+  ]
  }
-}
-</script>
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "BreadcrumbList",
- "itemListElement": [
-  {
-   "@type": "ListItem",
-   "position": 1,
-   "name": "Home",
-   "item": "https://sofiamiyakephoto.com/"
-  },
-  {
-   "@type": "ListItem",
-   "position": 2,
-   "name": "Engagement Photography",
-   "item": "https://sofiamiyakephoto.com/engagements"
-  }
- ]
 }
 </script>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
+<link rel="preload" as="image" href="images/DSC01118.jpg" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
 <script>document.documentElement.classList.add('js');</script>
 <!-- Google Analytics 4 -->
@@ -125,11 +131,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '27779095678410253');
+fbq('init', '1368697491897106');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" alt=""
+src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt=""
 /></noscript>
 <!-- End Meta Pixel Code -->
 </head>
@@ -144,7 +150,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       <div class="nav-group">
         <button type="button" class="nav-group-toggle active">Choose Your Story <span class="caret">▾</span></button>
         <div class="nav-dropdown">
-        <a href="/fall-minis">Fall Mini Sessions</a>
+        <a href="/fall-minis">Mini Sessions</a>
         <a href="/weddings">Weddings</a>
         <a href="/engagements" class="active">Engagements</a>
         <a href="/portraits">Portraits</a>
@@ -181,7 +187,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     <h1 style="font-size:clamp(2.2rem, 4.6vw, 3.4rem);">Engagement sessions in Sacramento and Roseville</h1>
     <p class="subhead">The story of you two, before the big day</p>
     <p class="lede">You just said yes — now let's capture this in-between chapter. Engagement sessions are relaxed, romantic, and a little bit of an adventure. No stiff posing, just the two of you being yourselves.</p>
-    <a href="/bookings" class="btn btn-gold">Inquire Now</a>
+    <a href="/bookings#inquire" class="btn btn-gold">Inquire Now</a>
   </div>
 </section>
 
@@ -200,7 +206,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       </ul>
     </div>
     <div class="img-frame tall reveal">
-      <img src="images/DSC01119.jpg" alt="Engaged couple embracing on a beach at sunset, foreheads touching under a pink and orange sky" loading="lazy" width="1321" height="1600">
+      <img src="images/DSC01119.jpg" alt="Engaged couple during their session" loading="lazy" width="1321" height="1600" srcset="/.netlify/images?url=/images/DSC01119.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC01119.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC01119.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC01119.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC01119.jpg&amp;w=1321 1321w" sizes="(max-width:1080px) calc(100vw - 64px), calc((min(1180px,100vw) - 124px)/2)">
     </div>
   </div>
 </section>
@@ -237,7 +243,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       <p class="section-label">Investment</p>
       <h2 class="center" style="margin-bottom:60px;">Engagement Sessions</h2>
     </div>
-    <div class="four-col pricing-grid reveal-group">
+    <div class="three-col pricing-grid reveal-group">
 
       <div class="price-card">
         <p class="card-label">The Golden Hour</p>
@@ -251,17 +257,17 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>Online gallery with download</li>
           <li>Delivered within 2 weeks</li>
         </ul>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
       </div>
 
       <div class="price-card popular">
         <div class="popular-badge">Popular</div>
         <p class="card-label">The Adventure</p>
-        <div class="price">$295</div>
+        <div class="price">$250</div>
         <p class="price-tag">The full engagement experience</p>
-        <p class="price-meta">90 minutes · Up to 2 locations</p>
+        <p class="price-meta">90-minute session · Up to 2 locations</p>
         <ul class="price-features">
-          <li>90-minute session</li>
+          <li>2-hour session</li>
           <li>Up to 2 locations, 2 outfits</li>
           <li>80+ edited images</li>
           <li>Location & style consultation</li>
@@ -269,29 +275,12 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>Save-the-date print credit</li>
           <li>Delivered within 2 weeks</li>
         </ul>
-        <a href="/bookings" class="btn btn-gold">Inquire Now</a>
-      </div>
-
-      <div class="price-card">
-        <p class="card-label">The Full Adventure</p>
-        <div class="price">$395</div>
-        <p class="price-tag">More time, more places, more of the two of you</p>
-        <p class="price-meta">2 hours · Up to 3 locations</p>
-        <ul class="price-features">
-          <li>2-hour session</li>
-          <li>Up to 3 locations, 3 outfits</li>
-          <li>110+ edited images</li>
-          <li>Location & style consultation</li>
-          <li>Online gallery with download</li>
-          <li>Save-the-date print credit</li>
-          <li>Delivered within 2 weeks</li>
-        </ul>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-gold">Inquire Now</a>
       </div>
 
       <div class="price-card">
         <p class="card-label">The Proposal</p>
-        <div class="price">$425</div>
+        <div class="price">$320</div>
         <p class="price-tag">The moment you ask — captured in secret</p>
         <p class="price-meta">Covert coverage + mini session</p>
         <ul class="price-features">
@@ -303,11 +292,10 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>Online gallery with download</li>
           <li>Same-week sneak peek</li>
         </ul>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
       </div>
 
     </div>
-    <p class="center reveal" style="margin-top:28px;opacity:0.85;">Want to add real Super 8 film to your session? <a href="/miyake-vision#film">See how it works</a>.</p>
   </div>
 </section>
 
@@ -317,12 +305,12 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     <div class="carousel reveal" data-carousel>
       <button class="carousel-arrow prev" type="button" aria-label="Previous image">←</button>
       <div class="carousel-track">
-        <div class="carousel-slide img-frame tall"><img src="images/DSC01124.jpg" alt="Close-up of a diamond engagement ring as a couple holds hands on the beach" loading="lazy" width="1600" height="1161"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC01132-2.jpg" alt="Smiling man looking down at his fiancée's hand and engagement ring resting on his chest" loading="lazy" width="1600" height="1556"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC01132.jpg" alt="Engaged couple laughing together on the beach, her ringed hand on his chest, ocean and blue sky behind them" loading="lazy" width="1295" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC01118.jpg" alt="Couple embracing and smiling on a beach under a soft blue and pink sky during their engagement session" loading="lazy" width="1377" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC01133.jpg" alt="Engaged couple standing close together on a tropical beach with palm trees and ocean behind them" loading="lazy" width="1600" height="1066"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC01119.jpg" alt="Engaged couple embracing on a beach at sunset, foreheads touching under a pink and orange sky" loading="lazy" width="1321" height="1600"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC01124.jpg" alt="Close-up of her hand resting in his, engagement ring catching the last of the light" loading="lazy" width="1600" height="1161" srcset="/.netlify/images?url=/images/DSC01124.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC01124.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC01124.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC01124.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC01124.jpg&amp;w=1600 1600w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC01132-2.jpg" alt="Close crop of the two of them mid-laugh, her ring hand flat against his shirt" loading="lazy" width="1600" height="1556" srcset="/.netlify/images?url=/images/DSC01132-2.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC01132-2.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC01132-2.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC01132-2.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC01132-2.jpg&amp;w=1600 1600w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC01132.jpg" alt="A couple laughing together on the beach, her hand with the new ring resting on his chest" loading="lazy" width="1295" height="1600" srcset="/.netlify/images?url=/images/DSC01132.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC01132.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC01132.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC01132.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC01132.jpg&amp;w=1295 1295w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC01118.jpg" alt="Newly engaged couple laughing face to face on the sand at dusk, her ring hand on his shoulder" loading="lazy" width="1377" height="1600" srcset="/.netlify/images?url=/images/DSC01118.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC01118.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC01118.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC01118.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC01118.jpg&amp;w=1377 1377w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC01133.jpg" alt="He turns to the camera while she laughs at him, palms and a pink sunset behind them" loading="lazy" width="1600" height="1066" srcset="/.netlify/images?url=/images/DSC01133.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC01133.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC01133.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC01133.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC01133.jpg&amp;w=1600 1600w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC01119.jpg" alt="Engagement session" loading="lazy" width="1321" height="1600" srcset="/.netlify/images?url=/images/DSC01119.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC01119.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC01119.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC01119.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC01119.jpg&amp;w=1321 1321w" sizes="min(420px, 80vw)"></div>
       </div>
       <button class="carousel-arrow next" type="button" aria-label="Next image">→</button>
     </div>
@@ -330,6 +318,18 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
 </section>
 
 
+
+<section class="quote-strip reveal">
+  <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+  <blockquote>She went out of her way to ensure we felt comfortable, which isn&rsquo;t always easy when you aren&rsquo;t used to being photographed. She truly knows what she&rsquo;s doing, and she does it with so much passion.</blockquote>
+  <cite>Zoad B., April 2026 &middot; <a href="https://www.zola.com/wedding-vendors/wedding-photographers/sofia-miyake-photo" target="_blank" rel="noopener">verified on Zola</a></cite>
+</section>
+
+<section>
+  <div class="container reveal" style="max-width:760px;">
+    <p class="center">Already set a date? Have a look at <a href="/weddings">wedding collections</a>. If you just want good photographs of the two of you with no wedding attached, that is a <a href="/portraits">portrait session</a>.</p>
+  </div>
+</section>
 
 <section class="cta-band">
   <div class="container reveal center">
@@ -347,7 +347,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
   <p class="role">Photographer</p>
   <p><a href="tel:+18054220130">(805) 422-0130</a></p>
   <p><a href="mailto:contact@sofiamiyakephoto.com">contact@sofiamiyakephoto.com</a></p>
-  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a></p>
+  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a> · <a href="/sitemap" style="text-decoration:underline;">Site Map</a></p>
 </footer>
 
 <script src="js/main.js"></script>

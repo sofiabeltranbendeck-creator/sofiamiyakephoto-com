@@ -18,7 +18,7 @@
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
- "@type": "LocalBusiness",
+ "@type": "PhotographyBusiness",
  "@id": "https://sofiamiyakephoto.com/#business",
  "name": "Sofia Miyake Photography",
  "description": "Documentary family, wedding, engagement, senior and birth photographer based in Roseville, serving Rocklin, Granite Bay, Folsom and greater Sacramento.",
@@ -26,7 +26,7 @@
  "telephone": "+1-805-422-0130",
  "email": "contact@sofiamiyakephoto.com",
  "image": "https://sofiamiyakephoto.com/images/og/home.jpg",
- "priceRange": "$100-$3925",
+ "priceRange": "$100-$2600",
  "address": {
   "@type": "PostalAddress",
   "addressLocality": "Roseville",
@@ -49,7 +49,7 @@
  "sameAs": [
   "https://www.instagram.com/sofiamiyakephoto/",
   "https://www.zola.com/wedding-vendors/wedding-photographers/sofia-miyake-photo",
-  "https://maps.google.com/?cid=3984129550021780191"
+  "https://www.google.com/maps/place/?cid=3984129550021780191"
  ]
 }
 </script>
@@ -57,9 +57,9 @@
 {
  "@context": "https://schema.org",
  "@type": "Service",
- "name": "Senior Photography",
- "serviceType": "Senior portrait photographer",
- "description": "Senior and graduation sessions in Roseville, Rocklin and Sacramento.",
+ "name": "Senior Portrait Photography",
+ "description": "Senior and graduation portrait sessions in Roseville, Rocklin and Sacramento.",
+ "serviceType": "Senior Portrait Photography",
  "url": "https://sofiamiyakephoto.com/seniors",
  "provider": {
   "@id": "https://sofiamiyakephoto.com/#business"
@@ -68,42 +68,48 @@
   "Roseville",
   "Rocklin",
   "Granite Bay",
+  "Lincoln",
+  "Folsom",
   "Sacramento"
  ],
- "offers": {
-  "@type": "Offer",
-  "priceCurrency": "USD",
-  "priceSpecification": {
-   "@type": "PriceSpecification",
-   "minPrice": 175,
-   "priceCurrency": "USD"
-  },
-  "url": "https://sofiamiyakephoto.com/seniors"
+ "hasOfferCatalog": {
+  "@type": "OfferCatalog",
+  "name": "Senior Portrait Photography collections",
+  "itemListElement": [
+   {
+    "@type": "Offer",
+    "name": "The Tassel",
+    "price": "175",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/seniors"
+   },
+   {
+    "@type": "Offer",
+    "name": "The Milestone",
+    "price": "325",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/seniors"
+   },
+   {
+    "@type": "Offer",
+    "name": "The Squad",
+    "price": "450",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/seniors"
+   }
+  ]
  }
-}
-</script>
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "BreadcrumbList",
- "itemListElement": [
-  {
-   "@type": "ListItem",
-   "position": 1,
-   "name": "Home",
-   "item": "https://sofiamiyakephoto.com/"
-  },
-  {
-   "@type": "ListItem",
-   "position": 2,
-   "name": "Senior Photography",
-   "item": "https://sofiamiyakephoto.com/seniors"
-  }
- ]
 }
 </script>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
+<link rel="preload" as="image" href="images/DSC00772-2.jpg" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
 <script>document.documentElement.classList.add('js');</script>
 <!-- Google Analytics 4 -->
@@ -125,11 +131,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '27779095678410253');
+fbq('init', '1368697491897106');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" alt=""
+src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt=""
 /></noscript>
 <!-- End Meta Pixel Code -->
 </head>
@@ -144,7 +150,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       <div class="nav-group">
         <button type="button" class="nav-group-toggle active">Choose Your Story <span class="caret">▾</span></button>
         <div class="nav-dropdown">
-        <a href="/fall-minis">Fall Mini Sessions</a>
+        <a href="/fall-minis">Mini Sessions</a>
         <a href="/weddings">Weddings</a>
         <a href="/engagements">Engagements</a>
         <a href="/portraits">Portraits</a>
@@ -181,7 +187,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     <h1 style="font-size:clamp(2.2rem, 4.6vw, 3.4rem);">Senior and graduation portraits in Roseville, Rocklin and Sacramento</h1>
     <p class="subhead">The next chapter starts here</p>
     <p class="lede">You worked for this. Senior and graduation sessions celebrate the chapter you just finished — and the person you became along the way. Bring the cap, the gown, the letterman jacket, or none of it. This is about you.</p>
-    <a href="/bookings" class="btn btn-gold">Inquire Now</a>
+    <a href="/bookings#inquire" class="btn btn-gold">Inquire Now</a>
   </div>
 </section>
 
@@ -200,7 +206,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       </ul>
     </div>
     <div class="img-frame tall reveal">
-      <img src="images/DSC00708.jpg" alt="Joyful graduate celebrating outdoors" loading="lazy" width="1066" height="1600">
+      <img src="images/DSC00708.jpg" alt="A graduate in cap and gown laughing as an older man pulls him into a one-armed hug" loading="lazy" width="1066" height="1600" srcset="/.netlify/images?url=/images/DSC00708.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC00708.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC00708.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC00708.jpg&amp;w=1066 1066w" sizes="(max-width:1080px) calc(100vw - 64px), calc((min(1180px,100vw) - 124px)/2)">
     </div>
   </div>
 </section>
@@ -210,13 +216,12 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     <div class="reveal">
       <p class="section-label">The Process</p>
       <h2 class="center">How it works</h2>
-      <p class="center" style="max-width:600px;margin:12px auto 0;opacity:0.85;">Your campus, your favorite spot, or somewhere new — I know Sierra College and Sac State well, and I'm always up for a new location.</p>
     </div>
     <div class="numbered-steps reveal-group">
       <div class="step">
         <div class="step-num">01</div>
         <h3>We Plan It</h3>
-        <p style="margin-top:12px;">A quick call to pick your campus — Sierra College, Sac State, or wherever tells your story — plus outfits, props, and timing around your ceremony.</p>
+        <p style="margin-top:12px;">A quick call to pick your campus — Sierra College, Sac State, or your own high school's grounds — a favorite spot, or somewhere that tells your story, plus outfits, props, and timing around your ceremony.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
@@ -252,7 +257,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>Online gallery with download</li>
           <li>Delivered within 1 week</li>
         </ul>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
       </div>
 
       <div class="price-card popular">
@@ -270,7 +275,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>Announcement-ready crops</li>
           <li>Delivered within 2 weeks</li>
         </ul>
-        <a href="/bookings" class="btn btn-gold">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-gold">Inquire Now</a>
       </div>
 
       <div class="price-card">
@@ -286,7 +291,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>Shared online gallery</li>
           <li>Delivered within 2 weeks</li>
         </ul>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
       </div>
 
     </div>
@@ -299,12 +304,12 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     <div class="carousel reveal" data-carousel>
       <button class="carousel-arrow prev" type="button" aria-label="Previous image">←</button>
       <div class="carousel-track">
-        <div class="carousel-slide img-frame tall"><img src="images/DSC00685.jpg" alt="Graduate receiving stole at ceremony" loading="lazy" width="1600" height="1066"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC00708.jpg" alt="Joyful graduate celebrating outdoors" loading="lazy" width="1066" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC00849.jpg" alt="Graduate holding diploma in cap and gown" loading="lazy" width="1600" height="1170"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC00648.jpg" alt="Smiling graduate at ceremony" loading="lazy" width="1066" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC00805.jpg" alt="Graduate with family outside Fleming Hall" loading="lazy" width="1600" height="1241"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC00814.jpg" alt="Graduate kissing loved one holding diploma" loading="lazy" width="1164" height="1600"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC00685.jpg" alt="Graduate receiving stole at ceremony" loading="lazy" width="1600" height="1066" srcset="/.netlify/images?url=/images/DSC00685.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC00685.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC00685.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC00685.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC00685.jpg&amp;w=1600 1600w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC00708.jpg" alt="A graduate in cap and gown laughing as an older man pulls him into a one-armed hug" loading="lazy" width="1066" height="1600" srcset="/.netlify/images?url=/images/DSC00708.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC00708.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC00708.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC00708.jpg&amp;w=1066 1066w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC00849.jpg" alt="Graduate holding diploma in cap and gown" loading="lazy" width="1600" height="1170" srcset="/.netlify/images?url=/images/DSC00849.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC00849.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC00849.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC00849.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC00849.jpg&amp;w=1600 1600w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC00648.jpg" alt="A graduate walking back down the aisle, red tassel swinging, diploma under his arm" loading="lazy" width="1066" height="1600" srcset="/.netlify/images?url=/images/DSC00648.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC00648.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC00648.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC00648.jpg&amp;w=1066 1066w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC00805.jpg" alt="Graduate with family outside Fleming Hall" loading="lazy" width="1600" height="1241" srcset="/.netlify/images?url=/images/DSC00805.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC00805.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC00805.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC00805.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC00805.jpg&amp;w=1600 1600w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC00814.jpg" alt="Graduate kissing loved one holding diploma" loading="lazy" width="1164" height="1600" srcset="/.netlify/images?url=/images/DSC00814.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC00814.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC00814.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC00814.jpg&amp;w=1164 1164w" sizes="min(420px, 80vw)"></div>
       </div>
       <button class="carousel-arrow next" type="button" aria-label="Next image">→</button>
     </div>
@@ -312,6 +317,12 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
 </section>
 
 
+
+<section>
+  <div class="container reveal" style="max-width:760px;">
+    <p class="center">Want the whole family in a few frames while everyone is still home? Add <a href="/families">a family session</a>. For applications, LinkedIn or a first job, a <a href="/portraits">headshot sitting</a> is quicker and cheaper.</p>
+  </div>
+</section>
 
 <section class="cta-band">
   <div class="container reveal center">
@@ -329,7 +340,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
   <p class="role">Photographer</p>
   <p><a href="tel:+18054220130">(805) 422-0130</a></p>
   <p><a href="mailto:contact@sofiamiyakephoto.com">contact@sofiamiyakephoto.com</a></p>
-  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a></p>
+  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a> · <a href="/sitemap" style="text-decoration:underline;">Site Map</a></p>
 </footer>
 
 <script src="js/main.js"></script>

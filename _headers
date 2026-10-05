@@ -1,3 +1,13 @@
+# Netlify reads this from the publish directory — no build step needed.
+#
+# Without it Netlify serves EVERY asset as `public,max-age=0,must-revalidate`,
+# so a repeat visitor re-round-trips ~20 photos, the CSS and the JS on every
+# single page view.
+#
+# 30 days, deliberately NOT `immutable`: filenames are unfingerprinted camera
+# IDs (DSC09686.jpg), so a re-exported photo reusing a name would otherwise sit
+# stale in browsers for a year with no way to bust it.
+
 /images/*
   Cache-Control: public, max-age=2592000
 

@@ -1,6 +1,10 @@
 /* Sofia Miyake Photography — site styles */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@300;400;500;600&display=swap');
+/* Fonts are loaded from each page's <head>, not with @import.
+   An @import here is invisible to the browser's preload scanner: it only
+   exists after this file has been fetched AND parsed, which serialises the
+   whole font chain behind it — and, because every hero is a CSS background,
+   delays the LCP image too. */
 
 :root{
   --cream:#f7f2ea;
@@ -133,9 +137,6 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 .hero-bg{
   position:absolute;inset:0;background-size:cover;background-position:center;
 }
-picture{display:contents;}
-.hero-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;}
-img.card-bg{width:100%;height:100%;object-fit:cover;object-position:center;}
 .hero-bg::after{
   content:"";position:absolute;inset:0;
   background:linear-gradient(180deg, rgba(20,17,14,0.15) 0%, rgba(20,17,14,0.65) 100%);
@@ -187,7 +188,6 @@ img.card-bg{width:100%;height:100%;object-fit:cover;object-position:center;}
 /* Grids */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
 .three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
-.four-col{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;}
 
 /* Story cards */
 .story-card{
@@ -278,7 +278,13 @@ img.card-bg{width:100%;height:100%;object-fit:cover;object-position:center;}
   max-width:720px;margin:0 auto;padding:8px;
 }
 .hb-embed iframe{display:block;width:100%;border:none;}
-.hb-embed > div{min-height:120px;}
+/* Reserve close to the real form height. 120px reserved for a full contact
+   form meant everything below it jumped down when HoneyBook injected the
+   iframe — a large layout shift on the one page that exists to convert.
+   Measured 1233px at a 279px-wide viewport; fields stack as width drops, so
+   the narrow reserve is the larger one. Worth re-checking after deploy. */
+.hb-embed > div{min-height:620px;}
+@media (max-width:700px){.hb-embed > div{min-height:900px;}}
 @media (max-width:700px){.hb-embed{padding:4px;}}
 
 /* About animated hero */
@@ -470,7 +476,7 @@ html:not(.js) .price-features li{opacity:1;transform:none;}
 }
 
 @media (max-width:700px){
-  .three-col.pricing-grid,.four-col.pricing-grid{grid-template-columns:1fr;}
+  .three-col.pricing-grid{grid-template-columns:1fr;}
   .price-card{padding:40px 32px;}
 }
 
@@ -505,11 +511,20 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
 
 /* ── Hero carousel (homepage) ───────────────────────────────── */
 .hero-carousel{display:block;}
+/* Only opacity is time-transitioned. visibility is flipped instantly on
+   activate, and delayed to the END of the fade on deactivate. Transitioning
+   visibility as a timed property alongside opacity is fragile — the browser
+   may create no transition at all, leaving the class correct and the slide
+   stuck invisible. */
 .hero-carousel .hero-slide{
   position:absolute;inset:0;display:flex;align-items:flex-end;
-  opacity:0;visibility:hidden;transition:opacity 1.1s ease, visibility 1.1s ease;
+  opacity:0;visibility:hidden;
+  transition:opacity 1.1s ease, visibility 0s linear 1.1s;
 }
-.hero-carousel .hero-slide.is-active{opacity:1;visibility:visible;}
+.hero-carousel .hero-slide.is-active{
+  opacity:1;visibility:visible;
+  transition:opacity 1.1s ease, visibility 0s linear 0s;
+}
 .hero-carousel .hero-content{width:100%;padding-bottom:112px;}
 .hero-carousel .hero-slide:not(.is-active) a,
 .hero-carousel .hero-slide:not(.is-active) button{pointer-events:none;}
@@ -590,3 +605,139 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
 
 /* Emotional headline moved under the SEO H1 on service pages */
 .hero .subhead{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(1.3rem,2.5vw,1.8rem);line-height:1.3;color:#f2ede4;margin:10px auto 0;max-width:700px;text-wrap:balance}
+
+/* Session spec line on the families story-cards — the other six service pages
+   already carry this information in .price-meta; families had none. */
+.card-spec{color:rgba(255,255,255,0.82);font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;margin-top:14px;}
+
+/* The one line that changes each season on /fall-minis. Everything else on that
+   page is now season-neutral so the URL holds its rankings year-round. */
+.season-flag{display:inline-block;margin:16px auto 0;padding:8px 18px;border:1px solid var(--gold-light);border-radius:2px;font-size:0.9rem;color:#f2ede4;background:rgba(20,17,14,0.35);}
+
+/* ── Booking page ──────────────────────────────────────────────────────── */
+
+/* The sticky header is ~62px. Without scroll-margin an anchored section lands
+   underneath it, which reads as "the page jumped to the wrong place". */
+.anchor-section{scroll-margin-top:84px;}
+
+.booking-intro{max-width:660px;margin:0 auto 48px;color:var(--ink-soft);}
+.booking-lede{max-width:600px;margin:0 auto 40px;color:var(--ink-soft);}
+
+/* Route cards — the whole card is the target, so there is one obvious action
+   per route rather than a card plus a separate small button. */
+.route-card{
+  display:flex;flex-direction:column;position:relative;
+  padding:38px 30px 30px;background:var(--cream);
+  border:1px solid var(--line);border-radius:3px;
+  transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.route-card:hover{
+  transform:translateY(-4px);border-color:var(--gold-light);
+  box-shadow:0 14px 38px rgba(20,17,14,0.10);color:inherit;
+}
+.route-step{
+  position:absolute;top:18px;right:22px;
+  font-family:var(--serif);font-size:2.4rem;line-height:1;
+  color:var(--gold);opacity:0.28;
+}
+.route-title{
+  font-family:var(--serif);font-size:1.5rem;line-height:1.2;
+  color:var(--ink);margin-bottom:6px;padding-right:44px;
+}
+.route-kicker{
+  font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold-text);margin-bottom:16px;
+}
+.route-body{color:var(--ink-soft);font-size:0.97rem;flex:1;margin-bottom:22px;}
+.route-cta{
+  align-self:flex-start;font-size:0.8rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--ink);
+  border-bottom:1px solid var(--gold);padding-bottom:3px;
+}
+.route-card:hover .route-cta{color:var(--gold);}
+
+/* Numbered "what happens next" list */
+.booking-steps{list-style:none;counter-reset:none;margin:0;padding:0;display:grid;gap:26px;}
+.booking-steps li{
+  display:grid;grid-template-columns:44px 1fr;gap:4px 20px;align-items:start;
+  padding-bottom:26px;border-bottom:1px solid var(--line);
+}
+.booking-steps li:last-child{border-bottom:none;padding-bottom:0;}
+.booking-steps .step-n{
+  grid-row:1 / span 2;
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:1.15rem;
+  color:var(--gold-text);border:1px solid var(--gold-light);
+}
+.booking-steps strong{font-family:var(--serif);font-weight:500;font-size:1.18rem;}
+.booking-steps span:not(.step-n){color:var(--ink-soft);font-size:0.96rem;}
+
+@media (max-width:1080px){
+  .route-card{padding:32px 24px 26px;}
+}
+
+/* ── Session journal: index cards + post pages ─────────────────────────── */
+
+.post-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
+@media (max-width:980px){.post-grid{grid-template-columns:1fr 1fr;gap:32px;}}
+@media (max-width:640px){.post-grid{grid-template-columns:1fr;}}
+
+.post-card{display:flex;flex-direction:column;}
+.post-card-img{display:block;overflow:hidden;margin-bottom:20px;background:var(--linen);}
+.post-card-img img{width:100%;aspect-ratio:3/2;object-fit:cover;transition:transform 0.7s ease;}
+.post-card:hover .post-card-img img{transform:scale(1.045);}
+.post-card-meta{
+  font-size:0.78rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--gold-text);margin-bottom:8px;
+}
+.post-card-title{
+  font-family:var(--serif);font-size:1.5rem;line-height:1.2;
+  color:var(--ink);margin-bottom:10px;
+}
+.post-card:hover .post-card-title{color:var(--gold);}
+.post-card-blurb{color:var(--ink-soft);font-size:0.96rem;margin-bottom:14px;}
+.post-card-more{
+  margin-top:auto;font-size:0.78rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--gold-text);
+}
+
+/* Post page */
+.session-post{padding:64px 0 96px;}
+.post-back{font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-text);margin-bottom:28px;}
+.post-meta{font-size:0.8rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-text);margin-bottom:10px;}
+.session-post h1{font-size:clamp(2.1rem,4.2vw,3rem);margin-bottom:26px;}
+.session-post p{font-size:1.05rem;line-height:1.8;}
+.post-gallery{margin-top:52px;display:grid;gap:26px;}
+.post-gallery .img-frame{overflow:hidden;}
+.post-gallery img{width:100%;}
+
+.post-nav{
+  margin-top:64px;padding-top:32px;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;
+}
+.post-nav-link{font-family:var(--serif);font-size:1.15rem;line-height:1.3;color:var(--ink);}
+.post-nav-link span{
+  display:block;font-family:var(--sans);font-size:0.74rem;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--gold-text);margin-bottom:6px;
+}
+.post-nav-link.next{text-align:right;}
+.post-nav-link:hover{color:var(--gold);}
+@media (max-width:640px){
+  .post-nav{grid-template-columns:1fr;}
+  .post-nav-link.next{text-align:left;}
+}
+
+/* ---- Site map page (/sitemap) ---- */
+.sitemap-list{list-style:none;margin:28px 0 0;padding:0;}
+.sitemap-list li{
+  padding:16px 0;border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:minmax(200px,0.8fr) 1.6fr;gap:12px 32px;align-items:baseline;
+}
+.sitemap-list li:last-child{border-bottom:0;}
+.sitemap-list a{font-family:var(--serif);font-size:1.22rem;color:var(--ink);}
+.sitemap-list a:hover{color:var(--gold);}
+.sitemap-list span{font-size:0.92rem;line-height:1.6;color:var(--ink-soft);}
+@media (max-width:700px){
+  .sitemap-list li{grid-template-columns:1fr;gap:4px;padding:14px 0;}
+}
