@@ -1,5 +1,14 @@
 // Sofia Miyake Photography — site behavior
 
+// Signals that this file actually arrived and parsed. The inline script in each
+// <head> adds the `js` class (which is what hides .reveal content) and then
+// starts a timer; if that timer fires without seeing `js-ready`, it removes `js`
+// again and everything becomes visible. Without this, a dropped request or a
+// parse error here leaves 169 reveal elements stuck at opacity:0 site-wide —
+// `html:not(.js)` only covers JavaScript being switched off, not this file
+// failing to load.
+document.documentElement.classList.add('js-ready');
+
 document.addEventListener('DOMContentLoaded', function () {
 
   // Reveal-on-scroll
@@ -12,7 +21,14 @@ document.addEventListener('DOMContentLoaded', function () {
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    // threshold:0 , NOT 0.15. A threshold is a percentage of the TARGET, so an
+    // element taller than the root can never exceed root/element however far you
+    // scroll - anything taller than root/0.15 is simply unreachable. The homepage
+    // gallery stacks to one 3,721px column at 375px wide; on a 568px-tall phone
+    // the root is 508px, capping the ratio at 0.1365, so it never revealed and the
+    // visitor scrolled past 3,721px of blank page. With 0 it fires as soon as the
+    // top edge clears the bottom margin, which is what -60px already expressed.
+    }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
     targets.forEach(function (t) { io.observe(t); });
   } else {
     targets.forEach(function (t) { t.classList.add('in-view'); });
@@ -71,6 +87,31 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // Promo bar — the current offer, dismissed once and then stays gone.
+  //
+  // PROMO_ID is part of the storage key, so when the deal changes, bump it and
+  // the bar comes back for everyone, including people who dismissed the last
+  // one. A plain "promo-dismissed" key would silently hide every future offer
+  // from your most engaged visitors.
+  //
+  // Every storage call is wrapped: Safari private mode throws on setItem, and
+  // a thrown error here would stop the rest of this file from running.
+  var PROMO_ID = 'fall-minis-2026';
+  var promo = document.getElementById('promo-bar');
+  if (promo) {
+    var promoKey = 'promo-dismissed:' + PROMO_ID;
+    var wasDismissed = false;
+    try { wasDismissed = localStorage.getItem(promoKey) === '1'; } catch (e) {}
+    if (!wasDismissed) promo.hidden = false;
+    var promoClose = promo.querySelector('.promo-dismiss');
+    if (promoClose) {
+      promoClose.addEventListener('click', function () {
+        promo.hidden = true;
+        try { localStorage.setItem(promoKey, '1'); } catch (e) {}
+      });
+    }
+  }
+
   // Hero carousel (homepage) — crossfading slides with dots
   document.querySelectorAll('[data-hero-carousel]').forEach(function (hero) {
     var slides = Array.prototype.slice.call(hero.querySelectorAll('.hero-slide'));
@@ -98,8 +139,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     hero.appendChild(dots);
 
+    // Slides 2+ carry their image in data-bg, not an inline background-image.
+    // A visibility:hidden box still generates a layout box, so the browser
+    // fetches its background in the same style-recalc tick as the LCP image —
+    // slides nobody sees for 9 and 18 seconds competing for the same bandwidth.
+    function applyBg(slide) {
+      var el = slide && slide.querySelector('.hero-bg[data-bg]');
+      if (!el) return;
+      el.style.backgroundImage = "url('" + el.dataset.bg + "')";
+      el.removeAttribute('data-bg');
+    }
+
     function go(n) {
       index = (n + slides.length) % slides.length;
+      applyBg(slides[index]);
       slides.forEach(function (s, i) {
         s.classList.toggle('is-active', i === index);
         s.setAttribute('aria-hidden', i === index ? 'false' : 'true');
@@ -109,7 +162,10 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    function start() { if (!reduced) timer = setInterval(function () { go(index + 1); }, DELAY); }
+    // The !timer guard matters: hover fires stop(), then a tab switch and
+    // return fires start(), then mouseleave fires start() again — without it
+    // the first interval is orphaned and runs a full-viewport crossfade forever.
+    function start() { if (!reduced && !timer) timer = setInterval(function () { go(index + 1); }, DELAY); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function restart() { stop(); start(); }
 
@@ -128,6 +184,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     go(0);
     start();
+
+    // Warm the deferred slides once the page is idle, so the 1.1s crossfade
+    // never plays against an empty slide. go() also applies on demand, which
+    // covers a dot click that lands before this runs.
+    var warm = function () { slides.forEach(applyBg); };
+    if (window.requestIdleCallback) { requestIdleCallback(warm, { timeout: 3000 }); }
+    else { setTimeout(warm, 2000); }
   });
 
   // Gallery carousel arrows
@@ -161,8 +224,9 @@ document.addEventListener('click', function (e) {
   if (!a || !a.href) return;
   var ga = (typeof gtag === 'function') ? gtag : function () {};
   if (a.href.indexOf('hbportal.co') !== -1) {
-    fbq('track', 'Schedule'); // opened booking scheduler (Lead reserved for real form submissions)
-    ga('event', 'scheduler_opened', { method: 'honeybook_scheduler', link_url: a.href, page_location: location.href });
+    fbq('track', 'Schedule'); // opened booking scheduler — NOT a completed inquiry.
+                              // 'Lead' fires only on thank-you.html, after the form is submitted.
+    ga('event', 'schedule_start', { method: 'honeybook_scheduler', link_url: a.href, page_location: location.href });
   } else if (a.href.indexOf('mailto:') === 0) {
     fbq('track', 'Contact');
     ga('event', 'contact_click', { method: 'email' });

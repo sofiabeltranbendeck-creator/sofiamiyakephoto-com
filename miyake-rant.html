@@ -15,10 +15,12 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Miyake Rant — Sofia Miyake Photography">
+<meta name="twitter:description" content="The Miyake Rant — thoughts on art, photography, and defeating oblivion, from Sofia Miyake.">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
- "@type": "LocalBusiness",
+ "@type": "PhotographyBusiness",
  "@id": "https://sofiamiyakephoto.com/#business",
  "name": "Sofia Miyake Photography",
  "description": "Documentary family, wedding, engagement, senior and birth photographer based in Roseville, serving Rocklin, Granite Bay, Folsom and greater Sacramento.",
@@ -26,6 +28,7 @@
  "telephone": "+1-805-422-0130",
  "email": "contact@sofiamiyakephoto.com",
  "image": "https://sofiamiyakephoto.com/images/og/home.jpg",
+ "logo": "https://sofiamiyakephoto.com/images/logo-white.png",
  "priceRange": "$100-$3925",
  "address": {
   "@type": "PostalAddress",
@@ -33,6 +36,11 @@
   "addressRegion": "CA",
   "postalCode": "95678",
   "addressCountry": "US"
+ },
+ "geo": {
+  "@type": "GeoCoordinates",
+  "latitude": 38.7521,
+  "longitude": -121.288
  },
  "areaServed": [
   "Roseville",
@@ -49,14 +57,37 @@
  "sameAs": [
   "https://www.instagram.com/sofiamiyakephoto/",
   "https://www.zola.com/wedding-vendors/wedding-photographers/sofia-miyake-photo",
-  "https://maps.google.com/?cid=3984129550021780191"
+  "https://www.google.com/maps/place/?cid=3984129550021780191"
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Home",
+   "item": "https://sofiamiyakephoto.com/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Miyake Rant",
+   "item": "https://sofiamiyakephoto.com/miyake-rant"
+  }
  ]
 }
 </script>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
 <link rel="stylesheet" href="css/style.css">
-<script>document.documentElement.classList.add('js');</script>
+<script>document.documentElement.classList.add('js');setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('js-ready')){d.classList.remove('js');}},3000);</script>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-43D75ZN3B7"></script>
 <script>
@@ -76,11 +107,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '27779095678410253');
+fbq('init', '1368697491897106');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" alt=""
+src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt=""
 /></noscript>
 <!-- End Meta Pixel Code -->
 </head>
@@ -88,6 +119,12 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
+<div class="promo-bar" id="promo-bar" hidden>
+  <div class="promo-inner">
+    <a href="/fall-minis">Book your fall mini sessions <span class="promo-price">$200</span> <span class="promo-arrow" aria-hidden="true">&rarr;</span></a>
+    <button type="button" class="promo-dismiss" aria-label="Dismiss this offer">&times;</button>
+  </div>
+</div>
 <header class="site-header">
   <div class="header-inner">
     <div class="site-title"><a href="/">Sofia Miyake <span class="accent">Photography</span></a></div>
@@ -95,7 +132,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       <div class="nav-group">
         <button type="button" class="nav-group-toggle">Choose Your Story <span class="caret">▾</span></button>
         <div class="nav-dropdown">
-        <a href="/fall-minis">Fall Mini Sessions</a>
+        <a href="/fall-minis">Mini Sessions</a>
         <a href="/weddings">Weddings</a>
         <a href="/engagements">Engagements</a>
         <a href="/portraits">Portraits</a>
@@ -137,10 +174,10 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
   <div class="container" style="max-width:840px;">
     <article class="rant-post reveal">
       <a href="/the-artists-escape" class="img-frame" style="display:block;">
-        <img src="images/DSC06249.jpg" alt="Photographer raising a camera on a pine-lined country road with a snow-capped mountain in the distance" loading="lazy" width="1478" height="988">
+        <img src="images/DSC06249.jpg" alt="A photographer raising her camera on an empty mountain road, snow-capped peak beyond the pines" fetchpriority="high" width="1478" height="988" srcset="/.netlify/images?url=/images/DSC06249.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC06249.jpg&amp;w=1478 1478w" sizes="calc(min(840px,100vw) - 64px)">
       </a>
       <div class="rant-post-body">
-        <p class="rant-meta">Sofia Miyake · May 28, 2019</p>
+        <p class="rant-meta"><a href="/miyake-vision">Sofia Miyake</a> · May 28, 2019</p>
         <h2><a href="/the-artists-escape">The Artist's Escape</a></h2>
         <p class="rant-excerpt">The only way out, is through.</p>
         <a href="/the-artists-escape" class="btn btn-dark">Read More</a>
@@ -165,7 +202,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
   <p class="role">Photographer</p>
   <p><a href="tel:+18054220130">(805) 422-0130</a></p>
   <p><a href="mailto:contact@sofiamiyakephoto.com">contact@sofiamiyakephoto.com</a></p>
-  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a></p>
+  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a> · <a href="/sitemap" style="text-decoration:underline;">Site Map</a></p>
 </footer>
 
 <script src="js/main.js"></script>

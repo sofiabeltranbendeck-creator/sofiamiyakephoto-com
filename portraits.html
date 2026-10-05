@@ -15,10 +15,12 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Portrait &amp; Headshot Photographer in Roseville | Sofia Miyake">
+<meta name="twitter:description" content="Portrait sessions from $225 and $100 headshots in Roseville and Sacramento. Guided, unrushed, delivered fast.">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
- "@type": "LocalBusiness",
+ "@type": "PhotographyBusiness",
  "@id": "https://sofiamiyakephoto.com/#business",
  "name": "Sofia Miyake Photography",
  "description": "Documentary family, wedding, engagement, senior and birth photographer based in Roseville, serving Rocklin, Granite Bay, Folsom and greater Sacramento.",
@@ -26,6 +28,7 @@
  "telephone": "+1-805-422-0130",
  "email": "contact@sofiamiyakephoto.com",
  "image": "https://sofiamiyakephoto.com/images/og/home.jpg",
+ "logo": "https://sofiamiyakephoto.com/images/logo-white.png",
  "priceRange": "$100-$3925",
  "address": {
   "@type": "PostalAddress",
@@ -33,6 +36,11 @@
   "addressRegion": "CA",
   "postalCode": "95678",
   "addressCountry": "US"
+ },
+ "geo": {
+  "@type": "GeoCoordinates",
+  "latitude": 38.7521,
+  "longitude": -121.288
  },
  "areaServed": [
   "Roseville",
@@ -49,7 +57,7 @@
  "sameAs": [
   "https://www.instagram.com/sofiamiyakephoto/",
   "https://www.zola.com/wedding-vendors/wedding-photographers/sofia-miyake-photo",
-  "https://maps.google.com/?cid=3984129550021780191"
+  "https://www.google.com/maps/place/?cid=3984129550021780191"
  ]
 }
 </script>
@@ -57,9 +65,9 @@
 {
  "@context": "https://schema.org",
  "@type": "Service",
- "name": "Portrait & Headshot Photography",
- "serviceType": "Portrait photographer",
- "description": "Guided portrait sessions and headshots in Roseville and Sacramento.",
+ "name": "Portrait Photography",
+ "description": "Portrait and headshot sessions in Roseville and Sacramento.",
+ "serviceType": "Portrait Photography",
  "url": "https://sofiamiyakephoto.com/portraits",
  "provider": {
   "@id": "https://sofiamiyakephoto.com/#business"
@@ -68,17 +76,44 @@
   "Roseville",
   "Rocklin",
   "Granite Bay",
+  "Lincoln",
+  "Folsom",
   "Sacramento"
  ],
- "offers": {
-  "@type": "Offer",
-  "priceCurrency": "USD",
-  "priceSpecification": {
-   "@type": "PriceSpecification",
-   "minPrice": 225,
-   "priceCurrency": "USD"
-  },
-  "url": "https://sofiamiyakephoto.com/portraits"
+ "hasOfferCatalog": {
+  "@type": "OfferCatalog",
+  "name": "Portrait Photography collections",
+  "itemListElement": [
+   {
+    "@type": "Offer",
+    "name": "The Mini",
+    "price": "225",
+    "priceCurrency": "USD",
+    "priceSpecification": {
+     "@type": "PriceSpecification",
+     "priceCurrency": "USD",
+     "minPrice": 225
+    },
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/portraits"
+   },
+   {
+    "@type": "Offer",
+    "name": "The Signature",
+    "price": "395",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/portraits"
+   },
+   {
+    "@type": "Offer",
+    "name": "The Editorial",
+    "price": "650",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/portraits"
+   }
+  ]
  }
 }
 </script>
@@ -96,16 +131,76 @@
   {
    "@type": "ListItem",
    "position": 2,
-   "name": "Portrait & Headshot Photography",
+   "name": "Portraits",
    "item": "https://sofiamiyakephoto.com/portraits"
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What does a portrait session include?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A short call first, so I know what you want to walk away with. Then the session \u2014 thirty minutes on The Mini, an hour on The Signature, two hours on The Editorial \u2014 and an online gallery you can download from. The Signature and The Editorial add a style consultation beforehand. If you want the whole family in frame, family sessions are set up for that."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is a headshot the same as a portrait session?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No, the headshot is its own thing. It's $100 for thirty minutes, and you get five fully retouched images back within three days. Book that one if you need something for LinkedIn, a company bio or a speaker page. A portrait session gives you a full gallery instead of five frames, and more room to move around."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How many photos do I get, and how soon?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Twenty or more edited images from The Mini, fifty or more from The Signature, a hundred or more from The Editorial, which also includes ten fine art prints. The Mini lands within a week, the other two within two weeks, and the headshot comes back in three days. They arrive as high-resolution files in an online gallery, ready to download."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What should I wear?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Bring something you already feel good in \u2014 that matters more than anything else you could plan. Texture and layers photograph better than a flat block of color, and a loud pattern pulls the eye off your face. If you book The Signature or The Editorial, we go through it in the style consultation beforehand."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Where do we shoot?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Around Roseville, Rocklin and greater Sacramento. The Mini is one location, The Signature up to two, and The Editorial as many as we can reach in two hours. If somewhere already means something to you \u2014 a street you walk, a field you like, your own front steps \u2014 tell me on the call and we'll start there."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How far ahead should I book?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Earlier than you think, especially around milestones and seasons. Send an inquiry from the booking page and I'll come back to you within one or two business days. If the photos are for graduation, senior and grad sessions are built around that calendar, and if you just got engaged, engagement sessions are the better place to start."
+   }
   }
  ]
 }
 </script>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
+<link rel="preload" as="image" href="images/DSC01118.jpg" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
-<script>document.documentElement.classList.add('js');</script>
+<script>document.documentElement.classList.add('js');setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('js-ready')){d.classList.remove('js');}},3000);</script>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-43D75ZN3B7"></script>
 <script>
@@ -125,11 +220,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '27779095678410253');
+fbq('init', '1368697491897106');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" alt=""
+src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt=""
 /></noscript>
 <!-- End Meta Pixel Code -->
 </head>
@@ -137,6 +232,12 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
+<div class="promo-bar" id="promo-bar" hidden>
+  <div class="promo-inner">
+    <a href="/fall-minis">Book your fall mini sessions <span class="promo-price">$200</span> <span class="promo-arrow" aria-hidden="true">&rarr;</span></a>
+    <button type="button" class="promo-dismiss" aria-label="Dismiss this offer">&times;</button>
+  </div>
+</div>
 <header class="site-header">
   <div class="header-inner">
     <div class="site-title"><a href="/">Sofia Miyake <span class="accent">Photography</span></a></div>
@@ -144,7 +245,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       <div class="nav-group">
         <button type="button" class="nav-group-toggle active">Choose Your Story <span class="caret">▾</span></button>
         <div class="nav-dropdown">
-        <a href="/fall-minis">Fall Mini Sessions</a>
+        <a href="/fall-minis">Mini Sessions</a>
         <a href="/weddings">Weddings</a>
         <a href="/engagements">Engagements</a>
         <a href="/portraits" class="active">Portraits</a>
@@ -181,8 +282,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     <h1 style="font-size:clamp(2.2rem, 4.6vw, 3.4rem);">Portraits and headshots in Roseville and Sacramento</h1>
     <p class="subhead">You deserve photos that make you stop scrolling</p>
     <p class="lede">Whether you're stepping into your next chapter, celebrating love, or simply doing something for yourself — our portrait sessions are warm, unhurried, and made to show the world exactly who you are.</p>
-    <a href="/bookings" class="btn btn-gold">Inquire Now</a>
-    <p style="margin-top:14px;"><a href="#headshot" style="color:inherit;text-decoration:underline;">Just need a professional headshot? See the $100 session &darr;</a></p>
+    <a href="/bookings#inquire" class="btn btn-gold">Inquire Now</a>
   </div>
 </section>
 
@@ -201,7 +301,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       </ul>
     </div>
     <div class="img-frame tall reveal">
-      <img src="images/DSC06101.jpg" alt="Couple dancing on a riverside walkway at sunset beneath dramatic orange clouds" loading="lazy" width="1600" height="1489">
+      <img src="images/DSC06101.jpg" alt="A couple holding each other on a footbridge above the river as the sky turns gold" loading="lazy" width="1600" height="1489" srcset="/.netlify/images?url=/images/DSC06101.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC06101.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC06101.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC06101.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC06101.jpg&amp;w=1600 1600w" sizes="(max-width:1080px) calc(100vw - 64px), calc((min(1180px,100vw) - 124px)/2)">
     </div>
   </div>
 </section>
@@ -252,7 +352,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>Online gallery with download</li>
           <li>Delivered within 1 week</li>
         </ul>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
       </div>
 
       <div class="price-card popular">
@@ -269,7 +369,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>Pre-session style consultation</li>
           <li>Delivered within 2 weeks</li>
         </ul>
-        <a href="/bookings" class="btn btn-gold">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-gold">Inquire Now</a>
       </div>
 
       <div class="price-card">
@@ -286,14 +386,14 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
           <li>10 fine art prints included</li>
           <li>Delivered within 2 weeks</li>
         </ul>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
       </div>
 
     </div>
 
-    <div class="price-banner reveal" id="headshot">
+    <div class="price-banner reveal">
       <div class="pb-photo">
-        <img src="images/DSC03931.jpg" alt="Black and white headshot of a woman with curly hair holding a film camera, looking straight at the viewer" loading="lazy" width="1470" height="1600">
+        <img src="images/DSC03931.jpg" alt="Black and white portrait of a woman holding a film camera, looking straight down the lens" loading="lazy" width="1470" height="1600" srcset="/.netlify/images?url=/images/DSC03931.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC03931.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC03931.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC03931.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC03931.jpg&amp;w=1470 1470w" sizes="(max-width:860px) calc(100vw - 64px), 420px">
         <p class="card-label pb-overlay-label">The Headshot</p>
       </div>
       <div class="pb-info">
@@ -307,7 +407,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       </ul>
       <div class="pb-action">
         <div class="price">$100</div>
-        <a href="/bookings" class="btn btn-dark">Inquire Now</a>
+        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
       </div>
     </div>
   </div>
@@ -319,14 +419,14 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     <div class="carousel reveal" data-carousel>
       <button class="carousel-arrow prev" type="button" aria-label="Previous image">←</button>
       <div class="carousel-track">
-        <div class="carousel-slide img-frame tall"><img src="images/DSC01243.jpg" alt="Parents holding their newborn in front of a decorated Christmas tree, nutcracker statues on either side" loading="lazy" width="1600" height="1066"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC00772-2.jpg" alt="Multigenerational family portrait under a large oak tree celebrating a graduate in cap and gown" loading="lazy" width="1600" height="1345"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC04991-3.jpg" alt="Soft-focus family portrait of a mother and father holding their two young children" loading="lazy" width="1383" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC07131-2.jpg" alt="Woman seated at an outdoor table, arms crossed, evening light" loading="lazy" width="1249" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC07406.jpg" alt="A couple seated together on a courtyard sofa" loading="lazy" width="1566" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC07181.jpg" alt="Man seated on the edge of a pool table, cue in hand" loading="lazy" width="995" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC07419.jpg" alt="Woman in a white shirt, chin on her hand, city courtyard behind" loading="lazy" width="1158" height="1600"></div>
-        <div class="carousel-slide img-frame tall"><img src="images/DSC07372.jpg" alt="Black and white portrait, eyes down, hair catching the light" loading="lazy" width="1600" height="1446"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07508.jpg" alt="A portrait on a rooftop at golden hour, the city skyline soft behind her" loading="lazy" width="1236" height="1600" srcset="/.netlify/images?url=/images/DSC07508.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07508.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07508.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07508.jpg&amp;w=1236 1236w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC08126.jpg" alt="Full-length studio portrait against a warm seamless backdrop, hat tipped low" loading="lazy" width="1066" height="1600" srcset="/.netlify/images?url=/images/DSC08126.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC08126.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC08126.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC08126.jpg&amp;w=1066 1066w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC08192.jpg" alt="Seated on a director&rsquo;s chair against corrugated metal and a red door" loading="lazy" width="964" height="1600" srcset="/.netlify/images?url=/images/DSC08192.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC08192.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC08192.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC08192.jpg&amp;w=964 964w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07131-2.jpg" alt="Woman seated at an outdoor table, arms crossed, evening light" loading="lazy" width="1249" height="1600" srcset="/.netlify/images?url=/images/DSC07131-2.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07131-2.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07131-2.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07131-2.jpg&amp;w=1249 1249w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07406.jpg" alt="A couple seated together on a courtyard sofa" loading="lazy" width="1566" height="1600" srcset="/.netlify/images?url=/images/DSC07406.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07406.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07406.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07406.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC07406.jpg&amp;w=1566 1566w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07181.jpg" alt="Man seated on the edge of a pool table, cue in hand" loading="lazy" width="995" height="1600" srcset="/.netlify/images?url=/images/DSC07181.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07181.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07181.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07181.jpg&amp;w=995 995w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07419.jpg" alt="Woman in a white shirt, chin on her hand, city courtyard behind" loading="lazy" width="1158" height="1600" srcset="/.netlify/images?url=/images/DSC07419.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07419.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07419.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07419.jpg&amp;w=1158 1158w" sizes="min(420px, 80vw)"></div>
+        <div class="carousel-slide img-frame tall"><img src="images/DSC07372.jpg" alt="Black and white portrait, eyes down, hair catching the light" loading="lazy" width="1600" height="1446" srcset="/.netlify/images?url=/images/DSC07372.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC07372.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC07372.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC07372.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC07372.jpg&amp;w=1600 1600w" sizes="min(420px, 80vw)"></div>
       </div>
       <button class="carousel-arrow next" type="button" aria-label="Next image">→</button>
     </div>
@@ -335,10 +435,54 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
 
 
 
+<section class="cream">
+  <div class="container narrow">
+    <div class="reveal">
+      <p class="section-label">Practical Details</p>
+      <h2 class="center" style="margin-bottom:44px;">What people want to know first</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>What does a portrait session include?</summary>
+        <div class="faq-answer">A short call first, so I know what you want to walk away with. Then the session — thirty minutes on The Mini, an hour on The Signature, two hours on The Editorial — and an online gallery you can download from. The Signature and The Editorial add a style consultation beforehand. If you want the whole family in frame, <a href="/families">family sessions</a> are set up for that.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is a headshot the same as a portrait session?</summary>
+        <div class="faq-answer">No, the headshot is its own thing. It's $100 for thirty minutes, and you get five fully retouched images back within three days. Book that one if you need something for LinkedIn, a company bio or a speaker page. A portrait session gives you a full gallery instead of five frames, and more room to move around.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How many photos do I get, and how soon?</summary>
+        <div class="faq-answer">Twenty or more edited images from The Mini, fifty or more from The Signature, a hundred or more from The Editorial, which also includes ten fine art prints. The Mini lands within a week, the other two within two weeks, and the headshot comes back in three days. They arrive as high-resolution files in an online gallery, ready to download.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What should I wear?</summary>
+        <div class="faq-answer">Bring something you already feel good in — that matters more than anything else you could plan. Texture and layers photograph better than a flat block of color, and a loud pattern pulls the eye off your face. If you book The Signature or The Editorial, we go through it in the style consultation beforehand.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Where do we shoot?</summary>
+        <div class="faq-answer">Around Roseville, Rocklin and greater Sacramento. The Mini is one location, The Signature up to two, and The Editorial as many as we can reach in two hours. If somewhere already means something to you — a street you walk, a field you like, your own front steps — tell me on the call and we'll start there.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How far ahead should I book?</summary>
+        <div class="faq-answer">Earlier than you think, especially around milestones and seasons. Send an inquiry from the booking page and I'll come back to you within one or two business days. If the photos are for graduation, <a href="/seniors">senior and grad sessions</a> are built around that calendar, and if you just got engaged, <a href="/engagements">engagement sessions</a> are the better place to start.</div>
+      </details>
+    </div>
+    <!-- TODO(sofia): how far ahead do portrait sessions actually need booking? No portrait lead time is published anywhere. Families says 6 to 8 weeks; seniors only says graduation season fills fast. -->
+    <!-- TODO(sofia): can portrait clients order prints or albums beyond the ten fine art prints included with The Editorial? Nothing on this page says either way. -->
+    <!-- TODO(sofia): the headshot line reads "In studio or on location" but no studio is documented anywhere on the site. Confirm there is a studio, or drop the phrase. -->
+  </div>
+</section>
+
+<section>
+  <div class="container reveal" style="max-width:760px;">
+    <p class="center">Graduating this year? <a href="/seniors">Senior and grad sessions</a> are built for that. Getting married? <a href="/engagements">Engagement sessions</a> cover the two of you together.</p>
+  </div>
+</section>
+
 <section class="cta-band">
   <div class="container reveal center">
     <h2>Ready to see yourself different?</h2>
-    <p>Spots fill up fast, especially around milestones and seasons. Let's start with a quick conversation about what you have in mind.</p>
+    <p>Milestones and seasons tend to cluster, so earlier is easier. Let's start with a quick conversation about what you have in mind.</p>
     <a href="/bookings" class="btn btn-light">Book Your Session</a>
   </div>
 </section>
@@ -351,7 +495,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
   <p class="role">Photographer</p>
   <p><a href="tel:+18054220130">(805) 422-0130</a></p>
   <p><a href="mailto:contact@sofiamiyakephoto.com">contact@sofiamiyakephoto.com</a></p>
-  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a></p>
+  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a> · <a href="/sitemap" style="text-decoration:underline;">Site Map</a></p>
 </footer>
 
 <script src="js/main.js"></script>

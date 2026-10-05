@@ -15,10 +15,12 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Roseville Family Photographer | From $350 | Sofia Miyake">
+<meta name="twitter:description" content="Relaxed golden-hour family sessions in Roseville, Rocklin and Sacramento. $350 for an hour, edited gallery in three weeks, dogs welcome.">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
- "@type": "LocalBusiness",
+ "@type": "PhotographyBusiness",
  "@id": "https://sofiamiyakephoto.com/#business",
  "name": "Sofia Miyake Photography",
  "description": "Documentary family, wedding, engagement, senior and birth photographer based in Roseville, serving Rocklin, Granite Bay, Folsom and greater Sacramento.",
@@ -26,6 +28,7 @@
  "telephone": "+1-805-422-0130",
  "email": "contact@sofiamiyakephoto.com",
  "image": "https://sofiamiyakephoto.com/images/og/home.jpg",
+ "logo": "https://sofiamiyakephoto.com/images/logo-white.png",
  "priceRange": "$100-$3925",
  "address": {
   "@type": "PostalAddress",
@@ -33,6 +36,11 @@
   "addressRegion": "CA",
   "postalCode": "95678",
   "addressCountry": "US"
+ },
+ "geo": {
+  "@type": "GeoCoordinates",
+  "latitude": 38.7521,
+  "longitude": -121.288
  },
  "areaServed": [
   "Roseville",
@@ -49,79 +57,7 @@
  "sameAs": [
   "https://www.instagram.com/sofiamiyakephoto/",
   "https://www.zola.com/wedding-vendors/wedding-photographers/sofia-miyake-photo",
-  "https://maps.google.com/?cid=3984129550021780191"
- ]
-}
-</script>
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "FAQPage",
- "mainEntity": [
-  {
-   "@type": "Question",
-   "name": "When should we book?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Anytime — there's no wrong season for family photos. That said, spring and fall book up quickly. If you have a milestone or holiday in mind, reach out at least 6–8 weeks ahead."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "What should we wear?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "I'll send you a simple styling guide after you book. The short version: coordinate without matching, lean into texture and layers, and wear something you actually feel good in. No matching white shirts required."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "How long are sessions?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Standard family sessions are 60–90 minutes. Extended family or milestone sessions can run up to two hours. I'd rather give you time to settle in than rush."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "How many photos will we get?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Galleries typically include 50–80 edited images delivered as high-resolution digital files. You'll have everything you need for prints, frames, albums, and the family group chat."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "Do you offer printed products?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Yes — fine art prints, albums, and wall art are available through my print shop. There's nothing like seeing your family on the wall of your own home."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "Can we bring the dog?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Always yes. Dogs make every session better. (Cats are negotiable.)"
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "What if the weather doesn't cooperate?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "For outdoor sessions, we'll keep an eye on conditions together and reschedule if needed — no fees for weather changes. I have a short list of beautiful indoor backups if you'd like a plan B."
-   }
-  },
-  {
-   "@type": "Question",
-   "name": "What does a session cost?",
-   "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Family sessions are $350 for one hour. Extended family sessions are $495 for 90 minutes, and Fresh Family sessions are $425 for one hour, at home or outdoors. Every session includes your edited, high-resolution gallery. If you're not sure which one fits, reach out and I'll help you choose, no pressure."
-   }
-  }
+  "https://www.google.com/maps/place/?cid=3984129550021780191"
  ]
 }
 </script>
@@ -130,8 +66,8 @@
  "@context": "https://schema.org",
  "@type": "Service",
  "name": "Family Photography",
- "serviceType": "Family photographer",
- "description": "Documentary golden-hour family sessions in Roseville, Rocklin and Sacramento.",
+ "description": "Documentary family photography sessions in Roseville, Rocklin and greater Sacramento.",
+ "serviceType": "Family Photography",
  "url": "https://sofiamiyakephoto.com/families",
  "provider": {
   "@id": "https://sofiamiyakephoto.com/#business"
@@ -140,17 +76,44 @@
   "Roseville",
   "Rocklin",
   "Granite Bay",
+  "Lincoln",
+  "Folsom",
   "Sacramento"
  ],
- "offers": {
-  "@type": "Offer",
-  "priceCurrency": "USD",
-  "priceSpecification": {
-   "@type": "PriceSpecification",
-   "minPrice": 350,
-   "priceCurrency": "USD"
-  },
-  "url": "https://sofiamiyakephoto.com/families"
+ "hasOfferCatalog": {
+  "@type": "OfferCatalog",
+  "name": "Family Photography collections",
+  "itemListElement": [
+   {
+    "@type": "Offer",
+    "name": "Family Photoshoot",
+    "price": "350",
+    "priceCurrency": "USD",
+    "priceSpecification": {
+     "@type": "PriceSpecification",
+     "priceCurrency": "USD",
+     "minPrice": 350
+    },
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/families"
+   },
+   {
+    "@type": "Offer",
+    "name": "Fresh Family",
+    "price": "425",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/families"
+   },
+   {
+    "@type": "Offer",
+    "name": "Extended Family",
+    "price": "495",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://sofiamiyakephoto.com/families"
+   }
+  ]
  }
 }
 </script>
@@ -168,16 +131,92 @@
   {
    "@type": "ListItem",
    "position": 2,
-   "name": "Family Photography",
+   "name": "Families",
    "item": "https://sofiamiyakephoto.com/families"
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "When should we book?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Anytime \u2014 there's no wrong season for family photos. That said, spring and fall book up quickly. If you have a milestone or holiday in mind, reach out at least 6\u20138 weeks ahead."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What should we wear?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The short version: coordinate without matching, lean into texture and layers, and wear something you actually feel good in. No matching white shirts required."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How long are sessions?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Family and fresh family sessions are an hour. Extended family sessions are 90 minutes, so there's room for group shots with everyone. I'd rather give you time to settle in than rush."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How many photos will we get?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Galleries typically include 50\u201380 edited images delivered as high-resolution digital files. You'll have everything you need for prints, frames, albums, and the family group chat."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do you offer printed products?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes \u2014 fine art prints, albums, and wall art are available. There's nothing like seeing your family on the wall of your own home."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can we bring the dog?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Always yes. Dogs make every session better. (Cats are negotiable.)"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What if the weather doesn't cooperate?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "For outdoor sessions, we'll keep an eye on conditions together and reschedule if needed \u2014 no fees for weather changes. I have a short list of beautiful indoor backups if you'd like a plan B."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What does a session cost?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Family sessions are $350 for an hour, $425 for a fresh family session at home or outdoors, and $495 for a 90-minute extended family session. Prints, albums and wall art are available separately."
+   }
   }
  ]
 }
 </script>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
+<link rel="preload" as="image" href="/.netlify/images?url=/images/DSC09932-hero.jpg&amp;w=1600" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
-<script>document.documentElement.classList.add('js');</script>
+<script>document.documentElement.classList.add('js');setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('js-ready')){d.classList.remove('js');}},3000);</script>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-43D75ZN3B7"></script>
 <script>
@@ -197,11 +236,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '27779095678410253');
+fbq('init', '1368697491897106');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" alt=""
+src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt=""
 /></noscript>
 <!-- End Meta Pixel Code -->
 </head>
@@ -209,6 +248,12 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
+<div class="promo-bar" id="promo-bar" hidden>
+  <div class="promo-inner">
+    <a href="/fall-minis">Book your fall mini sessions <span class="promo-price">$200</span> <span class="promo-arrow" aria-hidden="true">&rarr;</span></a>
+    <button type="button" class="promo-dismiss" aria-label="Dismiss this offer">&times;</button>
+  </div>
+</div>
 <header class="site-header">
   <div class="header-inner">
     <div class="site-title"><a href="/">Sofia Miyake <span class="accent">Photography</span></a></div>
@@ -216,7 +261,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       <div class="nav-group">
         <button type="button" class="nav-group-toggle active">Choose Your Story <span class="caret">▾</span></button>
         <div class="nav-dropdown">
-        <a href="/fall-minis">Fall Mini Sessions</a>
+        <a href="/fall-minis">Mini Sessions</a>
         <a href="/weddings">Weddings</a>
         <a href="/engagements">Engagements</a>
         <a href="/portraits">Portraits</a>
@@ -246,7 +291,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
 <main id="main">
 
 <section class="hero compact">
-  <div class="hero-bg"><img src="images/DSC00772-2.jpg" width="1600" height="1345" fetchpriority="high" alt="Nine family members gathered on a garden deck beneath large oak trees, with a man in a graduation cap and gown at the center and a woman kneeling in front holding his diploma"></div>
+  <div class="hero-bg" style="background-image:url('/.netlify/images?url=/images/DSC09932-hero.jpg&amp;w=1600');background-position:center 42%;"></div>
   <div class="hero-content">
     <div class="rule"></div>
     <span class="eyebrow">Families</span>
@@ -277,29 +322,32 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     </div>
     <div class="three-col reveal-group">
       <div class="story-card">
-        <img class="card-bg" src="images/DSC01243.jpg" width="1600" height="1066" loading="lazy" alt="Mom and dad holding their baby in front of a large lit Christmas tree with a nutcracker figure on each side">
+        <div class="card-bg" style="background-image:url('/.netlify/images?url=/images/DSC09825.jpg&w=640');"></div>
         <div class="story-card-content">
           <p class="card-label">Family Photoshoot</p>
           <h3>One Year. One Chapter. One More Time.</h3>
           <p>Anniversaries, newborn babies, kids starting school — some moments deserve more than a phone snap. Milestone sessions give you a real record of exactly where your family is right now, before everything shifts again.</p>
+          <p class="card-spec">One hour &middot; 50&ndash;80 edited images &middot; delivered in 3 weeks</p>
           <div class="card-booking"><span class="card-price">$350 · 1 hour</span><a href="/bookings" class="btn btn-light card-book-btn">Book</a></div>
         </div>
       </div>
       <div class="story-card">
-        <img class="card-bg" src="images/DSC00772-2.jpg" width="1600" height="1345" loading="lazy" alt="Extended family of nine posed together under oak trees to celebrate a graduation">
+        <div class="card-bg" style="background-image:url('/.netlify/images?url=/images/DSC09446.jpg&w=640');"></div>
         <div class="story-card-content">
           <p class="card-label">Extended Family</p>
           <h3>The whole chaos. Documented.</h3>
           <p>Grandparents, cousins, the dog — everyone in one frame. Extended sessions are relaxed and unhurried, with time for beautiful group shots and all the family fun.</p>
+          <p class="card-spec">90 minutes &middot; 50&ndash;80 edited images &middot; delivered in 3 weeks</p>
           <div class="card-booking"><span class="card-price">$495 · 90 minutes</span><a href="/bookings" class="btn btn-light card-book-btn">Book</a></div>
         </div>
       </div>
       <div class="story-card">
-        <img class="card-bg" src="images/DSC04991-3.jpg" width="1383" height="1600" loading="lazy" alt="Softly blurred portrait of a mom and dad with their newborn and toddler">
+        <div class="card-bg" style="background-image:url('/.netlify/images?url=/images/DSC04991-3.jpg&w=640');"></div>
         <div class="story-card-content">
           <p class="card-label">Fresh Family</p>
           <h3>The moment everything changed.</h3>
           <p>Adding a new person is one of the most beautiful things that can happen. Fresh family sessions are soft, unhurried, and focused on all of you.</p>
+          <p class="card-spec">One hour, at home or outdoors &middot; 50&ndash;80 edited images &middot; delivered in 3 weeks</p>
           <div class="card-booking"><span class="card-price">$425 · 1 hour, at home or outdoors</span><a href="/bookings" class="btn btn-light card-book-btn">Book</a></div>
         </div>
       </div>
@@ -341,24 +389,19 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
     <div class="reveal">
       <p class="section-label">Where We Shoot</p>
       <h2 class="center">Wherever you feel at home</h2>
-      <p class="center" style="max-width:620px;margin:12px auto 0;opacity:0.85;">From shaded park trails to open oak fields to the shoreline at golden hour — this corner of the valley has more good light than you'd think.</p>
     </div>
-    <div class="four-col reveal-group" style="margin-top:50px;">
+    <div class="three-col reveal-group" style="margin-top:50px;">
       <div>
         <h3>At home</h3>
         <p style="margin-top:12px; opacity:0.88;">Your living room, your backyard, your kitchen table. In-home sessions have a softness that's hard to replicate, and the comfort of known spaces.</p>
       </div>
       <div>
-        <h3>Local parks</h3>
-        <p style="margin-top:12px; opacity:0.88;">Maidu Regional Park, Mahany Park, Johnson-Springview Park — open lawns, trails and play structures that give kids room to actually be kids while we shoot.</p>
+        <h3>Outdoors</h3>
+        <p style="margin-top:12px; opacity:0.88;">Golden hour at Maidu Regional Park, the oak fields off Blue Oaks, Johnson-Springview over in Rocklin, or the Granite Bay shoreline when the light drops. Outdoor sessions give you open light and room to move. If you have a spot that means something, I'd love to hear about it.</p>
       </div>
       <div>
-        <h3>Open fields</h3>
-        <p style="margin-top:12px; opacity:0.88;">The oak fields off Blue Oaks catch the last light beautifully — tall grass, scattered trees, and nowhere else you need to be.</p>
-      </div>
-      <div>
-        <h3>By the water</h3>
-        <p style="margin-top:12px; opacity:0.88;">The Granite Bay shoreline for something a little different — water, light, and space to wander. If you have a spot that means something to your family, in Roseville, Rocklin, Folsom, Lincoln or anywhere around Sacramento, I'd love to hear about it too.</p>
+        <h3>A place that's yours</h3>
+        <p style="margin-top:12px; opacity:0.88;">A favorite coffee spot in old town Roseville, the neighborhood you walk every morning, the park where your kids learned to ride bikes — Mahany, Maidu, wherever yours is. Meaningful locations make for meaningful photos.</p>
       </div>
     </div>
     <div class="center reveal" style="margin-top:20px;">
@@ -382,11 +425,11 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       </details>
       <details class="faq-item">
         <summary>What should we wear?</summary>
-        <div class="faq-answer">I'll send you a simple styling guide after you book. The short version: coordinate without matching, lean into texture and layers, and wear something you actually feel good in. No matching white shirts required.</div>
+        <div class="faq-answer">The short version: coordinate without matching, lean into texture and layers, and wear something you actually feel good in. No matching white shirts required.</div>
       </details>
       <details class="faq-item">
         <summary>How long are sessions?</summary>
-        <div class="faq-answer">Standard family sessions are 60–90 minutes. Extended family or milestone sessions can run up to two hours. I'd rather give you time to settle in than rush.</div>
+        <div class="faq-answer">Family and fresh family sessions are an hour. Extended family sessions are 90 minutes, so there's room for group shots with everyone. I'd rather give you time to settle in than rush.</div>
       </details>
       <details class="faq-item">
         <summary>How many photos will we get?</summary>
@@ -394,7 +437,8 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       </details>
       <details class="faq-item">
         <summary>Do you offer printed products?</summary>
-        <div class="faq-answer">Yes — fine art prints, albums, and wall art are available through my print shop. There's nothing like seeing your family on the wall of your own home.</div>
+        <div class="faq-answer">Yes — fine art prints, albums, and wall art are available. There's nothing like seeing your family on the wall of your own home.</div>
+        <!-- TODO(sofia): does the print shop exist, and what is its link - this answer dropped the mention until it can be verified -->
       </details>
       <details class="faq-item">
         <summary>Can we bring the dog?</summary>
@@ -406,9 +450,53 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
       </details>
       <details class="faq-item">
         <summary>What does a session cost?</summary>
-        <div class="faq-answer">Family sessions are $350 for one hour. Extended family sessions are $495 for 90 minutes, and Fresh Family sessions are $425 for one hour, at home or outdoors. Every session includes your edited, high-resolution gallery. If you're not sure which one fits, reach out and I'll help you choose, no pressure.</div>
+        <div class="faq-answer">Family sessions are $350 for an hour, $425 for a fresh family session at home or outdoors, and $495 for a 90-minute extended family session. Prints, albums and wall art are available separately.</div>
       </details>
     </div>
+  </div>
+</section>
+
+<section>
+  <div class="container reveal" style="max-width:760px;">
+    <p class="center">If an hour is more than you need right now, <a href="/fall-minis">fall mini sessions</a> are thirty minutes at golden hour. You can also see <a href="/recent-shoots">recent family sessions around Roseville and Rocklin</a> to get a feel for how a session actually runs.</p>
+  </div>
+</section>
+
+<section class="cream">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">The Work</p>
+      <h2 class="center" style="margin-bottom:10px;">Recent family sessions in Roseville and Rocklin</h2>
+      <p class="center" style="max-width:620px;margin:0 auto 10px;color:var(--ink-soft);">Golden hour, open fields and families who stopped posing about ten minutes in.</p>
+    </div>
+    <div class="gallery-masonry reveal">
+      <div class="img-frame"><img src="images/DSC09571.jpg" alt="Family gathered on a plaid blanket beneath an oak at golden hour" loading="lazy" width="1600" height="1067" srcset="/.netlify/images?url=/images/DSC09571.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC09571.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC09571.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC09571.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC09571.jpg&amp;w=1600 1600w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+      <div class="img-frame"><img src="images/DSC09602.jpg" alt="Mother and her three children walking together across an open field, hands linked" loading="lazy" width="1600" height="1067" srcset="/.netlify/images?url=/images/DSC09602.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC09602.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC09602.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC09602.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC09602.jpg&amp;w=1600 1600w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+      <div class="img-frame"><img src="images/DSC09811.jpg" alt="A family of three close together by the pond in late afternoon light" loading="lazy" width="1304" height="1600" srcset="/.netlify/images?url=/images/DSC09811.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC09811.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC09811.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC09811.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC09811.jpg&amp;w=1304 1304w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+      <div class="img-frame"><img src="images/DSC09964.jpg" alt="A father crouched down, forehead to forehead with his daughter" loading="lazy" width="1030" height="1600" srcset="/.netlify/images?url=/images/DSC09964.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC09964.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC09964.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC09964.jpg&amp;w=1030 1030w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+      <div class="img-frame"><img src="images/DSC09915.jpg" alt="A family walking a dirt path away from the camera, their daughter on his shoulders" loading="lazy" width="1600" height="1388" srcset="/.netlify/images?url=/images/DSC09915.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC09915.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC09915.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC09915.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC09915.jpg&amp;w=1600 1600w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+      <div class="img-frame"><img src="images/DSC09932.jpg" alt="A family of three together on the path at golden hour" loading="lazy" width="1600" height="1066" srcset="/.netlify/images?url=/images/DSC09932.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC09932.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC09932.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC09932.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC09932.jpg&amp;w=1600 1600w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+      <div class="img-frame"><img src="images/DSC09788.jpg" alt="Two siblings side by side in tall golden grass" loading="lazy" width="1600" height="1067" srcset="/.netlify/images?url=/images/DSC09788.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC09788.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC09788.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC09788.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC09788.jpg&amp;w=1600 1600w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+      <div class="img-frame"><img src="images/DSC09474.jpg" alt="Father lifting his baby high against an open sky" loading="lazy" width="1474" height="1600" srcset="/.netlify/images?url=/images/DSC09474.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC09474.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC09474.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC09474.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/DSC09474.jpg&amp;w=1474 1474w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+      <div class="img-frame"><img src="images/DSC08943.jpg" alt="Children climbing a wooden ladder beside a plaid picnic blanket" loading="lazy" width="1162" height="1600" srcset="/.netlify/images?url=/images/DSC08943.jpg&amp;w=400 400w, /.netlify/images?url=/images/DSC08943.jpg&amp;w=640 640w, /.netlify/images?url=/images/DSC08943.jpg&amp;w=960 960w, /.netlify/images?url=/images/DSC08943.jpg&amp;w=1162 1162w" sizes="(max-width:640px) calc(100vw - 64px), (max-width:1080px) calc((100vw - 88px)/2), calc((min(1180px,100vw) - 112px)/3)"></div>
+    </div>
+    <div class="center reveal" style="margin-top:36px;">
+      <a href="/recent-shoots" class="btn btn-dark">See more recent sessions</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">In Their Words</p>
+      <h2 class="center" style="margin-bottom:40px;">What a client said</h2>
+    </div>
+    <figure class="testimonial reveal">
+      <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+      <blockquote>I had some last minute soccer pictures taken for a tournament and she was amazing. Very professional and the results came in quick. I would highly recommend her.</blockquote>
+      <figcaption class="testimonial-attrib">Samuel Beltran &middot; <a href="https://www.google.com/maps/place/?cid=3984129550021780191" target="_blank" rel="noopener">Google</a></figcaption>
+    </figure>
   </div>
 </section>
 
@@ -428,7 +516,7 @@ src="https://www.facebook.com/tr?id=27779095678410253&ev=PageView&noscript=1" al
   <p class="role">Photographer</p>
   <p><a href="tel:+18054220130">(805) 422-0130</a></p>
   <p><a href="mailto:contact@sofiamiyakephoto.com">contact@sofiamiyakephoto.com</a></p>
-  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a></p>
+  <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a> · <a href="/sitemap" style="text-decoration:underline;">Site Map</a></p>
 </footer>
 
 <script src="js/main.js"></script>

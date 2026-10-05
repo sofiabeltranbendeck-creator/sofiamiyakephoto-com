@@ -1,37 +1,16 @@
-# macOS / Windows file-manager clutter
-.DS_Store
-._*
-Thumbs.db
-desktop.ini
-
-# Editor and tool scratch
+# audit artifacts / scratch
 *.log
-*.tmp
-*~
-.vscode/
-.idea/
+.DS_Store
+Thumbs.db
 
-# Dependencies and build output
-node_modules/
-dist/
-build/
+# Local Netlify folder
+.netlify
 
-# Local environment and secrets — never commit these
-.env
-.env.*
+# live-site evidence snapshot for offline auditing — not part of the site
+.seo-evidence/
 
-# Hosting provider local state
-.netlify/
-.vercel/
+# scratch evidence for the headshot edit (not part of the site)
+.headshot-evidence/
 
-# Photo-editing sidecars and originals
-*.xmp
-*.CR2
-*.CR3
-*.NEF
-*.ARW
-*.dng
-
-# Backups and archives (old site copies live outside this repo)
-*.bak
-*.zip
+# scratch brief for the GPT ad review (not part of the site)
+.ads-evidence/
