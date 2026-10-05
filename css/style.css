@@ -8,7 +8,7 @@
 
 :root{
   --cream:#f7f2ea;
-  --gold-text:#8a6a3b; /* darker gold for small text — WCAG AA on cream */
+  --gold-text:#845f33; /* darker gold for small text — measured 5.14:1 on cream, 4.63:1 on linen */
   --linen:#efe6d8;
   --charcoal:#211d19;
   --ink:#2c2621;
@@ -51,7 +51,7 @@ em{font-style:italic;}
 
 section{padding:96px 0;}
 section.tight{padding:56px 0;}
-section.cream{background:var(--linen);}
+section.cream,section.linen{background:var(--linen);}
 section.dark{background:var(--charcoal);color:#f2ede4;}
 section.dark h2,section.dark h3{color:#f2ede4;}
 section.dark .section-label{color:var(--gold-light);}
@@ -215,7 +215,11 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
   content:"";position:absolute;inset:0;
   background:linear-gradient(180deg, rgba(20,17,14,0.15) 0%, rgba(20,17,14,0.65) 100%);
 }
-.hero.compact .hero-bg::after{background:rgba(20,17,14,0.5);}
+.hero.compact .hero-bg::after{background:rgba(20,17,14,0.68);}
+/* The carousel hero got a contrast fix (deeper scrim, lifted eyebrow colour, text-shadow)
+   that the 12 .hero.compact service heroes never received. Over the brightest hero photo
+   (/birth-stories) the eyebrow measured 2.58:1 against a 4.5 requirement. */
+.hero.compact .eyebrow{color:#e0c091;text-shadow:0 1px 3px rgba(20,17,14,0.55);}
 .hero-content{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:0 32px 80px;text-align:center;}
 .hero.compact .hero-content{padding:0 32px;}
 .hero .tagline + .btn{margin-top:44px;}
@@ -246,7 +250,7 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 .btn-light:hover{background:var(--gold-light);color:#fff;}
 .explore-arrow{display:inline-block;animation:explore-bob 1.6s ease-in-out infinite;}
 @keyframes explore-bob{0%,100%{transform:translateY(-2px);}50%{transform:translateY(3px);}}
-.btn-gold{background:var(--gold);color:#fff;}
+.btn-gold{background:var(--gold-text);color:#fff;}
 .btn-gold:hover{background:var(--charcoal);color:#fff;}
 .btn-dark{background:var(--charcoal);color:#fff;}
 .btn-dark:hover{background:var(--gold);color:#fff;}
@@ -432,7 +436,7 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 .in-view .pb-overlay-label,.price-banner.in-view .pb-overlay-label{opacity:1;transform:none;}
 .price-banner .pb-info,.price-banner .pb-features,.price-banner .pb-action{padding:36px 0;}
 .price-banner .price-tag{margin-top:8px;}
-.price-banner .pb-features{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;}
+.price-banner .pb-features{list-style:none;padding-left:0;margin:0;display:flex;flex-direction:column;gap:8px;}
 .price-banner .pb-features li{position:relative;padding-left:22px;}
 .price-banner .pb-features li::before{content:"";position:absolute;left:0;top:50%;width:12px;height:1px;background:var(--gold);transform:translateY(-50%);}
 .price-banner .pb-action{text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;}
@@ -503,15 +507,6 @@ html:not(.js) .price-features li{opacity:1;transform:none;}
 .site-footer a:hover{color:var(--gold-light);}
 .site-footer .fine{margin-top:22px;font-size:0.78rem;color:#a89e8f;}
 
-/* Booking form (bookings.html) */
-.booking-form{display:grid;gap:20px;max-width:640px;margin:0 auto;}
-.booking-form label{display:block;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;color:var(--ink-soft);}
-.booking-form input,.booking-form select,.booking-form textarea{
-  width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:2px;
-  font-family:var(--sans);font-size:1rem;background:#fff;color:var(--ink);
-}
-.booking-form textarea{min-height:140px;resize:vertical;}
-.booking-form button{align-self:start;border:none;cursor:pointer;font-family:var(--sans);}
 
 /* Rant blog */
 .rant-post{background:#fff;border:1px solid var(--line);border-radius:2px;overflow:hidden;}
@@ -559,6 +554,17 @@ html:not(.js) .price-features li{opacity:1;transform:none;}
   .price-features li{font-size:0.85rem;}
   .social-icons{display:none;}
   section{padding:64px 0;}
+  /* section.tight (0,1,1) and .quote-strip (0,1,0) outrank the bare `section` rule above,
+     so both kept their desktop padding at every width until these were added. */
+  section.tight{padding:40px 0;}
+  .quote-strip{padding:56px 24px;}
+  /* The last dropdown is centred on a 67px toggle at min-width:190px, so it overhangs the
+     container by ~61px against 32px of padding. It is hidden with visibility, not display,
+     so it still generates layout: this produced 110px of horizontal scroll on every page
+     between 701px and 1080px, with the menu closed. */
+  .nav-group:last-child .nav-dropdown{left:auto;right:0;transform:translateX(0) translateY(8px);}
+  .nav-group:last-child:hover .nav-dropdown,
+  .nav-group:last-child:focus-within .nav-dropdown{transform:translateX(0) translateY(4px);}
 }
 
 @media (max-width:700px){
@@ -698,7 +704,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
   .nav-open .main-nav{
     max-height:calc(100vh - 64px);
     overflow-y:auto;
-    -webkit-overflow-scrolling:touch;
+    
   }
 }
 
@@ -978,8 +984,8 @@ section.dark .testimonial-attrib a,.testimonial.on-dark .testimonial-attrib a{bo
 /* The two rules below render a per-date location and a remaining-spot count. Both are
    intentionally UNUSED right now: no per-date location and no spot count is recorded anywhere
    in this project, and publishing an invented count on a page built to create urgency would be
-   fabricating scarcity. Do not add markup for these until fall-minis.html TODO(sofia) lines are
-   answered from HoneyBook. Kept because they are exactly what those answers will need. */
+   fabricating scarcity. Do not add markup for these until the per-date questions in FOR-SOFIA.md
+   are answered from HoneyBook. Kept because they are exactly what those answers will need. */
 .session-date-where{margin:0;color:var(--ink-soft);font-size:0.95rem;}
 .session-date-spots{
   margin:0;justify-self:end;white-space:nowrap;

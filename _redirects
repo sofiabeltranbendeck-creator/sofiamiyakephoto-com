@@ -27,7 +27,7 @@
 # for the docs we know about, and a future "this one .md IS meant to be
 # served" exception can be added above this line and actually take effect.
 #
-# TODO(sofia): this line is UNVERIFIED and must not be trusted on its own.
+# NOTE: this line is UNVERIFIED and must not be trusted on its own.
 # Netlify's splat matches the remainder of a path, and a trailing literal after
 # the splat (the ".md" here) is not a documented pattern - it may match nothing
 # at all. Every .md in the repo is now listed explicitly above, so the site is

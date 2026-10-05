@@ -16,3 +16,16 @@
 
 /js/*
   Cache-Control: public, max-age=3600, must-revalidate
+
+# Applies to every response. Two cheap, zero-risk additions:
+#  - nosniff stops MIME sniffing on the .md paths _redirects 404s.
+#  - Referrer-Policy: without it the full URL of the page a visitor was on leaks
+#    to the booking host and to every outbound link, which sits badly next to
+#    publishing a privacy page.
+# Deliberately NOT adding Content-Security-Policy: this site uses inline
+# background-image styles, inline JSON-LD and a third-party booking embed, so a
+# correct policy needs 'unsafe-inline' (defeating most of the point) plus a host
+# allowlist that breaks the booking flow the day HoneyBook changes CDN.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
