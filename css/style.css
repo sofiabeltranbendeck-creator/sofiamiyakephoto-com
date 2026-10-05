@@ -180,6 +180,10 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
    outside it. So: a 16:9 crop for wide viewports, the full frame for narrow ones,
    swapped at the same 700px breakpoint the nav uses. Both are preloaded in <head>
    with matching media attributes, so only the one that will be used is fetched. */
+/* The girl mid-air. Used by the homepage lead slide and the bookings hero, so both
+   pages change together and the CDN variant is defined once. Set unconditionally,
+   NOT behind a JS-applied class: a blank hero is a far worse failure than a
+   slightly later LCP, and that exact bug shipped once already. */
 .hero-bg-lead{
   background-image:url('/.netlify/images?url=/images/DSC09951-hero.jpg&w=1600');
   background-position:center 20%;
