@@ -185,12 +185,12 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
    NOT behind a JS-applied class: a blank hero is a far worse failure than a
    slightly later LCP, and that exact bug shipped once already. */
 .hero-bg-lead{
-  background-image:url('/.netlify/images?url=/images/DSC09951-hero.jpg&w=1600');
+  background-image:url('/.netlify/images?url=/images/roseville-family-photographer-hero-wide.jpg&w=1600');
   background-position:center 20%;
 }
 @media (max-width:700px){
   .hero-bg-lead{
-    background-image:url('/.netlify/images?url=/images/DSC09951-hero-tall.jpg&w=800');
+    background-image:url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=800');
     background-position:center;
   }
 }
@@ -204,11 +204,11 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
    uses data-bg and keeps the optimisation. Keeping both URLs in CSS also means
    the media query keeps deciding, so a phone rotation re-picks correctly. */
 .hero-bg-minis{
-  background-image:url('/.netlify/images?url=/images/DSC09843-minis-triptych.jpg&w=1600');
+  background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=1600');
 }
 @media (max-width:700px){
   .hero-bg-minis{
-    background-image:url('/.netlify/images?url=/images/DSC09843-minis-tall.jpg&w=700');
+    background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=700');
   }
 }
 .hero-bg::after{
