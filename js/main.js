@@ -21,12 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
           io.unobserve(entry.target);
         }
       });
-    // threshold:0 , NOT 0.15. A threshold asks for a percentage of the TARGET to
-    // be visible, so any element taller than root/0.15 can never satisfy it. The
-    // homepage gallery is one 3,721px .reveal; on a 375x568 phone the root is
-    // 568-60=508px, so the ratio peaks at 0.1365 and the element never reveals —
-    // 3,721px of blank page. With 0 it fires as soon as the top edge clears the
-    // bottom margin, which is what the -60px rootMargin was already expressing.
+    // threshold:0 , NOT 0.15. A threshold is a percentage of the TARGET, so an
+    // element taller than the root can never exceed root/element however far you
+    // scroll - anything taller than root/0.15 is simply unreachable. The homepage
+    // gallery stacks to one 3,721px column at 375px wide; on a 568px-tall phone
+    // the root is 508px, capping the ratio at 0.1365, so it never revealed and the
+    // visitor scrolled past 3,721px of blank page. With 0 it fires as soon as the
+    // top edge clears the bottom margin, which is what -60px already expressed.
     }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
     targets.forEach(function (t) { io.observe(t); });
   } else {
