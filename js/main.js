@@ -195,22 +195,32 @@ document.addEventListener('DOMContentLoaded', function () {
     var pause = document.createElement('button');
     pause.type = 'button';
     pause.className = 'hero-pause';
+    // The label alone carries the state. Adding aria-pressed as well made a screen
+    // reader announce "Play slideshow, pressed" while the show was stopped.
     function syncPause() {
       pause.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
-      pause.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
       pause.textContent = userPaused ? '▶' : '‖';
     }
     pause.addEventListener('click', function () {
       userPaused = !userPaused;
       syncPause();
-      if (userPaused) stop(); else start();
+      // An explicit Play overrides the focus hold: the button itself has focus at
+      // this moment, so without this the show would stay stopped.
+      if (userPaused) { stop(); } else { focusHeld = false; start(); }
     });
     syncPause();
     // Appended to the hero, not to dots: dots is a role="tablist" and a control
     // that is not a tab does not belong inside one.
     hero.appendChild(pause);
 
-    hero.addEventListener('focusin', function () { focusHeld = true; stop(); });
+    // Hold only for keyboard focus. A mouse click or tap also focuses a button,
+    // and treating that as a hold froze the show after any click on a dot.
+    hero.addEventListener('focusin', function (e) {
+      var keyboard = true;
+      try { keyboard = e.target.matches(':focus-visible'); } catch (err) {}
+      if (!keyboard) return;
+      focusHeld = true; stop();
+    });
     hero.addEventListener('focusout', function (e) {
       // Ignore focus moving between controls inside the hero.
       if (e.relatedTarget && hero.contains(e.relatedTarget)) return;
@@ -296,17 +306,22 @@ document.addEventListener('click', function (e) {
   var placement = document.querySelector('[class^="hb-p-"], [class*=" hb-p-"]');
   if (!frames.length && !placement) return;
 
-  var sent = false;
+  var sent = {};
+  // Once per kind per page, so touching the inquiry form does not swallow a later
+  // scheduler report. Only the scheduler is a Meta 'Schedule': the contact form
+  // is an inquiry, and counting it as a booking would corrupt that conversion.
   var report = function (which) {
-    if (sent) return;
-    sent = true;
+    if (sent[which]) return;
+    sent[which] = true;
     var ga = (typeof gtag === 'function') ? gtag : function () {};
     if (typeof fbq !== 'function') { window.fbq = function () {}; }
-    fbq('track', 'Schedule');
-    ga('event', 'scheduler_interact', {
-      method: which,
-      page_location: location.href
-    });
+    if (which === 'honeybook_scheduler_embed') {
+      fbq('track', 'Schedule');
+      ga('event', 'scheduler_interact', { method: which, page_location: location.href });
+    } else {
+      fbq('trackCustom', 'InquiryFormInteract');
+      ga('event', 'inquiry_form_interact', { method: which, page_location: location.href });
+    }
   };
 
   window.addEventListener('blur', function () {

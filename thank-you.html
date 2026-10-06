@@ -87,8 +87,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
-<link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-family-session-golden-hour.jpg&amp;w=1600" media="(min-width:701px)" fetchpriority="high">
-<link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-family-session-golden-hour.jpg&amp;w=800" media="(max-width:700px)" fetchpriority="high">
+<link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-family-portrait-by-pond-fall.jpg&amp;w=1600" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
 <script>document.documentElement.classList.add('js');setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('js-ready')){d.classList.remove('js');}},3000);</script>
 <!-- Google Analytics 4 -->
@@ -98,14 +97,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-43D75ZN3B7');
-// Conversion. Fired at most once per browser session: this page is a normal
-// indexable URL, so a reload, a back-navigation or a direct hit would otherwise
-// each count as a fresh inquiry.
-//
-// NOTE: nothing on the site links here and the HoneyBook placement confirms
-// inside its own embed, so this only fires if HoneyBook's post-submit redirect
-// is pointed at /thank-you in the HoneyBook account. Until it is, check the
-// generate_lead count in GA4 before trusting any inquiry number.
+// Conversion, counted at most once per browser session so a reload or back-navigation is not a second lead.
 try {
   if (!sessionStorage.getItem('smp_lead_counted')) {
     sessionStorage.setItem('smp_lead_counted', '1');
@@ -128,8 +120,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1368697491897106');
 fbq('track', 'PageView');
-// Conversion — guarded the same way as generate_lead above, so a reload or a
-// direct hit cannot inflate the Lead count the ad account optimises against.
+// Same once-per-session guard as generate_lead.
 try {
   if (!sessionStorage.getItem('smp_fb_lead_counted')) {
     sessionStorage.setItem('smp_fb_lead_counted', '1');
@@ -189,7 +180,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 <main id="main">
 
 <section class="hero compact">
-  <div class="hero-bg" style="--hero-wide:url('/.netlify/images?url=/images/roseville-family-session-golden-hour.jpg&amp;w=1600');--hero-narrow:url('/.netlify/images?url=/images/roseville-family-session-golden-hour.jpg&amp;w=800');"></div>
+  <div class="hero-bg" style="--hero-wide:url('/.netlify/images?url=/images/roseville-family-portrait-by-pond-fall.jpg&amp;w=1600');"></div>
   <div class="hero-content">
     <div class="rule"></div>
     <span class="eyebrow">Received</span>
@@ -222,7 +213,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
         </div>
       </a>
       <a class="story-card" href="/miyake-vision">
-        <div class="card-bg" style="background-image:url('/.netlify/images?url=/images/sacramento-wedding-couple-flowered-arch.jpg&w=640');"></div>
+        <div class="card-bg" style="background-image:url('/.netlify/images?url=/images/sacramento-wedding-reception-laughing.jpg&w=640');"></div>
         <div class="story-card-content">
           <p class="card-label">About</p>
           <h3>Miyake Vision <span class="arrow">→</span></h3>
