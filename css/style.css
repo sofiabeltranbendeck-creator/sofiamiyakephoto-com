@@ -78,8 +78,12 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
    is an enhancement, so no-JS visitors simply not seeing it is the right
    failure mode (unlike a hero image, which must never depend on a script). */
 .promo-bar{background:var(--charcoal);color:var(--cream);}
+/* .promo-dismiss is absolutely positioned and occupies the right 48px, so the
+   padding has to reserve that on BOTH sides or justify-content:center centres the
+   link inside a lopsided box. The old 32/12 put the link 10px right of centre on
+   desktop, and the mobile 16/48 put it 16px left. */
 .promo-inner{
-  max-width:1280px;margin:0 auto;padding:0 12px 0 32px;
+  max-width:1280px;margin:0 auto;padding:0 48px;
   display:flex;align-items:center;justify-content:center;gap:8px;
   min-height:44px;position:relative;
 }
@@ -101,8 +105,9 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 }
 .promo-dismiss:hover{opacity:1;}
 @media (max-width:700px){
-  .promo-inner{padding:0 48px 0 16px;}
-  .promo-bar a{font-size:0.76rem;letter-spacing:0.05em;gap:7px;}
+  /* Tightened so the line still fits inside the symmetric 48px padding above;
+     at 0.76rem it wrapped the bar to two rows on a 375px screen. */
+  .promo-bar a{font-size:0.72rem;letter-spacing:0.04em;gap:6px;}
 }
 @media (prefers-reduced-motion: reduce){
   .promo-bar a .promo-arrow{transition:none;}
@@ -255,8 +260,14 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 /* Two hero actions side by side, wrapping to a stack on a phone. The booking
    action leads: before this, the homepage's only booking link was in the final
    band, roughly 14 screens down on a phone. */
-.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px;}
+/* .hero-content is text-align:center, which centres a lone inline-block .btn.
+   A flex row does not inherit that, so justify-content has to restate it or the
+   buttons sit left of the centred headline above them. */
+.hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:28px;}
 .hero-actions .btn{margin-top:0;}
+/* .hero .tagline + .btn sets 44px; the wrapper now sits between them, so it has
+   to carry the same spacing or the hero loses its vertical rhythm. */
+.hero .tagline + .hero-actions{margin-top:44px;}
 
 .btn{
   display:inline-block;margin-top:28px;padding:14px 32px;

@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (slides.length < 2) return;
 
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var DELAY = 9000;
+    var DELAY = 3000;
     var index = 0, timer = null;
 
     var dots = document.createElement('div');
