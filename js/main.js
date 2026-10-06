@@ -47,17 +47,48 @@ document.addEventListener('DOMContentLoaded', function () {
     toggle.innerHTML = '<span></span><span></span><span></span>';
     header.insertBefore(toggle, nav);
 
-    toggle.addEventListener('click', function () {
-      var open = header.classList.toggle('nav-open');
+    // Collapsed by max-height alone still leaves every link keyboard-focusable,
+    // so the closed panel is also made inert. Only below the 700px breakpoint:
+    // above it the nav is the ordinary horizontal bar and must stay reachable.
+    var mq = window.matchMedia('(max-width:700px)');
+
+    var measure = function () {
+      var top = nav.getBoundingClientRect().top;
+      var vh = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+      nav.style.setProperty('--nav-available-height', Math.max(0, vh - top) + 'px');
+    };
+
+    var sync = function (open) {
+      header.classList.toggle('nav-open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      nav.inert = mq.matches && !open;
+      if (open) measure();
+    };
+
+    sync(false);
+
+    toggle.addEventListener('click', function () {
+      sync(!header.classList.contains('nav-open'));
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && header.classList.contains('nav-open')) {
+        sync(false);
+        toggle.focus();
+      }
     });
 
     nav.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        header.classList.remove('nav-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', function () { sync(false); });
     });
+
+    var onViewport = function () {
+      if (header.classList.contains('nav-open')) measure();
+      nav.inert = mq.matches && !header.classList.contains('nav-open');
+    };
+    window.addEventListener('resize', onViewport);
+    if (mq.addEventListener) mq.addEventListener('change', onViewport);
+    else if (mq.addListener) mq.addListener(onViewport);
   }
 
   // Nav dropdown accessibility (aria-expanded + click/touch toggle)
@@ -221,3 +252,42 @@ document.addEventListener('click', function (e) {
     ga('event', 'contact_click', { method: 'phone' });
   }
 });
+
+// HoneyBook embed engagement.
+//
+// The schedulers and the inquiry form are cross-origin embeds, so clicks and
+// submissions inside them never bubble to this document. The click handler above
+// therefore only ever sees the secondary "Open scheduler in a new tab" anchors,
+// not the embed most visitors actually use — which left the single highest-intent
+// action on the site completely unmeasured.
+//
+// A click inside a cross-origin iframe blurs the parent window and makes that
+// iframe document.activeElement. That is the one signal available from out here.
+// It reports engagement, NOT a completed booking: the completion still happens on
+// hbportal.co and only HoneyBook can confirm it.
+(function () {
+  var frames = document.querySelectorAll('iframe[src*="hbportal.co"], .hb-embed iframe');
+  var placement = document.querySelector('[class^="hb-p-"], [class*=" hb-p-"]');
+  if (!frames.length && !placement) return;
+
+  var sent = false;
+  var report = function (which) {
+    if (sent) return;
+    sent = true;
+    var ga = (typeof gtag === 'function') ? gtag : function () {};
+    if (typeof fbq !== 'function') { window.fbq = function () {}; }
+    fbq('track', 'Schedule');
+    ga('event', 'scheduler_interact', {
+      method: which,
+      page_location: location.href
+    });
+  };
+
+  window.addEventListener('blur', function () {
+    var el = document.activeElement;
+    if (!el || el.tagName !== 'IFRAME') return;
+    var src = el.getAttribute('src') || '';
+    if (src.indexOf('hbportal.co') !== -1) report('honeybook_scheduler_embed');
+    else if (el.closest && el.closest('.hb-embed')) report('honeybook_form_embed');
+  });
+})();

@@ -174,6 +174,18 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 .hero-bg{
   position:absolute;inset:0;background-size:cover;background-position:center;
 }
+/* Responsive hero background. The page sets --hero-wide and --hero-narrow inline
+   (two Netlify Image CDN URLs for the same photograph at w=1600 and w=800) and
+   these rules pick between them, so a phone downloads the 800px file instead of
+   the full-size original. The attribute selector means only elements that
+   actually carry the custom properties are touched — a .hero-bg that still sets
+   background-image inline, or via its own class, is left exactly as it was.
+   Both URLs live in CSS, so a rotation re-picks correctly, and nothing here
+   depends on JavaScript: a blank hero is far worse than a late LCP. */
+.hero-bg[style*="--hero-wide"]{background-image:var(--hero-wide);}
+@media (max-width:700px){
+  .hero-bg[style*="--hero-narrow"]{background-image:var(--hero-narrow);}
+}
 /* Lead hero slide. The hero is min-height:88vh, so it is roughly 2:1 on a desktop
    but PORTRAIT on a phone — one crop cannot serve both. A single wide file would
    scale to fill the phone's height and show a narrow centre slice with her face
@@ -240,6 +252,12 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 .hero .lede{max-width:600px;margin:18px auto 0;font-size:1.08rem;color:#f2ede4;}
 
 /* Buttons */
+/* Two hero actions side by side, wrapping to a stack on a phone. The booking
+   action leads: before this, the homepage's only booking link was in the final
+   band, roughly 14 screens down on a phone. */
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px;}
+.hero-actions .btn{margin-top:0;}
+
 .btn{
   display:inline-block;margin-top:28px;padding:14px 32px;
   font-size:0.82rem;letter-spacing:0.14em;text-transform:uppercase;
@@ -527,6 +545,13 @@ html:not(.js) .price-features li{opacity:1;transform:none;}
     max-height:0;overflow:hidden;border-bottom:1px solid var(--line);
     transition:max-height 0.3s ease;
   }
+  /* The toggle button is created by js/main.js, so with no JavaScript the menu
+     would stay collapsed with nothing to open it — every page unreachable from a
+     phone header. The head script adds `js` synchronously and removes it after 3s
+     if main.js never ran, so this reverts the nav to a stacked list on that path.
+     Written as an override rather than by qualifying the rules above, so the
+     working open/closed cascade keeps its original specificity. */
+  html:not(.js) .main-nav{max-height:none;overflow:visible;}
   .main-nav a{padding:14px 32px;border-bottom:1px solid var(--line);width:100%;}
   .nav-group{width:100%;}
   .nav-group-toggle{display:block;width:100%;text-align:left;padding:14px 32px;border-bottom:1px solid var(--line);color:var(--gold);}
@@ -698,13 +723,15 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
 }
 
 /* The mobile menu was capped at 400px while the nav needs ~645px —
-   Bookings and About were unreachable on a phone. Cap to the viewport
-   and let it scroll instead. */
+   Bookings and About were unreachable on a phone. Cap to the space actually
+   below the header and let it scroll. --nav-available-height is measured by
+   js/main.js; the fallback covers the promo bar plus a one-line header, and
+   dvh rather than vh so mobile browser chrome is accounted for. */
 @media (max-width:700px){
   .nav-open .main-nav{
-    max-height:calc(100vh - 64px);
+    max-height:var(--nav-available-height, calc(100dvh - 120px));
     overflow-y:auto;
-    
+    overscroll-behavior-y:contain;
   }
 }
 
@@ -883,14 +910,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
 }
 .testimonial-attrib a{border-bottom:1px solid var(--line);}
 
-/* Google review cards. Laid out like a review listing — avatar, name, star row,
-   then the quote — so a visitor reads them as what they are rather than as
-   marketing copy a photographer wrote about herself.
-   Two deliberate omissions: no dates, because the review dates are not recorded
-   anywhere and inventing them would be inventing evidence; and no review count,
-   because four is a weak number and the quotes carry more weight on their own.
-   Every star shown is real: the profile is 5.0 across all four reviews, so each
-   of these three is a five. */
+/* Google review cards: avatar, name, star row, then the quote. */
 /* Four reviews, so 2x2 rather than a 3+1 orphan row. stretch (not start) keeps the
    two cards in each row the same height despite very different quote lengths. */
 .review-grid{
@@ -981,11 +1001,7 @@ section.dark .testimonial-attrib a,.testimonial.on-dark .testimonial-attrib a{bo
   margin:0;font-family:var(--serif);font-size:1.22rem;color:var(--ink);
   font-variant-numeric:tabular-nums;
 }
-/* The two rules below render a per-date location and a remaining-spot count. Both are
-   intentionally UNUSED right now: no per-date location and no spot count is recorded anywhere
-   in this project, and publishing an invented count on a page built to create urgency would be
-   fabricating scarcity. Do not add markup for these until the per-date questions in FOR-SOFIA.md
-   are answered from HoneyBook. Kept because they are exactly what those answers will need. */
+/* Optional per-date location and remaining-spot count. Unused until real values exist. */
 .session-date-where{margin:0;color:var(--ink-soft);font-size:0.95rem;}
 .session-date-spots{
   margin:0;justify-self:end;white-space:nowrap;
