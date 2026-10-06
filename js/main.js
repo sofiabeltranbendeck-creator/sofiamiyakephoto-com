@@ -73,20 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
     group.addEventListener('focusout', function () { sync(false); });
   });
 
-  // Simple booking form handler (bookings.html)
-  var form = document.querySelector('.booking-form');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var msg = form.querySelector('.form-message');
-      if (msg) {
-        msg.setAttribute('role', 'status');
-        msg.textContent = "Thank you! Your inquiry has been received — I'll be in touch within 1–2 business days.";
-      }
-      form.reset();
-    });
-  }
-
   // Promo bar — the current offer, dismissed once and then stays gone.
   //
   // PROMO_ID is part of the storage key, so when the deal changes, bump it and

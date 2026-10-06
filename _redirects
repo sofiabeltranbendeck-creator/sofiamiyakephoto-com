@@ -19,6 +19,8 @@
 /BUILD-PROMPT-2026-10-05.md  /404.html  404!
 /AUDIT-2026-10-05-COMBINED.md  /404.html  404!
 /CLAUDE.md  /404.html  404!
+/AGENTS.md  /404.html  404!
+/FOR-SOFIA-ANSWERS.md  /404.html  404!
 /README.md  /404.html  404!
 #
 # Catch-all backstop, so the next working doc is blocked the day it lands
@@ -27,7 +29,7 @@
 # for the docs we know about, and a future "this one .md IS meant to be
 # served" exception can be added above this line and actually take effect.
 #
-# TODO(sofia): this line is UNVERIFIED and must not be trusted on its own.
+# NOTE: this line is UNVERIFIED and must not be trusted on its own.
 # Netlify's splat matches the remainder of a path, and a trailing literal after
 # the splat (the ".md" here) is not a documented pattern - it may match nothing
 # at all. Every .md in the repo is now listed explicitly above, so the site is
@@ -82,3 +84,82 @@ https://sofiamiyakephoto.netlify.app/* https://sofiamiyakephoto.com/:splat 301!
 /gallery-1 /birth-stories 301
 /store/p/the-full-story /weddings 301
 /store/* / 301
+
+# Photographs renamed 2026-10-05 from camera IDs to descriptive, hyphenated
+# names (see CLAUDE.md). Forced 301s so already-crawled image URLs and any
+# link shared elsewhere keep resolving instead of 404ing.
+/images/DSC00648.jpg  /images/roseville-senior-graduate-walking-aisle-diploma.jpg  301!
+/images/DSC00685.jpg  /images/roseville-senior-graduate-receiving-stole.jpg  301!
+/images/DSC00708.jpg  /images/roseville-senior-graduate-hug-cap-and-gown.jpg  301!
+/images/DSC00772-2.jpg  /images/roseville-senior-graduation-portrait.jpg  301!
+/images/DSC00805.jpg  /images/roseville-senior-graduate-with-family.jpg  301!
+/images/DSC00814.jpg  /images/roseville-senior-graduate-kiss-diploma.jpg  301!
+/images/DSC00849.jpg  /images/roseville-senior-graduate-holding-diploma.jpg  301!
+/images/DSC01118.jpg  /images/roseville-engagement-couple-laughing-at-dusk.jpg  301!
+/images/DSC01119.jpg  /images/roseville-engagement-session.jpg  301!
+/images/DSC01124.jpg  /images/roseville-engagement-ring-hands-last-light.jpg  301!
+/images/DSC01132-2.jpg  /images/roseville-engagement-couple-mid-laugh-ring.jpg  301!
+/images/DSC01132.jpg  /images/roseville-engagement-couple-laughing-beach.jpg  301!
+/images/DSC01133.jpg  /images/roseville-engagement-couple-pink-sunset.jpg  301!
+/images/DSC02930.jpg  /images/sacramento-wedding-pergola-floral-arrangement.jpg  301!
+/images/DSC02934.jpg  /images/sacramento-wedding-dessert-table-cookies-roses.jpg  301!
+/images/DSC03038.jpg  /images/sacramento-wedding-ceremony-wooden-arch.jpg  301!
+/images/DSC03068.jpg  /images/sacramento-wedding-exchanging-rings.jpg  301!
+/images/DSC03104.jpg  /images/sacramento-wedding-couple-flowered-arch.jpg  301!
+/images/DSC03105.jpg  /images/sacramento-wedding-ceremony-kiss.jpg  301!
+/images/DSC03218.jpg  /images/sacramento-wedding-bride-bouquet-pond.jpg  301!
+/images/DSC03244.jpg  /images/sacramento-wedding-couple-kiss-by-lake.jpg  301!
+/images/DSC03404.jpg  /images/sacramento-wedding-photography-portfolio.jpg  301!
+/images/DSC03411.jpg  /images/sacramento-wedding-gold-rings-on-flowers.jpg  301!
+/images/DSC03663.jpg  /images/sacramento-wedding-reception-laughing.jpg  301!
+/images/DSC03931.jpg  /images/roseville-portrait-woman-with-film-camera-bw.jpg  301!
+/images/DSC06101.jpg  /images/roseville-portrait-couple-footbridge-golden-hour.jpg  301!
+/images/DSC07131-2.jpg  /images/roseville-portrait-woman-outdoor-table-evening.jpg  301!
+/images/DSC07181.jpg  /images/roseville-portrait-man-at-pool-table.jpg  301!
+/images/DSC07372.jpg  /images/roseville-portrait-bw-eyes-down-backlit-hair.jpg  301!
+/images/DSC07406.jpg  /images/roseville-portrait-couple-on-courtyard-sofa.jpg  301!
+/images/DSC07419.jpg  /images/roseville-portrait-woman-white-shirt-courtyard.jpg  301!
+/images/DSC07508.jpg  /images/roseville-portrait-rooftop-golden-hour-skyline.jpg  301!
+/images/DSC08126.jpg  /images/roseville-portrait-seamless-backdrop-hat.jpg  301!
+/images/DSC08192.jpg  /images/roseville-portrait-directors-chair-red-door.jpg  301!
+/images/DSC08478.jpg  /images/roseville-portrait-dancer-full-extension.jpg  301!
+/images/DSC08582.jpg  /images/roseville-portrait-neon-on-air-sign.jpg  301!
+/images/DSC03987.jpg  /images/sacramento-birth-photography-story.jpg  301!
+/images/DSC04408.jpg  /images/sacramento-birth-newborn-feet-parent-hand-bw.jpg  301!
+/images/DSC04570.jpg  /images/sacramento-birth-session.jpg  301!
+/images/DSC04426.jpg  /images/roseville-family-session.jpg  301!
+/images/DSC04991-3.jpg  /images/roseville-family-session-golden-hour.jpg  301!
+/images/DSC09811.jpg  /images/roseville-family-of-three-by-the-pond.jpg  301!
+/images/DSC09817.jpg  /images/roseville-family-father-kissing-wife-daughter-on-hip.jpg  301!
+/images/DSC09825.jpg  /images/roseville-family-session-evening-light.jpg  301!
+/images/DSC09861-Edit.jpg  /images/roseville-family-mother-daughter-under-willow.jpg  301!
+/images/DSC09915.jpg  /images/roseville-family-walking-dirt-path-daughter-on-shoulders.jpg  301!
+/images/DSC09932-hero.jpg  /images/roseville-family-photographer-hero.jpg  301!
+/images/DSC09932.jpg  /images/roseville-family-of-three-on-path-golden-hour.jpg  301!
+/images/DSC09964.jpg  /images/roseville-family-father-daughter-forehead-to-forehead.jpg  301!
+/images/DSC09651.jpg  /images/roseville-mini-session-siblings-evening-light.jpg  301!
+/images/DSC09843-minis-tall.jpg  /images/roseville-mini-sessions-tall.jpg  301!
+/images/DSC09843-minis-triptych.jpg  /images/roseville-mini-sessions-triptych.jpg  301!
+/images/DSC08845.jpg  /images/roseville-family-walking-through-the-park.jpg  301!
+/images/DSC08872.jpg  /images/roseville-family-holding-hands-afternoon-light.jpg  301!
+/images/DSC08943.jpg  /images/roseville-family-children-on-wooden-ladder.jpg  301!
+/images/DSC09185.jpg  /images/roseville-family-boy-mid-kick-on-the-grass.jpg  301!
+/images/DSC09193.jpg  /images/roseville-family-playing-football-open-field.jpg  301!
+/images/DSC09446.jpg  /images/sacramento-family-gathered-laughing-evening-light.jpg  301!
+/images/DSC09474.jpg  /images/sacramento-family-father-lifting-baby-to-the-sky.jpg  301!
+/images/DSC09478.jpg  /images/sacramento-family-walking-off-across-the-grass.jpg  301!
+/images/DSC09481-2-Edit.jpg  /images/sacramento-family-toddler-on-shoulders-golden-hour.jpg  301!
+/images/DSC09492-Edit.jpg  /images/sacramento-family-parents-kiss-beneath-bare-oak.jpg  301!
+/images/DSC09571.jpg  /images/roseville-family-plaid-blanket-beneath-oak.jpg  301!
+/images/DSC09602.jpg  /images/roseville-family-mother-three-children-open-field.jpg  301!
+/images/DSC09640.jpg  /images/roseville-family-three-siblings-laughing-late-sun.jpg  301!
+/images/DSC09649.jpg  /images/roseville-family-mother-arms-around-two-children.jpg  301!
+/images/DSC09686-hero.jpg  /images/roseville-family-session-journal-hero.jpg  301!
+/images/DSC09686.jpg  /images/roseville-family-siblings-circling-evening-light.jpg  301!
+/images/DSC09704.jpg  /images/roseville-family-standing-in-dry-grass.jpg  301!
+/images/DSC09757.jpg  /images/roseville-family-mother-and-son-heads-together.jpg  301!
+/images/DSC09788.jpg  /images/roseville-family-siblings-in-tall-golden-grass.jpg  301!
+/images/DSC09798.jpg  /images/roseville-family-boy-in-dry-grass-evening-light.jpg  301!
+/images/DSC06249.jpg  /images/sofia-miyake-photographer-on-mountain-road.jpg  301!
+/images/DSC09951-hero.jpg  /images/roseville-family-photographer-hero-wide.jpg  301!
+/images/DSC09951-hero-tall.jpg  /images/roseville-family-photographer-hero-tall.jpg  301!

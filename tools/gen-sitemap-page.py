@@ -22,6 +22,12 @@ head_swaps = [
   '<meta property="og:description" content="%s">' % DESC),
  (r'<meta property="og:image" content="[^"]*">',
   '<meta property="og:image" content="https://sofiamiyakephoto.com/images/og/home.jpg">'),
+ # The template carries privacy.html's BreadcrumbList. Without these two swaps the
+ # generated page tells Google it is the privacy policy, which is how sitemap.html
+ # ended up with the wrong trail.
+ (r'"name": "Privacy Policy"', '"name": "Site Map"'),
+ (r'"item": "https://sofiamiyakephoto\.com/privacy"',
+  '"item": "https://sofiamiyakephoto.com/sitemap"'),
 ]
 # A function replacement, so nothing in the new text is read as a group reference.
 for pat, rep in head_swaps:
