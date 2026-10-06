@@ -156,10 +156,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     hero.appendChild(dots);
 
-    // Slides 2+ carry their image in data-bg, not an inline background-image.
-    // A visibility:hidden box still generates a layout box, so the browser
-    // fetches its background in the same style-recalc tick as the LCP image —
-    // slides nobody sees for 9 and 18 seconds competing for the same bandwidth.
+    // All three slide backgrounds are CSS now, so there is nothing to apply
+    // lazily. Kept as a no-op guard in case a slide ever carries data-bg again.
     function applyBg(slide) {
       var el = slide && slide.querySelector('.hero-bg[data-bg]');
       if (!el) return;
@@ -179,17 +177,45 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    // The !timer guard matters: hover fires stop(), then a tab switch and
-    // return fires start(), then mouseleave fires start() again — without it
-    // the first interval is orphaned and runs a full-viewport crossfade forever.
-    function start() { if (!reduced && !timer) timer = setInterval(function () { go(index + 1); }, DELAY); }
+    // Rotation is gated on three independent reasons to hold, tracked separately
+    // so one releasing cannot override another that is still set. Previously a
+    // bare mouseenter stopped it: the hero is 88vh, so on a desktop the pointer
+    // is over it most of the time and the carousel simply never advanced.
+    // Hovering no longer pauses; the explicit button below does, which is also
+    // the pause control WCAG 2.2.2 asks for on anything auto-advancing.
+    var userPaused = false, focusHeld = false;
+
+    // The !timer guard matters: without it a second start() orphans the first
+    // interval and runs a full-viewport crossfade forever.
+    function canRun() { return !reduced && !userPaused && !focusHeld && !document.hidden; }
+    function start() { if (canRun() && !timer) timer = setInterval(function () { go(index + 1); }, DELAY); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function restart() { stop(); start(); }
 
-    hero.addEventListener('mouseenter', stop);
-    hero.addEventListener('mouseleave', start);
-    hero.addEventListener('focusin', stop);
-    hero.addEventListener('focusout', start);
+    var pause = document.createElement('button');
+    pause.type = 'button';
+    pause.className = 'hero-pause';
+    function syncPause() {
+      pause.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
+      pause.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
+      pause.textContent = userPaused ? '▶' : '‖';
+    }
+    pause.addEventListener('click', function () {
+      userPaused = !userPaused;
+      syncPause();
+      if (userPaused) stop(); else start();
+    });
+    syncPause();
+    // Appended to the hero, not to dots: dots is a role="tablist" and a control
+    // that is not a tab does not belong inside one.
+    hero.appendChild(pause);
+
+    hero.addEventListener('focusin', function () { focusHeld = true; stop(); });
+    hero.addEventListener('focusout', function (e) {
+      // Ignore focus moving between controls inside the hero.
+      if (e.relatedTarget && hero.contains(e.relatedTarget)) return;
+      focusHeld = false; start();
+    });
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) { stop(); } else { start(); }
     });
