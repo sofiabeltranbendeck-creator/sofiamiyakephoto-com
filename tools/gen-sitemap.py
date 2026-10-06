@@ -27,7 +27,10 @@ ORDER = [
      '/recent-shoots/roseville-afternoon-family-session'),
     ('miyake-vision.html',    '/miyake-vision'),
     ('miyake-rant.html',      '/miyake-rant'),
-    ('the-artists-escape.html', '/the-artists-escape'),
+    ('on-the-lives-we-live.html', '/on-the-lives-we-live'),
+    # the-artists-escape.html is out while it carries <meta robots noindex>:
+    # it has a title and an image but no essay yet. Put it back the day the
+    # text lands and the noindex comes off.
     ('sitemap.html',          '/sitemap'),
     ('privacy.html',          '/privacy'),
 ]

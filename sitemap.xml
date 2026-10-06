@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://sofiamiyakephoto.com/</loc>
-    <lastmod>2026-10-06T10:32:13-07:00</lastmod>
+    <lastmod>2026-10-06T11:04:34-07:00</lastmod>
     <image:image><image:loc>https://sofiamiyakephoto.com/images/roseville-family-photographer-hero-wide.jpg</image:loc></image:image>
     <image:image><image:loc>https://sofiamiyakephoto.com/images/roseville-family-photographer-hero-tall.jpg</image:loc></image:image>
     <image:image><image:loc>https://sofiamiyakephoto.com/images/sacramento-wedding-ceremony-wooden-arch.jpg</image:loc></image:image>
@@ -170,17 +170,18 @@
   </url>
   <url>
     <loc>https://sofiamiyakephoto.com/miyake-rant</loc>
-    <lastmod>2026-10-05T16:41:55-07:00</lastmod>
+    <lastmod>2026-10-06T11:27:18-07:00</lastmod>
+    <image:image><image:loc>https://sofiamiyakephoto.com/images/new-parents-newborn-christmas-tree.jpg</image:loc></image:image>
     <image:image><image:loc>https://sofiamiyakephoto.com/images/sofia-miyake-photographer-on-mountain-road.jpg</image:loc></image:image>
   </url>
   <url>
-    <loc>https://sofiamiyakephoto.com/the-artists-escape</loc>
-    <lastmod>2026-10-06T10:32:13-07:00</lastmod>
-    <image:image><image:loc>https://sofiamiyakephoto.com/images/sofia-miyake-photographer-on-mountain-road.jpg</image:loc></image:image>
+    <loc>https://sofiamiyakephoto.com/on-the-lives-we-live</loc>
+    <lastmod>2026-10-06T11:27:18-07:00</lastmod>
+    <image:image><image:loc>https://sofiamiyakephoto.com/images/new-parents-newborn-christmas-tree.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://sofiamiyakephoto.com/sitemap</loc>
-    <lastmod>2026-10-05T16:43:23-07:00</lastmod>
+    <lastmod>2026-10-06T11:27:18-07:00</lastmod>
   </url>
   <url>
     <loc>https://sofiamiyakephoto.com/privacy</loc>
