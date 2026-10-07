@@ -245,6 +245,92 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // Gallery auto-scroll, opt-in with data-autoscroll on a [data-carousel]. A slow,
+  // continuous drift that loops without a seam: every slide is cloned once, and
+  // when the drift has travelled one full set it jumps back by exactly that width,
+  // which lands on identical pixels. It eases to a stop under a mouse, stops
+  // outright for touch, wheel, the arrows and keyboard focus, and runs only while
+  // the gallery is on screen and the tab is visible. With reduced motion there is
+  // no drift and the carousel stays exactly as it was.
+  document.querySelectorAll('[data-carousel][data-autoscroll]').forEach(function (carousel) {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var track = carousel.querySelector('.carousel-track');
+    var originals = Array.prototype.slice.call(track.children);
+    if (originals.length < 2) return;
+    originals.forEach(function (slide) {
+      var copy = slide.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      copy.setAttribute('inert', '');
+      track.appendChild(copy);
+    });
+    carousel.classList.add('is-autoscroll');
+
+    var SPEED = 40;                 // px per second at full drift
+    var pos = 0, v = 0, last = 0, raf = 0;
+    var hover = false, holdUntil = 0, onScreen = false, writing = false;
+    var loopWidth = function () { return track.children[originals.length].offsetLeft - originals[0].offsetLeft; };
+    var wrap = function (x) { var L = loopWidth(); if (L <= 0) return x; x %= L; return x < 0 ? x + L : x; };
+    var hold = function (ms) { holdUntil = Math.max(holdUntil, performance.now() + ms); v = 0; writing = false; };
+
+    function frame(t) {
+      raf = 0;
+      var dt = last ? Math.min(0.05, (t - last) / 1000) : 0;
+      last = t;
+      var held = t < holdUntil;
+      v += ((hover || held) ? -v : SPEED - v) * Math.min(1, dt * 3);
+      if (held || (hover && v < 1)) {
+        writing = false;            // let the visitor own the scroll position
+      } else {
+        if (!writing) {             // picking up again: start from wherever they left it
+          pos = wrap(track.scrollLeft);
+          writing = true;
+        }
+        pos = wrap(pos + v * dt);
+        track.scrollLeft = pos;
+      }
+      schedule();
+    }
+    function schedule() {
+      if (!raf && onScreen && !document.hidden) raf = requestAnimationFrame(frame);
+      else if (raf && (!onScreen || document.hidden)) { cancelAnimationFrame(raf); raf = 0; }
+      if (!raf) last = 0;
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        onScreen = entries[entries.length - 1].isIntersecting;
+        schedule();
+      }).observe(carousel);
+    } else { onScreen = true; }
+    document.addEventListener('visibilitychange', schedule);
+
+    carousel.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+    carousel.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hover = false; });
+    track.addEventListener('touchstart', function () { hold(1e9); }, { passive: true });
+    var release = function () { holdUntil = 0; hold(2500); };
+    track.addEventListener('touchend', release, { passive: true });
+    track.addEventListener('touchcancel', release, { passive: true });
+    track.addEventListener('wheel', function () { hold(2000); }, { passive: true });
+    // Capture phase, so this runs before the arrow's own scrollBy: move to the
+    // identical position one loop along if the step would run off either end.
+    carousel.addEventListener('click', function (e) {
+      var arrow = e.target.closest && e.target.closest('.carousel-arrow');
+      if (!arrow) return;
+      hold(1600);
+      var x = wrap(track.scrollLeft), L = loopWidth();
+      if (arrow.classList.contains('prev') && x < originals[0].getBoundingClientRect().width + 24) x += L;
+      track.scrollLeft = x;
+    }, true);
+    carousel.addEventListener('focusin', function (e) {
+      var keyboard = true;
+      try { keyboard = e.target.matches(':focus-visible'); } catch (err) {}
+      if (keyboard) hold(1e9);
+    });
+    carousel.addEventListener('focusout', function (e) {
+      if (!carousel.contains(e.relatedTarget)) { holdUntil = 0; hold(1000); }
+    });
+  });
+
 });
 
 // Meta Pixel conversion events

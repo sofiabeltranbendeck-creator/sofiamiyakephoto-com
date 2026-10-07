@@ -191,6 +191,18 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 @media (max-width:700px){
   .hero-bg[style*="--hero-narrow"]{background-image:var(--hero-narrow);}
 }
+/* Triptych heroes (portraits, families, recent shoots): three photos split by dark
+   gutters, like the homepage minis slide. Below 1024px the hero gets taller than it
+   is wide enough for three panels, and cover-fit crops the outer two, faces and all,
+   out of view. So under 1024px a .hero-triptych swaps to its single --hero-narrow
+   photo, framed by --hero-narrow-pos. Both URLs are inline, no JavaScript involved,
+   and each page preloads the pair with matching media attributes. */
+@media (max-width:1023px){
+  .hero-bg.hero-triptych[style*="--hero-narrow"]{
+    background-image:var(--hero-narrow);
+    background-position:var(--hero-narrow-pos, center);
+  }
+}
 /* Lead hero slide. The hero is min-height:88vh, so it is roughly 2:1 on a desktop
    but PORTRAIT on a phone — one crop cannot serve both. A single wide file would
    scale to fill the phone's height and show a narrow centre slice with her face
@@ -373,6 +385,15 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 @media (max-width:640px){
   .carousel{gap:10px;}
   .carousel-arrow{width:44px;height:44px;}
+}
+/* Auto-scrolling gallery (main.js adds .is-autoscroll; never without JS, never with
+   reduced motion). Snap and smooth scrolling both fight a drift that moves the
+   track a fraction of a pixel per frame, so they are off here; the arrows ask for
+   smooth scrolling themselves. The mask fades the slides in and out at the edges. */
+.carousel.is-autoscroll .carousel-track{
+  scroll-snap-type:none;scroll-behavior:auto;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 56px,#000 calc(100% - 56px),transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 56px,#000 calc(100% - 56px),transparent 100%);
 }
 
 /* Masonry gallery */
