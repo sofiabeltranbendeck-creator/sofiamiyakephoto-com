@@ -248,10 +248,12 @@ document.addEventListener('DOMContentLoaded', function () {
   // Gallery auto-scroll, opt-in with data-autoscroll on a [data-carousel]. A slow,
   // continuous drift that loops without a seam: every slide is cloned once, and
   // when the drift has travelled one full set it jumps back by exactly that width,
-  // which lands on identical pixels. It eases to a stop under a mouse, stops
-  // outright for touch, wheel, the arrows and keyboard focus, and runs only while
-  // the gallery is on screen and the tab is visible. With reduced motion there is
-  // no drift and the carousel stays exactly as it was.
+  // which lands on identical pixels. It starts the moment the gallery is on screen.
+  // A finger, a sideways scroll, the arrows and keyboard focus stop it; it picks
+  // up again as soon as the track has stopped moving on its own, so a fling or an
+  // arrow's smooth scroll is never cut short. No hover pause: a pointer resting on
+  // the gallery would freeze it, as it did the homepage slideshow. It runs only on
+  // screen in a visible tab, and with reduced motion it never starts at all.
   document.querySelectorAll('[data-carousel][data-autoscroll]').forEach(function (carousel) {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var track = carousel.querySelector('.carousel-track');
@@ -265,26 +267,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     carousel.classList.add('is-autoscroll');
 
-    var SPEED = 40;                 // px per second at full drift
-    var pos = 0, v = 0, last = 0, raf = 0;
-    var hover = false, holdUntil = 0, onScreen = false, writing = false;
+    var SPEED = 40;                 // px per second
+    var pos = 0, v = 0, last = 0, raf = 0, seen = -1;
+    var holdUntil = 0, onScreen = false, writing = false;
     var loopWidth = function () { return track.children[originals.length].offsetLeft - originals[0].offsetLeft; };
     var wrap = function (x) { var L = loopWidth(); if (L <= 0) return x; x %= L; return x < 0 ? x + L : x; };
     var hold = function (ms) { holdUntil = Math.max(holdUntil, performance.now() + ms); v = 0; writing = false; };
+    var release = function (ms) { holdUntil = 0; hold(ms); };
 
     function frame(t) {
       raf = 0;
       var dt = last ? Math.min(0.05, (t - last) / 1000) : 0;
       last = t;
-      var held = t < holdUntil;
-      v += ((hover || held) ? -v : SPEED - v) * Math.min(1, dt * 3);
-      if (held || (hover && v < 1)) {
-        writing = false;            // let the visitor own the scroll position
-      } else {
-        if (!writing) {             // picking up again: start from wherever they left it
-          pos = wrap(track.scrollLeft);
-          writing = true;
-        }
+      if (!writing) {               // held, or settling: wait for the track to stop
+        var now = track.scrollLeft, still = now === seen;
+        seen = now;
+        if (t >= holdUntil && still) { pos = wrap(now); writing = true; }
+      }
+      if (writing) {
+        v += (SPEED - v) * Math.min(1, dt * 12);   // full speed within a quarter second
         pos = wrap(pos + v * dt);
         track.scrollLeft = pos;
       }
@@ -300,23 +301,24 @@ document.addEventListener('DOMContentLoaded', function () {
       new IntersectionObserver(function (entries) {
         onScreen = entries[entries.length - 1].isIntersecting;
         schedule();
-      }).observe(carousel);
-    } else { onScreen = true; }
+      }, { rootMargin: '200px 0px' }).observe(carousel);   // already moving as it scrolls in
+    } else { onScreen = true; schedule(); }
     document.addEventListener('visibilitychange', schedule);
 
-    carousel.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
-    carousel.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hover = false; });
     track.addEventListener('touchstart', function () { hold(1e9); }, { passive: true });
-    var release = function () { holdUntil = 0; hold(2500); };
-    track.addEventListener('touchend', release, { passive: true });
-    track.addEventListener('touchcancel', release, { passive: true });
-    track.addEventListener('wheel', function () { hold(2000); }, { passive: true });
+    track.addEventListener('touchend', function () { release(300); }, { passive: true });
+    track.addEventListener('touchcancel', function () { release(300); }, { passive: true });
+    // Only a sideways scroll is the visitor steering the gallery. A vertical wheel
+    // over it is just someone scrolling the page past.
+    track.addEventListener('wheel', function (e) {
+      if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) hold(300);
+    }, { passive: true });
     // Capture phase, so this runs before the arrow's own scrollBy: move to the
     // identical position one loop along if the step would run off either end.
     carousel.addEventListener('click', function (e) {
       var arrow = e.target.closest && e.target.closest('.carousel-arrow');
       if (!arrow) return;
-      hold(1600);
+      hold(200);
       var x = wrap(track.scrollLeft), L = loopWidth();
       if (arrow.classList.contains('prev') && x < originals[0].getBoundingClientRect().width + 24) x += L;
       track.scrollLeft = x;
@@ -327,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (keyboard) hold(1e9);
     });
     carousel.addEventListener('focusout', function (e) {
-      if (!carousel.contains(e.relatedTarget)) { holdUntil = 0; hold(1000); }
+      if (!carousel.contains(e.relatedTarget)) release(300);
     });
   });
 
