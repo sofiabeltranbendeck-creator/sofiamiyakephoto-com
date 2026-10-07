@@ -364,9 +364,67 @@ document.addEventListener('click', function (e) {
     }
   };
 
+  // But a click is not the only thing that moves focus into an embed: the HoneyBook
+  // scheduler focuses itself when it finishes loading, and the browser then scrolls
+  // the page to it. Measured on the live site, /bookings jumped from the top to the
+  // first calendar about two seconds after load, and /fall-minis carried a visitor
+  // reading the gallery 2,000px down to its calendar. Counting that as a click would
+  // also have fired a Meta Schedule for nearly every /bookings visit.
+  // So a focus move counts as the visitor only when the embed is on screen and either
+  // the mouse is over it or the embed finished loading more than 3s earlier. The
+  // self-focus was measured at 130 to 750ms after load, and browsers do not always
+  // tell this page when the mouse crosses into a cross-origin frame, so hover alone
+  // cannot be relied on. A first click inside those 3s goes uncounted; the next one
+  // counts. When focus lands in an embed with no click, tap, key or wheel just
+  // before, the page is held where it was for 1.2s, which outlasts the browser's
+  // smooth scroll to the embed (measured at under a second); that covers an embed
+  // that is only partly on screen too, which the browser also scrolls to. Either
+  // way a focus the visitor did not cause is handed back to the page, or their real
+  // click into the embed afterwards would move no focus and go unreported.
+  var overFrame = null, lastInput = 0, hold = null, start = Date.now();
+  // Listened for on the document, so the form embed HoneyBook inserts later is covered.
+  var isFrame = function (el) { return el && el.tagName === 'IFRAME'; };
+  document.addEventListener('load', function (e) { if (isFrame(e.target)) e.target.loadedAt = Date.now(); }, true);
+  document.addEventListener('pointerover', function (e) { if (isFrame(e.target) && e.pointerType === 'mouse') overFrame = e.target; });
+  document.addEventListener('pointerout', function (e) { if (e.target === overFrame) overFrame = null; });
+  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (type) {
+    window.addEventListener(type, function () { lastInput = Date.now(); hold = null; }, { capture: true, passive: true });
+  });
+  // A window without focus (say, just after a click in the address bar) gets no blur
+  // event when the embed takes focus, but the page still scrolls to it. So the scroll
+  // is watched too: settledY follows the page while the visitor drives it, and a jump
+  // of more than 300px with focus in an embed and no input from them is undone.
+  var settledY = window.scrollY;
+  var handBack = function (el) { setTimeout(function () { el.blur(); window.focus(); }, 0); };
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY, now = Date.now(), el = document.activeElement;
+    if (hold && now > hold.until) hold = null;
+    if (hold) { if (Math.abs(y - hold.y) > 1) window.scrollTo({ top: hold.y, behavior: 'instant' }); return; }
+    // Never for an embed the visitor has clicked into: wheeling over it scrolls the
+    // page with no event reaching this document, and that must not be fought.
+    if (isFrame(el) && !el.byVisitor && now - lastInput > 1000) {
+      if (Math.abs(y - settledY) > 300) {
+        hold = { y: settledY, until: now + 1200 };
+        window.scrollTo({ top: settledY, behavior: 'instant' });
+        handBack(el);
+      }
+      return;
+    }
+    settledY = y;
+  }, { passive: true });
+
   window.addEventListener('blur', function () {
     var el = document.activeElement;
     if (!el || el.tagName !== 'IFRAME') return;
+    var r = el.getBoundingClientRect();
+    var onScreen = r.bottom > 0 && r.top < window.innerHeight;
+    var visitor = onScreen && (el === overFrame || Date.now() - (el.loadedAt || start) > 3000);
+    if (!visitor) {
+      if (Date.now() - lastInput > 1000) hold = { y: window.scrollY, until: Date.now() + 1200 };
+      handBack(el);
+      return;
+    }
+    el.byVisitor = true;
     var src = el.getAttribute('src') || '';
     if (src.indexOf('hbportal.co') !== -1) report('honeybook_scheduler_embed');
     else if (el.closest && el.closest('.hb-embed')) report('honeybook_form_embed');
