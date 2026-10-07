@@ -232,10 +232,24 @@ document.addEventListener('DOMContentLoaded', function () {
   // Runs only while the gallery is on screen in a visible tab. Without JavaScript,
   // or with reduced motion, every photo simply shows in the grid.
   document.querySelectorAll('[data-fade-gallery]').forEach(function (gallery) {
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var motion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (motion && motion.matches) return;
     var SHOWN = 3, FADE = 900, SETTLE = 1600, FIRST = 500;   // ms; match the CSS
     var items = Array.prototype.slice.call(gallery.children);
     if (items.length <= SHOWN) return;
+    // Turning reduced motion on mid-visit stops the gallery and puts every photo
+    // back in the still grid, exactly as a visit that started with it on.
+    var still = gallery.innerHTML, stopped = false;
+    if (motion) {
+      var stop = function (e) {
+        if (!e.matches || stopped) return;
+        stopped = true; clearTimeout(timer); timer = 0;
+        gallery.innerHTML = still;
+        gallery.classList.remove('is-live');
+      };
+      if (motion.addEventListener) motion.addEventListener('change', stop);
+      else if (motion.addListener) motion.addListener(stop);
+    }
     var frames = items.slice(0, SHOWN);
     // The rest leave the page and wait in line: oldest first.
     var queue = items.slice(SHOWN).map(function (item) {
@@ -247,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var timer = 0, busy = false, onScreen = false, lastSlot = -1, hovered = null;
     var wait = function () { return 1300 + Math.random() * 1000; };
-    var live = function () { return onScreen && !document.hidden; };
+    var live = function () { return !stopped && onScreen && !document.hidden; };
     function schedule(ms) {
       clearTimeout(timer);
       timer = live() ? setTimeout(swap, ms) : 0;
@@ -257,15 +271,36 @@ document.addEventListener('DOMContentLoaded', function () {
     function ready(img) {
       img.loading = 'eager';
       var done = img.decode ? img.decode() : new Promise(function (res, rej) {
-        if (img.complete) { res(); } else { img.onload = res; img.onerror = rej; }
+        if (img.complete) { if (img.naturalWidth) res(); else rej(new Error('image failed')); }
+        else { img.onload = res; img.onerror = rej; }
       });
-      return Promise.race([done, new Promise(function (res, rej) { setTimeout(rej, 8000); })]);
+      var giveUp;
+      var timeout = new Promise(function (res, rej) { giveUp = setTimeout(rej, 8000); });
+      return Promise.race([done, timeout]).then(
+        function () { clearTimeout(giveUp); },
+        function (e) { clearTimeout(giveUp); throw e; });
+    }
+    // Run fn once the element's transition on prop has ended, or after ms if the
+    // browser never reports it (a hidden tab, a busy page). Tying cleanup to the
+    // transition, not the clock, means a fade that starts late is never cut short.
+    function after(el, prop, ms, fn) {
+      var done = false, t;
+      var end = function (e) { if (e.target === el && e.propertyName === prop) finish(); };
+      var finish = function () { if (done) return; done = true; clearTimeout(t); el.removeEventListener('transitionend', end); fn(); };
+      el.addEventListener('transitionend', end);
+      t = setTimeout(finish, ms);
     }
     function swap() {
       timer = 0;
       if (busy || !live()) return;
+      // A set of exactly four can have its only queued photo still on screen,
+      // fading out, if the gallery restarts quickly; try again shortly.
+      if (!queue.length) { schedule(FIRST); return; }
       busy = true;
       var incoming = queue.shift();
+      // Detached images never re-pick from srcset when the window changes size, so
+      // ask again now: a photo queued at phone width comes back sharp on a desktop.
+      if (incoming.srcset) incoming.srcset = incoming.srcset;
       ready(incoming).then(function () {
         busy = false;
         if (!live()) { queue.unshift(incoming); return; }   // left while it loaded
@@ -276,20 +311,25 @@ document.addEventListener('DOMContentLoaded', function () {
         frame.appendChild(incoming);
         incoming.getBoundingClientRect();                     // commit opacity 0 before fading
         incoming.classList.add('is-shown');
-        setTimeout(function () {                              // fully covered: drop it
+        after(incoming, 'opacity', FADE + 600, function () {   // fully covered: drop it
+          if (stopped) return;
           frame.removeChild(outgoing);
           queue.push(outgoing);
-        }, FADE + 100);
-        setTimeout(function () {                              // zoom settled: back to a plain photo
+        });
+        after(incoming, 'transform', SETTLE + 600, function () { // settled: back to a plain photo
+          if (stopped) return;
           incoming.classList.remove('fade-gallery-in', 'is-shown');
-        }, SETTLE + 100);
+        });
         lastSlot = slot;
         if (queue[0]) ready(queue[0]).catch(function () {});  // fetch the next one now
         schedule(wait());
       }, function () {
-        busy = false;                                         // failed to load: back of the line
-        queue.push(incoming);
-        schedule(wait());
+        // Failed to load: go straight on to the next photo, and give this one a
+        // single retry later before leaving it out for the rest of the visit.
+        busy = false;
+        incoming.failures = (incoming.failures || 0) + 1;
+        if (incoming.failures < 2) queue.push(incoming);
+        schedule(300);
       });
     }
 
