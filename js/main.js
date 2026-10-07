@@ -223,113 +223,88 @@ document.addEventListener('DOMContentLoaded', function () {
     else { setTimeout(warm, 2000); }
   });
 
-  // Gallery carousel arrows
-  document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
-    var track = carousel.querySelector('.carousel-track');
-    carousel.setAttribute('role', 'region');
-    if (!carousel.hasAttribute('aria-label')) carousel.setAttribute('aria-label', 'Image gallery');
-    track.setAttribute('tabindex', '0');
-    track.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); carousel.querySelector('.prev').click(); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); carousel.querySelector('.next').click(); }
-    });
-    var step = function () {
-      var slide = track.querySelector('.carousel-slide');
-      return slide ? slide.getBoundingClientRect().width + 24 : 300;
-    };
-    carousel.querySelector('.prev').addEventListener('click', function () {
-      track.scrollBy({ left: -step(), behavior: 'smooth' });
-    });
-    carousel.querySelector('.next').addEventListener('click', function () {
-      track.scrollBy({ left: step(), behavior: 'smooth' });
-    });
-  });
-
-  // Gallery auto-scroll, opt-in with data-autoscroll on a [data-carousel]. A slow,
-  // continuous drift that loops without a seam: every slide is cloned once, and
-  // when the drift has travelled one full set it jumps back by exactly that width,
-  // which lands on identical pixels. It starts the moment the gallery is on screen.
-  // A finger, a sideways scroll, the arrows and keyboard focus stop it; it picks
-  // up again as soon as the track has stopped moving on its own, so a fling or an
-  // arrow's smooth scroll is never cut short. No hover pause: a pointer resting on
-  // the gallery would freeze it, as it did the homepage slideshow. It runs only on
-  // screen in a visible tab, and with reduced motion it never starts at all.
-  document.querySelectorAll('[data-carousel][data-autoscroll]').forEach(function (carousel) {
+  // Fade gallery (data-fade-gallery). Three photos on show; every 1.3 to 2.3
+  // seconds one of the three frames, picked at random, crossfades to whichever
+  // photo has been out of view longest, so every photo in the set takes its turn.
+  // The incoming photo is fully decoded before its fade starts, so a frame never
+  // flashes empty, and the one after it is fetched in the background meanwhile.
+  // A frame under the mouse is skipped, not paused: the other two keep changing.
+  // Runs only while the gallery is on screen in a visible tab. Without JavaScript,
+  // or with reduced motion, every photo simply shows in the grid.
+  document.querySelectorAll('[data-fade-gallery]').forEach(function (gallery) {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var track = carousel.querySelector('.carousel-track');
-    var originals = Array.prototype.slice.call(track.children);
-    if (originals.length < 2) return;
-    originals.forEach(function (slide) {
-      var copy = slide.cloneNode(true);
-      copy.setAttribute('aria-hidden', 'true');
-      copy.setAttribute('inert', '');
-      track.appendChild(copy);
+    var SHOWN = 3, FADE = 900, SETTLE = 1600, FIRST = 500;   // ms; match the CSS
+    var items = Array.prototype.slice.call(gallery.children);
+    if (items.length <= SHOWN) return;
+    var frames = items.slice(0, SHOWN);
+    // The rest leave the page and wait in line: oldest first.
+    var queue = items.slice(SHOWN).map(function (item) {
+      var img = item.querySelector('img');
+      gallery.removeChild(item);
+      return img;
     });
-    carousel.classList.add('is-autoscroll');
+    gallery.classList.add('is-live');
 
-    var SPEED = 40;                 // px per second
-    var pos = 0, v = 0, last = 0, raf = 0, seen = -1;
-    var holdUntil = 0, onScreen = false, writing = false;
-    var loopWidth = function () { return track.children[originals.length].offsetLeft - originals[0].offsetLeft; };
-    var wrap = function (x) { var L = loopWidth(); if (L <= 0) return x; x %= L; return x < 0 ? x + L : x; };
-    var hold = function (ms) { holdUntil = Math.max(holdUntil, performance.now() + ms); v = 0; writing = false; };
-    var release = function (ms) { holdUntil = 0; hold(ms); };
-
-    function frame(t) {
-      raf = 0;
-      var dt = last ? Math.min(0.05, (t - last) / 1000) : 0;
-      last = t;
-      if (!writing) {               // held, or settling: wait for the track to stop
-        var now = track.scrollLeft, still = now === seen;
-        seen = now;
-        if (t >= holdUntil && still) { pos = wrap(now); writing = true; }
-      }
-      if (writing) {
-        v += (SPEED - v) * Math.min(1, dt * 12);   // full speed within a quarter second
-        pos = wrap(pos + v * dt);
-        track.scrollLeft = pos;
-      }
-      schedule();
+    var timer = 0, busy = false, onScreen = false, lastSlot = -1, hovered = null;
+    var wait = function () { return 1300 + Math.random() * 1000; };
+    var live = function () { return onScreen && !document.hidden; };
+    function schedule(ms) {
+      clearTimeout(timer);
+      timer = live() ? setTimeout(swap, ms) : 0;
     }
-    function schedule() {
-      if (!raf && onScreen && !document.hidden) raf = requestAnimationFrame(frame);
-      else if (raf && (!onScreen || document.hidden)) { cancelAnimationFrame(raf); raf = 0; }
-      if (!raf) last = 0;
+    // Load and decode an image that is not in the page. Lazy images outside the
+    // document never load, so it is switched to eager first. Gives up after 8s.
+    function ready(img) {
+      img.loading = 'eager';
+      var done = img.decode ? img.decode() : new Promise(function (res, rej) {
+        if (img.complete) { res(); } else { img.onload = res; img.onerror = rej; }
+      });
+      return Promise.race([done, new Promise(function (res, rej) { setTimeout(rej, 8000); })]);
+    }
+    function swap() {
+      timer = 0;
+      if (busy || !live()) return;
+      busy = true;
+      var incoming = queue.shift();
+      ready(incoming).then(function () {
+        busy = false;
+        if (!live()) { queue.unshift(incoming); return; }   // left while it loaded
+        var slots = [0, 1, 2].filter(function (i) { return i !== lastSlot && frames[i] !== hovered; });
+        var slot = slots[Math.floor(Math.random() * slots.length)];
+        var frame = frames[slot], outgoing = frame.querySelector('img');
+        incoming.classList.add('fade-gallery-in');
+        frame.appendChild(incoming);
+        incoming.getBoundingClientRect();                     // commit opacity 0 before fading
+        incoming.classList.add('is-shown');
+        setTimeout(function () {                              // fully covered: drop it
+          frame.removeChild(outgoing);
+          queue.push(outgoing);
+        }, FADE + 100);
+        setTimeout(function () {                              // zoom settled: back to a plain photo
+          incoming.classList.remove('fade-gallery-in', 'is-shown');
+        }, SETTLE + 100);
+        lastSlot = slot;
+        if (queue[0]) ready(queue[0]).catch(function () {});  // fetch the next one now
+        schedule(wait());
+      }, function () {
+        busy = false;                                         // failed to load: back of the line
+        queue.push(incoming);
+        schedule(wait());
+      });
     }
 
+    frames.forEach(function (frame) {
+      frame.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hovered = frame; });
+      frame.addEventListener('pointerleave', function () { if (hovered === frame) hovered = null; });
+    });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         onScreen = entries[entries.length - 1].isIntersecting;
-        schedule();
-      }, { rootMargin: '200px 0px' }).observe(carousel);   // already moving as it scrolls in
-    } else { onScreen = true; schedule(); }
-    document.addEventListener('visibilitychange', schedule);
-
-    track.addEventListener('touchstart', function () { hold(1e9); }, { passive: true });
-    track.addEventListener('touchend', function () { release(300); }, { passive: true });
-    track.addEventListener('touchcancel', function () { release(300); }, { passive: true });
-    // Only a sideways scroll is the visitor steering the gallery. A vertical wheel
-    // over it is just someone scrolling the page past.
-    track.addEventListener('wheel', function (e) {
-      if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) hold(300);
-    }, { passive: true });
-    // Capture phase, so this runs before the arrow's own scrollBy: move to the
-    // identical position one loop along if the step would run off either end.
-    carousel.addEventListener('click', function (e) {
-      var arrow = e.target.closest && e.target.closest('.carousel-arrow');
-      if (!arrow) return;
-      hold(200);
-      var x = wrap(track.scrollLeft), L = loopWidth();
-      if (arrow.classList.contains('prev') && x < originals[0].getBoundingClientRect().width + 24) x += L;
-      track.scrollLeft = x;
-    }, true);
-    carousel.addEventListener('focusin', function (e) {
-      var keyboard = true;
-      try { keyboard = e.target.matches(':focus-visible'); } catch (err) {}
-      if (keyboard) hold(1e9);
-    });
-    carousel.addEventListener('focusout', function (e) {
-      if (!carousel.contains(e.relatedTarget)) release(300);
+        if (onScreen) { if (!timer && !busy) schedule(FIRST); } else { clearTimeout(timer); timer = 0; }
+      }, { threshold: 0.3 }).observe(gallery);
+    } else { onScreen = true; schedule(FIRST); }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { clearTimeout(timer); timer = 0; } else if (live() && !timer && !busy) schedule(FIRST);
     });
   });
 
