@@ -19,6 +19,12 @@ ORDER = [
     ('birth-stories.html',    '/birth-stories'),
     ('bookings.html',         '/bookings'),
     ('recent-shoots.html',    '/recent-shoots'),
+    ('recent-shoots/roseville-toddler-and-baby-family-session.html',
+     '/recent-shoots/roseville-toddler-and-baby-family-session'),
+    ('recent-shoots/roseville-pond-family-session.html',
+     '/recent-shoots/roseville-pond-family-session'),
+    ('recent-shoots/roseville-willow-pond-family-session.html',
+     '/recent-shoots/roseville-willow-pond-family-session'),
     ('recent-shoots/roseville-golden-hour-family-session.html',
      '/recent-shoots/roseville-golden-hour-family-session'),
     ('recent-shoots/sacramento-golden-hour-family-session.html',
@@ -27,7 +33,10 @@ ORDER = [
      '/recent-shoots/roseville-afternoon-family-session'),
     ('miyake-vision.html',    '/miyake-vision'),
     ('miyake-rant.html',      '/miyake-rant'),
-    ('the-artists-escape.html', '/the-artists-escape'),
+    ('on-the-lives-we-live.html', '/on-the-lives-we-live'),
+    # the-artists-escape.html is out while it carries <meta robots noindex>:
+    # it has a title and an image but no essay yet. Put it back the day the
+    # text lands and the noindex comes off.
     ('sitemap.html',          '/sitemap'),
     ('privacy.html',          '/privacy'),
 ]

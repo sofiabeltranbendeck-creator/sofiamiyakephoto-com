@@ -47,17 +47,48 @@ document.addEventListener('DOMContentLoaded', function () {
     toggle.innerHTML = '<span></span><span></span><span></span>';
     header.insertBefore(toggle, nav);
 
-    toggle.addEventListener('click', function () {
-      var open = header.classList.toggle('nav-open');
+    // Collapsed by max-height alone still leaves every link keyboard-focusable,
+    // so the closed panel is also made inert. Only below the 700px breakpoint:
+    // above it the nav is the ordinary horizontal bar and must stay reachable.
+    var mq = window.matchMedia('(max-width:700px)');
+
+    var measure = function () {
+      var top = nav.getBoundingClientRect().top;
+      var vh = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+      nav.style.setProperty('--nav-available-height', Math.max(0, vh - top) + 'px');
+    };
+
+    var sync = function (open) {
+      header.classList.toggle('nav-open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      nav.inert = mq.matches && !open;
+      if (open) measure();
+    };
+
+    sync(false);
+
+    toggle.addEventListener('click', function () {
+      sync(!header.classList.contains('nav-open'));
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && header.classList.contains('nav-open')) {
+        sync(false);
+        toggle.focus();
+      }
     });
 
     nav.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        header.classList.remove('nav-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', function () { sync(false); });
     });
+
+    var onViewport = function () {
+      if (header.classList.contains('nav-open')) measure();
+      nav.inert = mq.matches && !header.classList.contains('nav-open');
+    };
+    window.addEventListener('resize', onViewport);
+    if (mq.addEventListener) mq.addEventListener('change', onViewport);
+    else if (mq.addListener) mq.addListener(onViewport);
   }
 
   // Nav dropdown accessibility (aria-expanded + click/touch toggle)
@@ -104,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (slides.length < 2) return;
 
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var DELAY = 9000;
+    var DELAY = 3000;
     var index = 0, timer = null;
 
     var dots = document.createElement('div');
@@ -125,10 +156,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     hero.appendChild(dots);
 
-    // Slides 2+ carry their image in data-bg, not an inline background-image.
-    // A visibility:hidden box still generates a layout box, so the browser
-    // fetches its background in the same style-recalc tick as the LCP image —
-    // slides nobody sees for 9 and 18 seconds competing for the same bandwidth.
+    // All three slide backgrounds are CSS now, so there is nothing to apply
+    // lazily. Kept as a no-op guard in case a slide ever carries data-bg again.
     function applyBg(slide) {
       var el = slide && slide.querySelector('.hero-bg[data-bg]');
       if (!el) return;
@@ -148,17 +177,32 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    // The !timer guard matters: hover fires stop(), then a tab switch and
-    // return fires start(), then mouseleave fires start() again — without it
-    // the first interval is orphaned and runs a full-viewport crossfade forever.
-    function start() { if (!reduced && !timer) timer = setInterval(function () { go(index + 1); }, DELAY); }
+    // Rotation holds for keyboard focus inside the hero and for a hidden tab,
+    // tracked separately so one releasing cannot override the other. Hovering
+    // does not pause: the hero is 88vh, so on a desktop the pointer is over it
+    // most of the time and a hover pause meant the carousel never advanced.
+    var focusHeld = false;
+
+    // The !timer guard matters: without it a second start() orphans the first
+    // interval and runs a full-viewport crossfade forever.
+    function canRun() { return !reduced && !focusHeld && !document.hidden; }
+    function start() { if (canRun() && !timer) timer = setInterval(function () { go(index + 1); }, DELAY); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function restart() { stop(); start(); }
 
-    hero.addEventListener('mouseenter', stop);
-    hero.addEventListener('mouseleave', start);
-    hero.addEventListener('focusin', stop);
-    hero.addEventListener('focusout', start);
+    // Hold only for keyboard focus. A mouse click or tap also focuses a button,
+    // and treating that as a hold froze the show after any click on a dot.
+    hero.addEventListener('focusin', function (e) {
+      var keyboard = true;
+      try { keyboard = e.target.matches(':focus-visible'); } catch (err) {}
+      if (!keyboard) return;
+      focusHeld = true; stop();
+    });
+    hero.addEventListener('focusout', function (e) {
+      // Ignore focus moving between controls inside the hero.
+      if (e.relatedTarget && hero.contains(e.relatedTarget)) return;
+      focusHeld = false; start();
+    });
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) { stop(); } else { start(); }
     });
@@ -179,25 +223,136 @@ document.addEventListener('DOMContentLoaded', function () {
     else { setTimeout(warm, 2000); }
   });
 
-  // Gallery carousel arrows
-  document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
-    var track = carousel.querySelector('.carousel-track');
-    carousel.setAttribute('role', 'region');
-    if (!carousel.hasAttribute('aria-label')) carousel.setAttribute('aria-label', 'Image gallery');
-    track.setAttribute('tabindex', '0');
-    track.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); carousel.querySelector('.prev').click(); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); carousel.querySelector('.next').click(); }
+  // Fade gallery (data-fade-gallery). Three photos on show; every 1.3 to 2.3
+  // seconds one of the three frames, picked at random, crossfades to whichever
+  // photo has been out of view longest, so every photo in the set takes its turn.
+  // The incoming photo is fully decoded before its fade starts, so a frame never
+  // flashes empty, and the one after it is fetched in the background meanwhile.
+  // A frame under the mouse is skipped, not paused: the other two keep changing.
+  // Runs only while the gallery is on screen in a visible tab. Without JavaScript,
+  // or with reduced motion, every photo simply shows in the grid.
+  document.querySelectorAll('[data-fade-gallery]').forEach(function (gallery) {
+    var motion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (motion && motion.matches) return;
+    var SHOWN = 3, FADE = 900, SETTLE = 1600, FIRST = 500;   // ms; match the CSS
+    var items = Array.prototype.slice.call(gallery.children);
+    if (items.length <= SHOWN) return;
+    // Turning reduced motion on mid-visit stops the gallery and puts every photo
+    // back in the still grid, exactly as a visit that started with it on.
+    var still = gallery.innerHTML, stopped = false;
+    if (motion) {
+      var stop = function (e) {
+        if (!e.matches || stopped) return;
+        stopped = true; clearTimeout(timer); timer = 0;
+        gallery.innerHTML = still;
+        gallery.classList.remove('is-live');
+      };
+      if (motion.addEventListener) motion.addEventListener('change', stop);
+      else if (motion.addListener) motion.addListener(stop);
+    }
+    var frames = items.slice(0, SHOWN);
+    // The rest leave the page and wait in line: oldest first.
+    var queue = items.slice(SHOWN).map(function (item) {
+      var img = item.querySelector('img');
+      gallery.removeChild(item);
+      return img;
     });
-    var step = function () {
-      var slide = track.querySelector('.carousel-slide');
-      return slide ? slide.getBoundingClientRect().width + 24 : 300;
-    };
-    carousel.querySelector('.prev').addEventListener('click', function () {
-      track.scrollBy({ left: -step(), behavior: 'smooth' });
+    gallery.classList.add('is-live');
+
+    var timer = 0, busy = false, onScreen = false, lastSlot = -1, hovered = null;
+    var wait = function () { return 1300 + Math.random() * 1000; };
+    var live = function () { return !stopped && onScreen && !document.hidden; };
+    function schedule(ms) {
+      clearTimeout(timer);
+      timer = live() ? setTimeout(swap, ms) : 0;
+    }
+    // Load and decode an image that is not in the page. Lazy images outside the
+    // document never load, so it is switched to eager first. Gives up after 8s.
+    function ready(img) {
+      img.loading = 'eager';
+      var done = img.decode ? img.decode() : new Promise(function (res, rej) {
+        if (img.complete) { if (img.naturalWidth) res(); else rej(new Error('image failed')); }
+        else { img.onload = res; img.onerror = rej; }
+      });
+      var giveUp;
+      var timeout = new Promise(function (res, rej) { giveUp = setTimeout(rej, 8000); });
+      return Promise.race([done, timeout]).then(
+        function () { clearTimeout(giveUp); },
+        function (e) { clearTimeout(giveUp); throw e; });
+    }
+    // Run fn once the element's transition on prop has ended, or after ms if the
+    // browser never reports it (a hidden tab, a busy page). Tying cleanup to the
+    // transition, not the clock, means a fade that starts late is never cut short.
+    function after(el, prop, ms, fn) {
+      var done = false, t;
+      var end = function (e) { if (e.target === el && e.propertyName === prop) finish(); };
+      var finish = function () { if (done) return; done = true; clearTimeout(t); el.removeEventListener('transitionend', end); fn(); };
+      // The fallback must not cut short a fade that started late: if the transition
+      // is still pending or running when it fires, wait for it to finish instead.
+      var fallback = function () {
+        var running = el.getAnimations && el.getAnimations().filter(function (a) {
+          return a.transitionProperty === prop && a.playState !== 'finished';
+        })[0];
+        if (running) running.finished.then(finish, finish); else finish();
+      };
+      el.addEventListener('transitionend', end);
+      t = setTimeout(fallback, ms);
+    }
+    function swap() {
+      timer = 0;
+      if (busy || !live()) return;
+      // A set of exactly four can have its only queued photo still on screen,
+      // fading out, if the gallery restarts quickly; try again shortly.
+      if (!queue.length) { schedule(FIRST); return; }
+      busy = true;
+      var incoming = queue.shift();
+      // Detached images never re-pick from srcset when the window changes size, so
+      // ask again now: a photo queued at phone width comes back sharp on a desktop.
+      if (incoming.srcset) incoming.srcset = incoming.srcset;
+      ready(incoming).then(function () {
+        busy = false;
+        if (!live()) { queue.unshift(incoming); return; }   // left while it loaded
+        var slots = [0, 1, 2].filter(function (i) { return i !== lastSlot && frames[i] !== hovered; });
+        var slot = slots[Math.floor(Math.random() * slots.length)];
+        var frame = frames[slot], outgoing = frame.querySelector('img');
+        incoming.classList.add('fade-gallery-in');
+        frame.appendChild(incoming);
+        incoming.getBoundingClientRect();                     // commit opacity 0 before fading
+        incoming.classList.add('is-shown');
+        after(incoming, 'opacity', FADE + 600, function () {   // fully covered: drop it
+          if (stopped) return;
+          frame.removeChild(outgoing);
+          queue.push(outgoing);
+        });
+        after(incoming, 'transform', SETTLE + 600, function () { // settled: back to a plain photo
+          if (stopped) return;
+          incoming.classList.remove('fade-gallery-in', 'is-shown');
+        });
+        lastSlot = slot;
+        if (queue[0]) ready(queue[0]).catch(function () {});  // fetch the next one now
+        schedule(wait());
+      }, function () {
+        // Failed to load: go straight on to the next photo, and give this one a
+        // single retry later before leaving it out for the rest of the visit.
+        busy = false;
+        incoming.failures = (incoming.failures || 0) + 1;
+        if (incoming.failures < 2) queue.push(incoming);
+        schedule(300);
+      });
+    }
+
+    frames.forEach(function (frame) {
+      frame.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hovered = frame; });
+      frame.addEventListener('pointerleave', function () { if (hovered === frame) hovered = null; });
     });
-    carousel.querySelector('.next').addEventListener('click', function () {
-      track.scrollBy({ left: step(), behavior: 'smooth' });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        onScreen = entries[entries.length - 1].isIntersecting;
+        if (onScreen) { if (!timer && !busy) schedule(FIRST); } else { clearTimeout(timer); timer = 0; }
+      }, { threshold: 0.3 }).observe(gallery);
+    } else { onScreen = true; schedule(FIRST); }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { clearTimeout(timer); timer = 0; } else if (live() && !timer && !busy) schedule(FIRST);
     });
   });
 
@@ -221,3 +376,109 @@ document.addEventListener('click', function (e) {
     ga('event', 'contact_click', { method: 'phone' });
   }
 });
+
+// HoneyBook embed engagement.
+//
+// The schedulers and the inquiry form are cross-origin embeds, so clicks and
+// submissions inside them never bubble to this document. The click handler above
+// therefore only ever sees the secondary "Open scheduler in a new tab" anchors,
+// not the embed most visitors actually use — which left the single highest-intent
+// action on the site completely unmeasured.
+//
+// A click inside a cross-origin iframe blurs the parent window and makes that
+// iframe document.activeElement. That is the one signal available from out here,
+// and it is only an estimate (see below), so it goes to GA as engagement and never
+// to Meta as a conversion. It is NOT a completed booking: the completion still
+// happens on hbportal.co and only HoneyBook can confirm it.
+(function () {
+  var frames = document.querySelectorAll('iframe[src*="hbportal.co"], .hb-embed iframe');
+  var placement = document.querySelector('[class^="hb-p-"], [class*=" hb-p-"]');
+  if (!frames.length && !placement) return;
+
+  var sent = {};
+  // Once per kind per page, so touching the inquiry form does not swallow a later
+  // scheduler report.
+  var report = function (which) {
+    if (sent[which]) return;
+    sent[which] = true;
+    var ga = (typeof gtag === 'function') ? gtag : function () {};
+    ga('event', which === 'honeybook_scheduler_embed' ? 'scheduler_interact' : 'inquiry_form_interact',
+      { method: which, page_location: location.href });
+  };
+
+  // But a click is not the only thing that moves focus into an embed: the HoneyBook
+  // scheduler focuses itself after it loads (measured 130ms to 12s after its load
+  // event), and the browser then scrolls the page to it. On the live site /bookings
+  // jumps from the top to the first calendar, and /fall-minis pulls a visitor reading
+  // the gallery 2,000px down to its calendar.
+  //
+  // Only two things the visitor does can move focus into an embed: clicking it (the
+  // mouse is over it) or tabbing into it. Anything else that puts focus there is the
+  // embed itself. So:
+  //  - Each embed is checked every 50ms from its load until it first takes focus (at
+  //    most 15s). If focus arrives with no mouse over it and no Tab just before, and
+  //    the embed was not fully in view, the page goes back to where it was 50ms
+  //    earlier. Scrolling, swiping or other keys do not stand the check down: a
+  //    reader scrolling past is exactly who was being pulled away.
+  //  - The page is then held by its content, not its scroll offset: the element in
+  //    the middle of the screen is kept where it was. That undoes the browser's
+  //    scroll to the embed but leaves scroll anchoring alone (a form growing above
+  //    the reader). Any wheel, touch, key or click from the visitor ends the hold,
+  //    and it lets go once the page has been still for 400ms (2s at most).
+  //  - Focus itself is never moved, and nothing is watched after an embed's first
+  //    focus, so a screen reader, a keyboard user or a swipe over an embed is never
+  //    fought.
+  //  - Engagement goes to GA only, and only for a focus move the visitor caused (the
+  //    mouse over the embed, or a Tab). A tap on a touch screen cannot be seen from
+  //    out here, and a click into an embed that already took focus by itself moves
+  //    no focus, so this undercounts; a real measure needs HoneyBook's own data.
+  var overFrame = null, lastTab = 0, hold = null;
+  var isFrame = function (el) { return el && el.tagName === 'IFRAME'; };
+  var byVisitor = function (el) { return el === overFrame || Date.now() - lastTab < 1000; };
+  document.addEventListener('pointerover', function (e) { if (isFrame(e.target) && e.pointerType === 'mouse') overFrame = e.target; });
+  document.addEventListener('pointerout', function (e) { if (e.target === overFrame) overFrame = null; });
+  window.addEventListener('keydown', function (e) { if (e.key === 'Tab') lastTab = Date.now(); hold = null; }, true);
+  ['pointerdown', 'wheel', 'touchstart'].forEach(function (type) {
+    window.addEventListener(type, function () { hold = null; }, { capture: true, passive: true });
+  });
+  var holdHere = function (y) {
+    if (Math.abs(window.scrollY - y) > 1) window.scrollTo({ top: y, behavior: 'instant' });
+    var ref = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2) || document.body;
+    hold = { ref: ref, top: ref.getBoundingClientRect().top, quiet: Date.now(), end: Date.now() + 2000 };
+  };
+  window.addEventListener('scroll', function () {
+    if (!hold) return;
+    var now = Date.now();
+    if (now > hold.end || now - hold.quiet > 400) { hold = null; return; }
+    var moved = hold.ref.getBoundingClientRect().top - hold.top;
+    if (Math.abs(moved) > 1) { window.scrollTo({ top: window.scrollY + moved, behavior: 'instant' }); hold.quiet = now; }
+  }, { passive: true });
+  var watch = function (el) {
+    var t0 = Date.now(), y = window.scrollY;
+    var id = setInterval(function () {
+      if (Date.now() - t0 > 15000) { clearInterval(id); return; }
+      if (document.activeElement !== el) { y = window.scrollY; return; }
+      clearInterval(id);
+      if (byVisitor(el)) return;
+      var r = el.getBoundingClientRect(), top = r.top + window.scrollY - y;
+      if (top >= 0 && top + r.height <= window.innerHeight) return;  // fully in view: nothing to stop
+      holdHere(y);
+    }, 50);
+  };
+  document.addEventListener('load', function (e) { if (isFrame(e.target)) watch(e.target); }, true);
+
+  window.addEventListener('blur', function () {
+    var visitor = function (el) { return isFrame(el) && byVisitor(el); };
+    // Some browsers update activeElement only after blur, so look a tick later.
+    setTimeout(function () {
+      var el = document.activeElement;
+      if (!visitor(el)) return;
+      var src = el.getAttribute('src') || '';
+      if (src.indexOf('hbportal.co') !== -1) report('honeybook_scheduler_embed');
+      else if (el.closest && el.closest('.hb-embed')) report('honeybook_form_embed');
+    }, 0);
+  });
+})();
+
+
+
