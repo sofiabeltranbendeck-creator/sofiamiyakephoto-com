@@ -421,13 +421,15 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
   max-width:720px;margin:0 auto;padding:8px;
 }
 .hb-embed iframe{display:block;width:100%;border:none;}
-/* Reserve close to the real form height. 120px reserved for a full contact
-   form meant everything below it jumped down when HoneyBook injected the
-   iframe — a large layout shift on the one page that exists to convert.
-   Measured 1233px at a 279px-wide viewport; fields stack as width drops, so
-   the narrow reserve is the larger one. Worth re-checking after deploy. */
-.hb-embed > div{min-height:620px;}
-@media (max-width:700px){.hb-embed > div{min-height:900px;}}
+/* Reserve the real form height, or everything below jumps when HoneyBook injects
+   the iframe, on the one page that exists to convert. Measured 7 Oct 2026: 971px
+   from 900px wide up, 986px at 431-899px, 1082px at 390-430px, 1099px at 360-375px,
+   1144px at 320px. Each reserve is the smallest height in its range, so no gap is
+   left below the form; the narrowest phones still shift 17-62px. The heights
+   follow the form's fields: re-measure if the HoneyBook form changes. */
+.hb-embed > div{min-height:971px;}
+@media (max-width:899px){.hb-embed > div{min-height:986px;}}
+@media (max-width:430px){.hb-embed > div{min-height:1082px;}}
 @media (max-width:700px){.hb-embed{padding:4px;}}
 
 /* About animated hero */

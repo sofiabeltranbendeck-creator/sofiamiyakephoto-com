@@ -407,76 +407,78 @@ document.addEventListener('click', function (e) {
   };
 
   // But a click is not the only thing that moves focus into an embed: the HoneyBook
-  // scheduler focuses itself 130 to 750ms after it loads, and the browser then
-  // scrolls the page to it. Measured on the live site, /bookings jumped from the top
-  // to the first calendar about two seconds after load, and /fall-minis carried a
-  // visitor reading the gallery 2,000px down to its calendar.
+  // scheduler focuses itself after it loads (measured 130ms to 12s after its load
+  // event), and the browser then scrolls the page to it. On the live site /bookings
+  // jumps from the top to the first calendar, and /fall-minis pulls a visitor reading
+  // the gallery 2,000px down to its calendar.
   //
-  // Focus alone cannot say who moved it, so this is deliberately narrow:
-  //  - For 2.5s after an embed loads it is checked every 50ms. If it takes focus
-  //    then, with no click, tap, key or wheel from the visitor in the second before,
-  //    and it was not fully in view, that is the self-focus: the page goes back to
-  //    where it was just before and is held there for 1.2s, which outlasts the
-  //    browser's smooth scroll. Checked by polling, not on blur, because a window
-  //    without focus gets no blur event and is scrolled all the same. Focus itself
-  //    is never moved, and nothing is watched outside that window, so a screen
-  //    reader, a keyboard user or a swipe over an embed is never fought.
-  //  - Engagement is only an estimate, so it goes to GA as an engagement event and
-  //    never to Meta as a conversion: a focus move counts when the embed is on screen
-  //    and the mouse is over it, a key was just pressed, or the embed loaded more than
-  //    2.5s before. A first tap inside those 2.5s is missed; a self-focus on a
-  //    scheduler the visitor scrolls to after that window can still count. A real
-  //    measure needs a signal from HoneyBook itself.
-  var overFrame = null, lastInput = 0, lastKey = 0, hold = null, start = Date.now();
-  // Listened for on the document, so the form embed HoneyBook inserts later is covered.
+  // Only two things the visitor does can move focus into an embed: clicking it (the
+  // mouse is over it) or tabbing into it. Anything else that puts focus there is the
+  // embed itself. So:
+  //  - Each embed is checked every 50ms from its load until it first takes focus (at
+  //    most 15s). If focus arrives with no mouse over it and no Tab just before, and
+  //    the embed was not fully in view, the page goes back to where it was 50ms
+  //    earlier. Scrolling, swiping or other keys do not stand the check down: a
+  //    reader scrolling past is exactly who was being pulled away.
+  //  - The page is then held by its content, not its scroll offset: the element in
+  //    the middle of the screen is kept where it was. That undoes the browser's
+  //    scroll to the embed but leaves scroll anchoring alone (a form growing above
+  //    the reader). Any wheel, touch, key or click from the visitor ends the hold,
+  //    and it lets go once the page has been still for 400ms (2s at most).
+  //  - Focus itself is never moved, and nothing is watched after an embed's first
+  //    focus, so a screen reader, a keyboard user or a swipe over an embed is never
+  //    fought.
+  //  - Engagement goes to GA only, and only for a focus move the visitor caused (the
+  //    mouse over the embed, or a Tab). A tap on a touch screen cannot be seen from
+  //    out here, and a click into an embed that already took focus by itself moves
+  //    no focus, so this undercounts; a real measure needs HoneyBook's own data.
+  var overFrame = null, lastTab = 0, hold = null;
   var isFrame = function (el) { return el && el.tagName === 'IFRAME'; };
-  var loadedAt = function (el) { return el.loadedAt || start; };
+  var byVisitor = function (el) { return el === overFrame || Date.now() - lastTab < 1000; };
+  document.addEventListener('pointerover', function (e) { if (isFrame(e.target) && e.pointerType === 'mouse') overFrame = e.target; });
+  document.addEventListener('pointerout', function (e) { if (e.target === overFrame) overFrame = null; });
+  window.addEventListener('keydown', function (e) { if (e.key === 'Tab') lastTab = Date.now(); hold = null; }, true);
+  ['pointerdown', 'wheel', 'touchstart'].forEach(function (type) {
+    window.addEventListener(type, function () { hold = null; }, { capture: true, passive: true });
+  });
+  var holdHere = function (y) {
+    if (Math.abs(window.scrollY - y) > 1) window.scrollTo({ top: y, behavior: 'instant' });
+    var ref = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2) || document.body;
+    hold = { ref: ref, top: ref.getBoundingClientRect().top, quiet: Date.now(), end: Date.now() + 2000 };
+  };
+  window.addEventListener('scroll', function () {
+    if (!hold) return;
+    var now = Date.now();
+    if (now > hold.end || now - hold.quiet > 400) { hold = null; return; }
+    var moved = hold.ref.getBoundingClientRect().top - hold.top;
+    if (Math.abs(moved) > 1) { window.scrollTo({ top: window.scrollY + moved, behavior: 'instant' }); hold.quiet = now; }
+  }, { passive: true });
   var watch = function (el) {
     var t0 = Date.now(), y = window.scrollY;
     var id = setInterval(function () {
-      if (Date.now() - t0 > 2500) { clearInterval(id); return; }
+      if (Date.now() - t0 > 15000) { clearInterval(id); return; }
       if (document.activeElement !== el) { y = window.scrollY; return; }
       clearInterval(id);
-      if (Date.now() - lastInput < 1000) return;
+      if (byVisitor(el)) return;
       var r = el.getBoundingClientRect(), top = r.top + window.scrollY - y;
       if (top >= 0 && top + r.height <= window.innerHeight) return;  // fully in view: nothing to stop
-      hold = { y: y, until: Date.now() + 1200 };
-      if (Math.abs(window.scrollY - y) > 1) window.scrollTo({ top: y, behavior: 'instant' });
+      holdHere(y);
     }, 50);
   };
-  document.addEventListener('load', function (e) {
-    if (isFrame(e.target)) { e.target.loadedAt = Date.now(); watch(e.target); }
-  }, true);
-  document.addEventListener('pointerover', function (e) { if (isFrame(e.target) && e.pointerType === 'mouse') overFrame = e.target; });
-  document.addEventListener('pointerout', function (e) { if (e.target === overFrame) overFrame = null; });
-  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (type) {
-    window.addEventListener(type, function () {
-      lastInput = Date.now();
-      if (type === 'keydown') lastKey = lastInput;
-      hold = null;
-    }, { capture: true, passive: true });
-  });
-  window.addEventListener('scroll', function () {
-    if (!hold) return;
-    if (Date.now() > hold.until) { hold = null; return; }
-    if (Math.abs(window.scrollY - hold.y) > 1) window.scrollTo({ top: hold.y, behavior: 'instant' });
-  }, { passive: true });
+  document.addEventListener('load', function (e) { if (isFrame(e.target)) watch(e.target); }, true);
 
   window.addEventListener('blur', function () {
-    var y = window.scrollY, now = Date.now();
-    // Some browsers update activeElement only after blur, so look a tick later,
-    // judging the embed's position against where the page was at the blur.
+    var visitor = function (el) { return isFrame(el) && byVisitor(el); };
+    // Some browsers update activeElement only after blur, so look a tick later.
     setTimeout(function () {
       var el = document.activeElement;
-      if (!isFrame(el)) return;
-      var r = el.getBoundingClientRect(), top = r.top + window.scrollY - y;
-      var onScreen = top + r.height > 0 && top < window.innerHeight;
-      if (!onScreen || !(el === overFrame || now - lastKey < 500 || now - loadedAt(el) > 2500)) return;
+      if (!visitor(el)) return;
       var src = el.getAttribute('src') || '';
       if (src.indexOf('hbportal.co') !== -1) report('honeybook_scheduler_embed');
       else if (el.closest && el.closest('.hb-embed')) report('honeybook_form_embed');
     }, 0);
   });
 })();
+
 
 
