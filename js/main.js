@@ -287,8 +287,16 @@ document.addEventListener('DOMContentLoaded', function () {
       var done = false, t;
       var end = function (e) { if (e.target === el && e.propertyName === prop) finish(); };
       var finish = function () { if (done) return; done = true; clearTimeout(t); el.removeEventListener('transitionend', end); fn(); };
+      // The fallback must not cut short a fade that started late: if the transition
+      // is still pending or running when it fires, wait for it to finish instead.
+      var fallback = function () {
+        var running = el.getAnimations && el.getAnimations().filter(function (a) {
+          return a.transitionProperty === prop && a.playState !== 'finished';
+        })[0];
+        if (running) running.finished.then(finish, finish); else finish();
+      };
       el.addEventListener('transitionend', end);
-      t = setTimeout(finish, ms);
+      t = setTimeout(fallback, ms);
     }
     function swap() {
       timer = 0;
