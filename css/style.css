@@ -692,17 +692,6 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
   transition:background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
 }
 .hero-dots button:hover::before{background:rgba(242,237,228,0.6);}
-/* Pause control for the auto-advancing hero. Sits beside the dots rather than
-   inside them, because .hero-dots is a tablist. 44x44 tap target, glyph smaller. */
-.hero-pause{
-  position:absolute;z-index:6;bottom:34px;left:50%;
-  transform:translateX(64px);
-  width:44px;height:44px;padding:0;border:none;background:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(242,237,228,0.75);font-size:0.78rem;line-height:1;
-  transition:color 0.3s ease;
-}
-.hero-pause:hover{color:#fff;}
 .hero-dots button[aria-selected="true"]::before{
   background:var(--gold);border-color:var(--gold);transform:scale(1.25);
 }
@@ -714,7 +703,6 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
 @media (max-width:640px){
   .hero-carousel .hero-content{padding-bottom:92px;}
   .hero-dots{bottom:26px;}
-  .hero-pause{bottom:26px;}
 }
 @media (prefers-reduced-motion: reduce){
   .hero-carousel .hero-slide{transition:none;}

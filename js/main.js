@@ -177,41 +177,18 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    // Rotation is gated on three independent reasons to hold, tracked separately
-    // so one releasing cannot override another that is still set. Previously a
-    // bare mouseenter stopped it: the hero is 88vh, so on a desktop the pointer
-    // is over it most of the time and the carousel simply never advanced.
-    // Hovering no longer pauses; the explicit button below does, which is also
-    // the pause control WCAG 2.2.2 asks for on anything auto-advancing.
-    var userPaused = false, focusHeld = false;
+    // Rotation holds for keyboard focus inside the hero and for a hidden tab,
+    // tracked separately so one releasing cannot override the other. Hovering
+    // does not pause: the hero is 88vh, so on a desktop the pointer is over it
+    // most of the time and a hover pause meant the carousel never advanced.
+    var focusHeld = false;
 
     // The !timer guard matters: without it a second start() orphans the first
     // interval and runs a full-viewport crossfade forever.
-    function canRun() { return !reduced && !userPaused && !focusHeld && !document.hidden; }
+    function canRun() { return !reduced && !focusHeld && !document.hidden; }
     function start() { if (canRun() && !timer) timer = setInterval(function () { go(index + 1); }, DELAY); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function restart() { stop(); start(); }
-
-    var pause = document.createElement('button');
-    pause.type = 'button';
-    pause.className = 'hero-pause';
-    // The label alone carries the state. Adding aria-pressed as well made a screen
-    // reader announce "Play slideshow, pressed" while the show was stopped.
-    function syncPause() {
-      pause.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
-      pause.textContent = userPaused ? '▶' : '‖';
-    }
-    pause.addEventListener('click', function () {
-      userPaused = !userPaused;
-      syncPause();
-      // An explicit Play overrides the focus hold: the button itself has focus at
-      // this moment, so without this the show would stay stopped.
-      if (userPaused) { stop(); } else { focusHeld = false; start(); }
-    });
-    syncPause();
-    // Appended to the hero, not to dots: dots is a role="tablist" and a control
-    // that is not a tab does not belong inside one.
-    hero.appendChild(pause);
 
     // Hold only for keyboard focus. A mouse click or tap also focuses a button,
     // and treating that as a hold froze the show after any click on a dot.
