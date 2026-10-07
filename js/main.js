@@ -378,9 +378,10 @@ document.addEventListener('click', function (e) {
 // action on the site completely unmeasured.
 //
 // A click inside a cross-origin iframe blurs the parent window and makes that
-// iframe document.activeElement. That is the one signal available from out here.
-// It reports engagement, NOT a completed booking: the completion still happens on
-// hbportal.co and only HoneyBook can confirm it.
+// iframe document.activeElement. That is the one signal available from out here,
+// and it is only an estimate (see below), so it goes to GA as engagement and never
+// to Meta as a conversion. It is NOT a completed booking: the completion still
+// happens on hbportal.co and only HoneyBook can confirm it.
 (function () {
   var frames = document.querySelectorAll('iframe[src*="hbportal.co"], .hb-embed iframe');
   var placement = document.querySelector('[class^="hb-p-"], [class*=" hb-p-"]');
@@ -388,85 +389,86 @@ document.addEventListener('click', function (e) {
 
   var sent = {};
   // Once per kind per page, so touching the inquiry form does not swallow a later
-  // scheduler report. Only the scheduler is a Meta 'Schedule': the contact form
-  // is an inquiry, and counting it as a booking would corrupt that conversion.
+  // scheduler report.
   var report = function (which) {
     if (sent[which]) return;
     sent[which] = true;
     var ga = (typeof gtag === 'function') ? gtag : function () {};
-    if (typeof fbq !== 'function') { window.fbq = function () {}; }
-    if (which === 'honeybook_scheduler_embed') {
-      fbq('track', 'Schedule');
-      ga('event', 'scheduler_interact', { method: which, page_location: location.href });
-    } else {
-      fbq('trackCustom', 'InquiryFormInteract');
-      ga('event', 'inquiry_form_interact', { method: which, page_location: location.href });
-    }
+    ga('event', which === 'honeybook_scheduler_embed' ? 'scheduler_interact' : 'inquiry_form_interact',
+      { method: which, page_location: location.href });
   };
 
   // But a click is not the only thing that moves focus into an embed: the HoneyBook
-  // scheduler focuses itself when it finishes loading, and the browser then scrolls
-  // the page to it. Measured on the live site, /bookings jumped from the top to the
-  // first calendar about two seconds after load, and /fall-minis carried a visitor
-  // reading the gallery 2,000px down to its calendar. Counting that as a click would
-  // also have fired a Meta Schedule for nearly every /bookings visit.
-  // So a focus move counts as the visitor only when the embed is on screen and either
-  // the mouse is over it or the embed finished loading more than 3s earlier. The
-  // self-focus was measured at 130 to 750ms after load, and browsers do not always
-  // tell this page when the mouse crosses into a cross-origin frame, so hover alone
-  // cannot be relied on. A first click inside those 3s goes uncounted; the next one
-  // counts. When focus lands in an embed with no click, tap, key or wheel just
-  // before, the page is held where it was for 1.2s, which outlasts the browser's
-  // smooth scroll to the embed (measured at under a second); that covers an embed
-  // that is only partly on screen too, which the browser also scrolls to. Either
-  // way a focus the visitor did not cause is handed back to the page, or their real
-  // click into the embed afterwards would move no focus and go unreported.
-  var overFrame = null, lastInput = 0, hold = null, start = Date.now();
+  // scheduler focuses itself 130 to 750ms after it loads, and the browser then
+  // scrolls the page to it. Measured on the live site, /bookings jumped from the top
+  // to the first calendar about two seconds after load, and /fall-minis carried a
+  // visitor reading the gallery 2,000px down to its calendar.
+  //
+  // Focus alone cannot say who moved it, so this is deliberately narrow:
+  //  - For 2.5s after an embed loads it is checked every 50ms. If it takes focus
+  //    then, with no click, tap, key or wheel from the visitor in the second before,
+  //    and it was not fully in view, that is the self-focus: the page goes back to
+  //    where it was just before and is held there for 1.2s, which outlasts the
+  //    browser's smooth scroll. Checked by polling, not on blur, because a window
+  //    without focus gets no blur event and is scrolled all the same. Focus itself
+  //    is never moved, and nothing is watched outside that window, so a screen
+  //    reader, a keyboard user or a swipe over an embed is never fought.
+  //  - Engagement is only an estimate, so it goes to GA as an engagement event and
+  //    never to Meta as a conversion: a focus move counts when the embed is on screen
+  //    and the mouse is over it, a key was just pressed, or the embed loaded more than
+  //    2.5s before. A first tap inside those 2.5s is missed; a self-focus on a
+  //    scheduler the visitor scrolls to after that window can still count. A real
+  //    measure needs a signal from HoneyBook itself.
+  var overFrame = null, lastInput = 0, lastKey = 0, hold = null, start = Date.now();
   // Listened for on the document, so the form embed HoneyBook inserts later is covered.
   var isFrame = function (el) { return el && el.tagName === 'IFRAME'; };
-  document.addEventListener('load', function (e) { if (isFrame(e.target)) e.target.loadedAt = Date.now(); }, true);
+  var loadedAt = function (el) { return el.loadedAt || start; };
+  var watch = function (el) {
+    var t0 = Date.now(), y = window.scrollY;
+    var id = setInterval(function () {
+      if (Date.now() - t0 > 2500) { clearInterval(id); return; }
+      if (document.activeElement !== el) { y = window.scrollY; return; }
+      clearInterval(id);
+      if (Date.now() - lastInput < 1000) return;
+      var r = el.getBoundingClientRect(), top = r.top + window.scrollY - y;
+      if (top >= 0 && top + r.height <= window.innerHeight) return;  // fully in view: nothing to stop
+      hold = { y: y, until: Date.now() + 1200 };
+      if (Math.abs(window.scrollY - y) > 1) window.scrollTo({ top: y, behavior: 'instant' });
+    }, 50);
+  };
+  document.addEventListener('load', function (e) {
+    if (isFrame(e.target)) { e.target.loadedAt = Date.now(); watch(e.target); }
+  }, true);
   document.addEventListener('pointerover', function (e) { if (isFrame(e.target) && e.pointerType === 'mouse') overFrame = e.target; });
   document.addEventListener('pointerout', function (e) { if (e.target === overFrame) overFrame = null; });
   ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (type) {
-    window.addEventListener(type, function () { lastInput = Date.now(); hold = null; }, { capture: true, passive: true });
+    window.addEventListener(type, function () {
+      lastInput = Date.now();
+      if (type === 'keydown') lastKey = lastInput;
+      hold = null;
+    }, { capture: true, passive: true });
   });
-  // A window without focus (say, just after a click in the address bar) gets no blur
-  // event when the embed takes focus, but the page still scrolls to it. So the scroll
-  // is watched too: settledY follows the page while the visitor drives it, and a jump
-  // of more than 300px with focus in an embed and no input from them is undone.
-  var settledY = window.scrollY;
-  var handBack = function (el) { setTimeout(function () { el.blur(); window.focus(); }, 0); };
   window.addEventListener('scroll', function () {
-    var y = window.scrollY, now = Date.now(), el = document.activeElement;
-    if (hold && now > hold.until) hold = null;
-    if (hold) { if (Math.abs(y - hold.y) > 1) window.scrollTo({ top: hold.y, behavior: 'instant' }); return; }
-    // Never for an embed the visitor has clicked into: wheeling over it scrolls the
-    // page with no event reaching this document, and that must not be fought.
-    if (isFrame(el) && !el.byVisitor && now - lastInput > 1000) {
-      if (Math.abs(y - settledY) > 300) {
-        hold = { y: settledY, until: now + 1200 };
-        window.scrollTo({ top: settledY, behavior: 'instant' });
-        handBack(el);
-      }
-      return;
-    }
-    settledY = y;
+    if (!hold) return;
+    if (Date.now() > hold.until) { hold = null; return; }
+    if (Math.abs(window.scrollY - hold.y) > 1) window.scrollTo({ top: hold.y, behavior: 'instant' });
   }, { passive: true });
 
   window.addEventListener('blur', function () {
-    var el = document.activeElement;
-    if (!el || el.tagName !== 'IFRAME') return;
-    var r = el.getBoundingClientRect();
-    var onScreen = r.bottom > 0 && r.top < window.innerHeight;
-    var visitor = onScreen && (el === overFrame || Date.now() - (el.loadedAt || start) > 3000);
-    if (!visitor) {
-      if (Date.now() - lastInput > 1000) hold = { y: window.scrollY, until: Date.now() + 1200 };
-      handBack(el);
-      return;
-    }
-    el.byVisitor = true;
-    var src = el.getAttribute('src') || '';
-    if (src.indexOf('hbportal.co') !== -1) report('honeybook_scheduler_embed');
-    else if (el.closest && el.closest('.hb-embed')) report('honeybook_form_embed');
+    var y = window.scrollY, now = Date.now();
+    // Some browsers update activeElement only after blur, so look a tick later,
+    // judging the embed's position against where the page was at the blur.
+    setTimeout(function () {
+      var el = document.activeElement;
+      if (!isFrame(el)) return;
+      var r = el.getBoundingClientRect(), top = r.top + window.scrollY - y;
+      var onScreen = top + r.height > 0 && top < window.innerHeight;
+      if (!onScreen || !(el === overFrame || now - lastKey < 500 || now - loadedAt(el) > 2500)) return;
+      var src = el.getAttribute('src') || '';
+      if (src.indexOf('hbportal.co') !== -1) report('honeybook_scheduler_embed');
+      else if (el.closest && el.closest('.hb-embed')) report('honeybook_form_embed');
+    }, 0);
   });
 })();
+
+
