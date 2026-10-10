@@ -1,0 +1,468 @@
+/* /families only. Loaded right after style.css; every rule is scoped to
+   body.page-families so nothing here can reach another page. */
+
+/* ── Hero ────────────────────────────────────────────────────────────────
+   Stacked at every width, with no scrim anywhere: the photographs as a full-bleed
+   band, then the words beneath on the site's dark ground (--charcoal, as section.dark
+   and .cta-band). Every band height is set by CSS before the image arrives, so
+   nothing shifts when it does.
+   The rules are a cascade with no gaps between ranges: the tablet layout is the base,
+   and max-width:640px, max-width:400px and min-width:1024px each override it, so a
+   fractional width (zoom) always lands in exactly one source and one layout. The four
+   preloads in <head> use the same boundaries: width >= 1024px, 640px < width < 1024px,
+   400px < width <= 640px, width <= 400px. Sources are CDN variants by screen density (image-set, with a plain
+   url() first for browsers without it).
+     >=1024px:   the triptych (2400x1200, so 50cqw tall at full width), offset -7cqw so
+                 the band always starts 14% down the photo, above the highest head
+                 (17% in the middle panel). Height min(39cqw, 100svh - 360px), at least
+                 30cqw: 360px is the promo bar, header and the hero's text down to the
+                 bottom of the button, so the whole button is on the first screen. The
+                 30cqw floor still shows 14-74% of the photo, every face included.
+     641-1023px: the whole triptych at its own 2:1, from a 960/1600/2400 density ladder.
+     <=640px:    the single photo (mother and daughter), positioned so both faces stay
+                 in the band at any phone width.
+   Sizes and offsets are in cqw (the hero's own width), not vw: with a desktop scrollbar
+   100vw is wider than the hero, and a vw offset left a strip of repeated sky. */
+.page-families .hero.compact{display:block;min-height:0;padding:0;background:var(--charcoal);container-type:inline-size;}
+.page-families .hero.compact .hero-bg::after{content:none;}
+.page-families .hero-bg.hero-triptych{
+  position:relative;inset:auto;background-size:cover;background-repeat:no-repeat;
+  aspect-ratio:2/1;height:auto;background-position:center;
+  background-image:url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=960');
+  background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=960') 1x, url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=1600') 2x, url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=2400') 3x);
+  background-image:image-set(url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=960') 1x, url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=1600') 2x, url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=2400') 3x);
+}
+/* The desktop text measure: 696px of text, as .hero-content's 760px box less its 32px sides. */
+.page-families .hero.compact .hero-content{max-width:792px;padding:40px 48px 48px;}
+@media (max-width:640px){
+  /* The photo is 1.5x as tall as it is wide when it fills the width; the mother's hair starts
+     at 45% of its height and the girl's chin sits near 68%, so a band starting 61.5cqw down
+     holds both faces from 320px to 640px wide. */
+  .page-families .hero-bg.hero-triptych{
+    aspect-ratio:auto;height:clamp(240px, 66.7vw, 300px);
+    background-position:center -61.5vw;background-position:center -61.5cqw;
+    background-image:url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=640');
+    background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=640') 1x, url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=1067') 2x);
+    background-image:image-set(url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=640') 1x, url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=1067') 2x);
+  }
+  .page-families .hero.compact .hero-content{max-width:none;padding:28px 24px 36px;}
+  .page-families .fam-hero-facts{margin:12px 0 0;}
+  .page-families .hero-actions{margin-top:16px;}
+}
+@media (max-width:400px){
+  .page-families .hero-bg.hero-triptych{
+    background-image:url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=800');
+    background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=400') 1x, url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=800') 2x, url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=1067') 3x);
+    background-image:image-set(url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=400') 1x, url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=800') 2x, url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&w=1067') 3x);
+  }
+}
+/* Desktop: the price, length and gallery facts sit directly under the h1 so they are on
+   the first screen; the rule and eyebrow step aside, the subhead and actions follow. */
+@media (min-width:1024px){
+  .page-families .hero-bg.hero-triptych{
+    aspect-ratio:auto;
+    height:clamp(30vw, calc(100vh - 360px), 39vw);
+    height:clamp(30cqw, calc(100svh - 360px), 39cqw);
+    background-position:50% -7vw;
+    background-position:50% -7cqw;
+    background-image:url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=1600');
+    background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=1600') 1x, url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=2400') 2x);
+    background-image:image-set(url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=1600') 1x, url('/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&w=2400') 2x);
+  }
+  .page-families .hero.compact .hero-content{max-width:1100px;padding:20px 48px 40px;display:flex;flex-direction:column;align-items:center;}
+  .page-families .hero .rule,
+  .page-families .hero.compact .eyebrow{display:none;}
+  .page-families .hero h1{order:0;margin:0;}
+  .page-families .fam-hero-facts{order:1;margin:8px 0 0;font-size:0.95rem;}
+  .page-families .hero .subhead{order:2;margin:10px auto 0;}
+  .page-families .hero-actions{order:3;margin-top:20px;}
+}
+/* Short phones (390x664 with the promo bar): a shorter band, a slightly smaller h1 and no rule,
+   so the button and the facts line both sit on the first screen. The band still holds both faces. */
+@media (max-width:640px) and (max-height:700px){
+  .page-families .hero-bg.hero-triptych{height:190px;background-position:center calc(-61.5vw - 12px);background-position:center calc(-61.5cqw - 12px);}
+  .page-families .hero.compact .hero-content{padding:18px 24px 22px;}
+  .page-families .hero .rule{display:none;}
+  .page-families .hero-actions{margin-top:16px;}
+  .page-families .fam-hero-facts{margin-top:8px;}
+}
+/* overflow-wrap only breaks a word that cannot fit a line by itself ("photographer" at 200% text). */
+.page-families .hero h1{font-size:clamp(2.2rem, 4.6vw, 3.4rem);text-wrap:balance;overflow-wrap:break-word;}
+@media (max-width:640px) and (max-height:700px){.page-families .hero h1{font-size:2rem;}}
+/* One step lighter than style.css's #e0c091 (set when the eyebrow sat on a photo); on
+   --charcoal it measures 10.3:1. */
+.page-families .hero.compact .eyebrow{color:#e6c99c;text-shadow:none;}
+.page-families .hero-actions{align-items:center;gap:10px 26px;}
+.page-families .hero-actions .btn{min-height:48px;display:inline-flex;align-items:center;}
+/* The quiet second route: a text link, not a second button. */
+.page-families .fam-hero-link{
+  display:inline-flex;align-items:center;min-height:44px;
+  font-size:0.86rem;letter-spacing:0.12em;text-transform:uppercase;color:#f7f2ea;
+  text-decoration:underline;text-decoration-color:rgba(224,192,145,0.75);text-underline-offset:6px;
+}
+.page-families .fam-hero-link:hover{color:#e0c091;}
+/* The offer in one line of plain sentence case: between the subhead and the actions on phones
+   and tablets, directly under the h1 on desktop. */
+.page-families .fam-hero-facts{margin:16px 0 0;font-size:0.875rem;line-height:1.5;letter-spacing:0.02em;color:#efe6d8;text-wrap:balance;}
+.page-families .hero :focus-visible{outline-color:var(--cream);}
+/* Spec and fact lines break only between items, after the middot, never inside one;
+   on phones an item may still wrap inside itself, so enlarged text (200%) reflows instead of clipping. */
+.page-families .fam-nw{white-space:nowrap;}
+@media (max-width:640px){
+  /* An inline-block keeps each item whole while it fits the line, and wraps inside itself
+     only when enlarged text makes it wider than the line. */
+  .page-families .fam-hero-facts .fam-nw{white-space:normal;display:inline-block;max-width:100%;}
+}
+
+/* ── Buttons: hover states that keep their text readable ─────────────────
+   style.css turns .btn-light white-on-gold-light on hover (2.25:1) and .btn-dark
+   white-on-gold (3.16:1). Here: ink on gold-light 6.64:1, white on gold-text 5.73:1. */
+.page-families main .btn-light:hover{color:var(--ink);}
+.page-families main .btn-dark:hover{background:var(--gold-text);color:#fff;}
+
+/* ── Keyboard focus inside a block that has not revealed yet ─────────────
+   .reveal content starts transparent and fades in over 0.8s; focus arriving
+   first shows the block at once, so the focus ring is never on invisible text. */
+.page-families .reveal:focus-within,
+.page-families .reveal-group:focus-within > *,
+.page-families .price-features li:focus-within{opacity:1;transform:none;transition:none;}
+
+/* Screen-reader-only text (the gallery's descriptions as a stable list). */
+.page-families .fam-sr-only{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+/* ── Approach: photo beside the words ────────────────────────────────────
+   The photo spans both rows; the heading sits at the bottom of the first and
+   the copy at the top of the second, so the text block centres on the photo. */
+.page-families .fam-approach{
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);
+  grid-template-areas:"photo head" "photo body";
+  column-gap:72px;
+}
+.page-families .fam-approach-photo{
+  grid-area:photo;align-self:center;position:relative;overflow:hidden;aspect-ratio:1/1;
+  border:12px solid #fff;border-radius:2px;
+  box-shadow:0 0 0 1px rgba(44,38,33,0.10), 0 14px 30px -14px rgba(44,38,33,0.35);
+}
+.page-families .fam-approach-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%;}
+.page-families .fam-approach-head{grid-area:head;align-self:end;}
+.page-families .fam-approach-head .section-label{text-align:left;}
+.page-families .fam-approach-head h2{margin-bottom:22px;}
+.page-families .fam-approach-body{grid-area:body;align-self:start;}
+.page-families .fam-approach-body p{max-width:540px;}
+.page-families .fam-approach-body > p:not(.fam-lead):not(.fam-pull){font-weight:400;font-size:1.05rem;line-height:1.65;max-width:32em;}
+/* The lead-in that used to sit in the hero, set one size up from the paragraph it introduces. */
+.page-families .fam-lead{font-size:1.2rem;line-height:1.6;font-weight:400;color:var(--ink);margin-bottom:18px;}
+.page-families .fam-pull{
+  margin:28px 0 0;padding-left:22px;border-left:2px solid var(--gold);
+  font-family:var(--serif);font-style:italic;font-size:1.5rem;line-height:1.45;color:var(--ink);
+}
+@media (max-width:899px){
+  .page-families .fam-approach{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "photo" "body";}
+  .page-families .fam-approach-head{text-align:center;}
+  .page-families .fam-approach-head .section-label{text-align:center;}
+  .page-families .fam-approach-head h2{margin-bottom:28px;}
+  .page-families .fam-approach-photo{width:100%;max-width:520px;margin:0 auto 32px;aspect-ratio:1/1;}
+  .page-families .fam-approach-photo img{object-position:50% 100%;}
+  .page-families .fam-approach-body{width:100%;max-width:560px;margin:0 auto;}
+  .page-families .fam-approach-body p{max-width:none;}
+  .page-families .fam-pull{font-size:1.35rem;}
+  .page-families .fam-lead{font-size:1.12rem;}
+}
+@media (min-width:768px) and (max-width:899px){
+  .page-families .fam-approach-section{padding:56px 0;}
+  .page-families .fam-approach-photo{max-width:420px;margin-bottom:24px;}
+}
+@media (max-width:640px){
+  .page-families .fam-approach-photo{border-width:5px;}
+}
+
+/* ── The work (gallery) ──────────────────────────────────────────────── */
+.page-families .fam-work h2{margin-bottom:10px;}
+.page-families .fam-work-intro{max-width:620px;margin:0 auto 10px;color:var(--ink-soft);}
+.page-families .fam-work .fade-gallery{margin-top:30px;}
+.page-families .fam-work-more{margin-top:36px;}
+/* The forehead-to-forehead frame keeps the contact low in the frame rather than sky; targeted
+   by file because photos move between frames. */
+.page-families .fam-work img[src$="roseville-family-father-daughter-forehead-to-forehead.jpg"]{object-position:50% 100%;}
+/* Phones: a mosaic instead of three ~95px thumbnails. Frame 1 runs the full width, frames 2 and 3
+   sit side by side beneath it; all keep the 4:5 mat, and main.js crossfades photos through all
+   three as before. Photos move between frames, so every photo's sizes value is written for the
+   big frame (100vw - 64px container - 2 x 8px mat), times its cover factor in a 4:5 frame. */
+@media (max-width:640px){
+  .page-families .fam-work .fade-gallery{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .page-families .fam-work .fade-gallery > .img-frame:first-child{grid-column:1 / -1;border-width:8px;}
+  /* Only present when all six frames are in the page (reduced motion, no JavaScript): the
+     sixth runs full width too, so the still mosaic is 1 + 2 + 2 + 1 with no orphan. */
+  .page-families .fam-work .fade-gallery > .img-frame:nth-child(6){grid-column:1 / -1;border-width:8px;}
+}
+
+/* ── Review ──────────────────────────────────────────────────────────────
+   The coda to the gallery: one client's words as an editorial pull quote on the
+   cream between the gallery's band and the sessions' band. No box, no heading. */
+.page-families .fam-quote{padding:72px 0 76px;}
+@media (max-width:1080px){.page-families .fam-quote{padding:52px 0 56px;}}
+.page-families .fam-pullquote{max-width:34em;margin:0 auto;text-align:center;font-size:1.75rem;}
+.page-families .fam-pullquote-mark{display:block;font-family:var(--serif);font-size:4.4rem;line-height:0.6;color:var(--gold);margin:0 0 4px;height:0.42em;}
+.page-families .fam-pullquote blockquote{
+  margin:0;font-family:var(--serif);font-style:italic;font-weight:400;font-size:1em;line-height:1.45;
+  color:var(--ink);text-wrap:balance;
+}
+.page-families .fam-pullquote-attrib{
+  margin-top:24px;font-family:var(--sans);font-size:0.8rem;letter-spacing:0.16em;text-transform:uppercase;
+  font-weight:400;color:var(--gold-text);
+}
+@media (max-width:700px){
+  .page-families .fam-pullquote{font-size:1.3rem;}
+  .page-families .fam-pullquote-mark{font-size:3.6rem;}
+  .page-families .fam-pullquote-attrib{margin-top:18px;font-size:0.76rem;}
+}
+/* The review link: a 44px hit area without moving the line (style.css's padding/negative-margin pattern). */
+.page-families .fam-pullquote-attrib a{
+  display:inline-block;padding:12px 4px;margin:-12px -4px;border-bottom:0;
+  text-decoration:underline;text-decoration-color:var(--gold-light);text-decoration-thickness:1px;text-underline-offset:4px;
+}
+.page-families .fam-pullquote-attrib a:hover{text-decoration-color:var(--gold);color:var(--gold-text);}
+
+/* ── Session cards ───────────────────────────────────────────────────────
+   Light cards: the photo on top, in full colour, and the words beneath it on
+   white. The offer's name, its price and length straight under it, then the
+   tagline, what it is and the button; what every gallery includes is said once above the
+   cards. Three across, every row (photo, name, price, tagline, copy, button) is a shared
+   subgrid track, so names, prices and buttons line up whatever the copy length. */
+.page-families .fam-sessions h2{margin-bottom:20px;}
+/* What every family gallery includes, said once above the three cards. */
+.page-families .fam-includes{max-width:46em;margin:0 auto 40px;text-align:center;font-size:1rem;line-height:1.5;font-weight:400;color:var(--ink-soft);text-wrap:pretty;}
+/* The comparison links land on each card's name, price and button, not its photo. */
+.page-families .fam-card h3[id]{scroll-margin-top:96px;}
+/* Phones and tablets: the three offers in words before the long cards (name, price and
+   who it is for), each linking to its card. Three across from 768 to 1080px. */
+.page-families .fam-compare,.page-families .fam-compare-help{display:none;}
+@media (max-width:1080px){
+  .page-families .fam-compare-help{display:block;margin:0 0 12px;text-align:center;font-size:0.875rem;font-weight:400;color:var(--ink-soft);}
+  .page-families .fam-compare{display:grid;gap:8px;list-style:none;margin:0 0 24px;padding:0;}
+  /* Flex rows that wrap: at 200% text the price drops under the name instead of colliding
+     with it. The arrow sits in a reserved 24px column on the right (12px gap). */
+  .page-families .fam-compare a{
+    position:relative;display:flex;flex-wrap:wrap;align-items:baseline;align-content:center;gap:4px 12px;
+    min-height:72px;padding:12px 52px 12px 16px;background:#fff;border:1px solid var(--line);border-radius:2px;
+    font-size:1rem;line-height:1.35;font-weight:400;color:var(--ink);
+  }
+  .page-families .fam-compare-name{flex:1 1 9rem;font-family:var(--serif);font-size:1.15rem;font-weight:500;}
+  .page-families .fam-compare-price{color:var(--gold-text);white-space:normal;}
+  .page-families .fam-compare-for{flex-basis:100%;font-size:0.875rem;color:var(--ink-soft);}
+  .page-families .fam-compare-arrow{position:absolute;right:16px;top:50%;width:24px;transform:translateY(-50%);text-align:center;font-size:1.1rem;line-height:1;color:var(--gold-text);}
+  .page-families .fam-compare a:hover{border-color:var(--gold-light);color:var(--ink);}
+}
+@media (min-width:768px) and (max-width:1080px){
+  .page-families .fam-compare{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+  .page-families .fam-compare li{display:flex;}
+  .page-families .fam-compare li > a{flex:1 1 auto;}
+  .page-families .fam-compare a{flex-direction:column;flex-wrap:nowrap;align-items:flex-start;justify-content:center;gap:2px;padding:12px 44px 12px 12px;min-height:88px;}
+  .page-families .fam-compare-name{flex:0 0 auto;}
+  .page-families .fam-compare-for{flex-basis:auto;line-height:1.35;}
+  .page-families .fam-compare-arrow{right:12px;}
+}
+.page-families .fam-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:28px;row-gap:0;}
+.page-families .fam-card{
+  display:grid;grid-template-rows:subgrid;grid-row:span 6;row-gap:0;
+  background:#fff;border:1px solid var(--line);border-radius:2px;overflow:hidden;
+  transition:box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.page-families .fam-card > :not(.fam-card-photo){margin-left:28px;margin-right:28px;}
+.page-families .fam-card-photo{position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--linen);}
+.page-families .fam-card-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.7s ease;}
+.page-families .fam-card-photo img{object-position:50% 50%;}
+.page-families .fam-card h3{margin:24px 0 8px;font-size:1.85rem;line-height:1.15;}
+.page-families .fam-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0;}
+.page-families .fam-price-amount{font-family:var(--serif);font-weight:500;font-size:2rem;line-height:1;color:var(--ink);}
+/* Desktop: the name leads (2rem), the price follows (1.75rem). After the base rule, so it wins. */
+@media (min-width:1081px){
+  .page-families .fam-card h3{font-size:2rem;}
+  .page-families .fam-price-amount{font-size:1.75rem;}
+}
+.page-families .fam-price-time{font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-text);font-weight:400;}
+.page-families .fam-card-tagline{margin:16px 0 12px;font-family:var(--serif);font-style:italic;font-size:1.15rem;line-height:1.35;color:var(--ink);}
+.page-families .fam-card-copy{margin:0;font-size:0.95rem;line-height:1.55;font-weight:400;color:var(--ink-soft);}
+.page-families .fam-card-btn{
+  display:flex;align-items:center;justify-content:center;min-height:48px;
+  margin-top:20px;margin-bottom:28px;padding:12px 16px;text-align:center;
+}
+@media (hover:hover) and (pointer:fine){
+  .page-families .fam-card:hover{border-color:var(--gold-light);box-shadow:0 18px 40px -18px rgba(44,38,33,0.35);}
+  .page-families .fam-card:hover .fam-card-photo img{transform:scale(1.035);}
+}
+.page-families .fam-minis-note{max-width:36em;margin:40px auto 0;text-align:center;color:var(--ink-soft);text-wrap:balance;}
+.page-families .fam-minis-note a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+.page-families .fam-minis-note a:hover{color:var(--gold-text);}
+
+/* Tablets (641-1080px): one card per row, the photo on the left, stretched to the height of its
+   text panel so no white strip is left under it. From 641 to 767px it is never shorter than square. */
+@media (max-width:1080px){
+  .page-families .fam-cards{grid-template-columns:minmax(0,1fr);row-gap:24px;}
+  .page-families .fam-card{
+    display:grid;grid-row:auto;grid-template-rows:none;
+    grid-template-columns:minmax(0,0.42fr) minmax(0,0.58fr);
+    grid-auto-rows:auto;align-content:start;
+  }
+  .page-families .fam-card-photo{grid-column:1;grid-row:1 / span 5;align-self:stretch;aspect-ratio:auto;min-height:0;}
+  .page-families .fam-card > :not(.fam-card-photo){grid-column:2;}
+  .page-families .fam-card h3{margin-top:26px;}
+  .page-families .fam-card-copy{margin-top:0;}
+  .page-families .fam-card-btn{justify-self:start;padding:12px 28px;}
+}
+@media (min-width:641px) and (max-width:767px){
+  .page-families .fam-card{grid-template-columns:minmax(0,0.4fr) minmax(0,0.6fr);}
+  .page-families .fam-card-photo{min-height:calc((100vw - 66px) * 0.4);}
+  .page-families .fam-card > :not(.fam-card-photo){margin-left:20px;margin-right:20px;}
+  .page-families .fam-card h3{margin-top:20px;font-size:1.75rem;}
+  .page-families .fam-card-btn{margin-bottom:20px;}
+}
+/* Phones (to 640px): stacked, 5:4 photo above the words; each crop keeps every face. */
+@media (max-width:640px){
+  .page-families .fam-card{grid-template-columns:minmax(0,1fr);}
+  .page-families .fam-card-photo{grid-column:1;grid-row:auto;aspect-ratio:5/4;min-height:0;align-self:auto;}
+  .page-families .fam-card-photo-family img{object-position:50% 70%;}
+  .page-families .fam-card-photo-fresh img{object-position:50% 62%;}
+  .page-families .fam-card-photo-extended img{object-position:50% 55%;}
+  .page-families .fam-card > :not(.fam-card-photo){grid-column:1;margin-left:22px;margin-right:22px;}
+  .page-families .fam-card h3{margin-top:20px;font-size:1.5rem;line-height:1.2;}
+  .page-families .fam-price-amount{font-size:2rem;}
+  .page-families .fam-card-tagline{margin-top:12px;}
+  .page-families .fam-card-btn{justify-self:stretch;margin-top:18px;margin-bottom:22px;}
+  .page-families .fam-sessions h2{margin-bottom:36px;}
+}
+
+/* ── Maternity ───────────────────────────────────────────────────────────
+   Its own band on cream, so it reads apart from the linen pricing above. The card sits
+   in a .reveal-group (as the portraits price cards do), so its bullets fade in. Above
+   1080px the card is two columns: the price, tagline and length on the left; what is
+   included and the button on the right. Tablet and phone keep it stacked. */
+.page-families .fam-maternity{background:var(--cream);padding:64px 0 72px;}
+@media (max-width:1080px){.page-families .fam-maternity{padding:56px 0 64px;}}
+.page-families .fam-maternity h2{margin-bottom:28px;}
+.page-families .fam-maternity .price{font-size:2rem;line-height:1.1;}
+.page-families .fam-maternity .price-card{max-width:680px;margin:0 auto;}
+.page-families .fam-maternity-details{display:flex;flex-direction:column;}
+.page-families .fam-maternity-details .btn{align-self:center;}
+@media (min-width:1081px){
+  .page-families .fam-maternity .price-card{
+    display:grid;grid-template-columns:0.9fr 1.1fr;gap:24px 40px;padding:32px;max-width:100%;align-items:start;
+  }
+  .page-families .fam-maternity-summary .price{margin-top:4px;}
+  .page-families .fam-maternity-summary .price-meta{margin-bottom:0;}
+  .page-families .fam-maternity-details{border-left:1px solid var(--line);padding-left:40px;}
+  .page-families .fam-maternity .price-features{border-top:0;padding-top:0;margin:0;}
+  .page-families .fam-maternity-details .btn{align-self:flex-start;margin-top:18px;}
+}
+.page-families .fam-maternity .price-features li{font-weight:400;font-size:0.95rem;}
+@media (max-width:640px){.page-families .fam-maternity .price-features li{font-size:1rem;line-height:1.5;}}
+.page-families .fam-maternity .price-features a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+.page-families .fam-maternity .price-features a:hover{color:var(--gold-text);}
+@media (min-width:701px) and (max-width:1080px){
+  .page-families .fam-maternity .price-features{display:grid;grid-template-columns:1fr 1fr;column-gap:32px;align-content:start;}
+}
+
+/* ── Process ─────────────────────────────────────────────────────────────
+   style.css's --gold step numbers measure 2.84:1 on cream; #a07a45 is the same
+   hue a step darker and measures 3.51:1 (3:1 is the bar at this size). */
+.page-families .step-num{color:#a07a45;}
+.page-families .step p{margin-top:12px;font-weight:400;color:var(--ink-soft);}
+/* Phones: the steps were 60px apart box to box (about 90px to the eye: Cormorant's old-style
+   numerals sit at x-height, so their line box is mostly air); now 24px with the numeral set
+   solid, about 40px to the eye, and the numeral 8px above its h3. */
+@media (max-width:640px){
+  .page-families .numbered-steps{gap:24px;margin:32px 0 12px;}
+  .page-families .step-num{line-height:1;margin-bottom:8px;}
+  .page-families .step p{margin-bottom:0;}
+}
+
+.page-families .fam-process{padding-top:48px;}
+@media (max-width:1080px){.page-families .fam-process{padding-top:40px;}}
+/* Desktop (>=1081px): an editorial block. The label, heading and button sit left-aligned in
+   a 240px column; the three steps run down the right as a list, numeral in a gutter. */
+@media (min-width:1081px){
+  .page-families .fam-process .container{
+    display:grid;grid-template-columns:240px minmax(0,1fr);grid-template-rows:auto 1fr;
+    grid-template-areas:"intro steps" "cta steps";column-gap:72px;align-items:start;
+  }
+  .page-families .fam-process-intro{grid-area:intro;}
+  .page-families .fam-process-intro .section-label,
+  .page-families .fam-process-intro h2{text-align:left;}
+  .page-families .fam-process-cta{grid-area:cta;text-align:left;}
+  .page-families .fam-process-cta .btn{margin-top:12px;}
+  .page-families .fam-process .numbered-steps{grid-area:steps;grid-template-columns:minmax(0,1fr);gap:40px;margin:6px 0 0;max-width:640px;}
+  .page-families .fam-process .step{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:baseline;}
+  .page-families .fam-process .step-num{grid-row:1;line-height:1;margin:0;}
+  .page-families .fam-process .step h3,.page-families .fam-process .step p{grid-column:2;}
+  .page-families .fam-process .step p{margin-bottom:0;}
+}
+
+/* Tablets (641-1080px): style.css drops How it goes and Where we shoot to one full-width
+   column, which ran about 100 characters a line at 820 and 128 at 1023. The steps become a
+   list with the numeral in a left gutter, and both blocks keep a measure of about 70
+   characters, centred under their headings and left-aligned. */
+@media (min-width:641px) and (max-width:1080px){
+  .page-families .numbered-steps{max-width:592px;margin-left:auto;margin-right:auto;gap:36px;}
+  .page-families .step{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:baseline;}
+  .page-families .step-num{grid-row:1;line-height:1;margin:0;}
+  .page-families .step h3,.page-families .step p{grid-column:2;}
+  .page-families .step p{margin-bottom:0;}
+}
+
+/* ── Where we shoot ──────────────────────────────────────────────────────
+   The real places are set in a warm cream at weight 500 so they can be scanned; the
+   words around them are unchanged. Copy #cfc8bc is 10.1:1 on --charcoal and the places
+   #f2e6d0 are 13.6:1 (the old 0.88 opacity left no room above it for an emphasis). */
+.page-families .fam-where .three-col{margin-top:50px;}
+.page-families .fam-where .three-col p{margin:12px 0 0;color:#cfc8bc;font-weight:400;}
+.page-families .fam-where strong{font-weight:600;color:#f2e6d0;}
+@media (min-width:641px) and (max-width:767px){
+  .page-families .fam-where .three-col{max-width:34em;margin-left:auto;margin-right:auto;}
+}
+@media (min-width:768px) and (max-width:1080px){
+  .page-families .fam-where .three-col{max-width:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 40px;}
+  .page-families .fam-where .three-col > :nth-child(1){grid-column:1;grid-row:1;}
+  .page-families .fam-where .three-col > :nth-child(2){grid-column:2;grid-row:1 / span 2;}
+  .page-families .fam-where .three-col > :nth-child(3){grid-column:1;grid-row:2;}
+}
+@media (min-width:641px){
+  .page-families .fam-where .three-col h3::before{content:"";display:block;width:32px;height:2px;background:var(--gold);margin-bottom:18px;}
+}
+@media (max-width:640px){
+  .page-families .fam-where .three-col{gap:28px;margin-top:32px;}
+}
+
+/* ── FAQ ─────────────────────────────────────────────────────────────── */
+.page-families .fam-faq h2{margin-bottom:44px;}
+/* style.css lets an answer run 680px, about 95 characters a line; 32.5em keeps it at 75 or under. */
+.page-families .fam-faq .faq-answer{max-width:32.5em;margin-top:0;padding-bottom:20px;font-weight:400;}
+/* The whole row is the summary: style.css pads the item 16px above and below a 44px
+   summary, which left 32px of each row untappable. */
+.page-families .fam-faq .faq-item{padding:0;}
+.page-families .fam-faq .faq-item summary{min-height:72px;padding:14px 0;gap:16px;}
+/* The disclosure sign in gold-text (5.1:1 on cream; style.css's gold measured 2.84:1), at 24px,
+   drawn in an aria-hidden span so it is never read as part of the question. */
+.page-families .fam-faq .faq-item summary::after{content:none;}
+.page-families .fam-faq-icon{flex:0 0 24px;display:inline-flex;justify-content:center;color:var(--gold-text);font-family:var(--sans);font-weight:300;font-size:24px;line-height:1;transition:transform 0.25s ease;}
+.page-families .fam-faq-icon::before{content:"+";}
+.page-families .faq-item[open] .fam-faq-icon{transform:rotate(45deg);}
+
+/* ── Closing band ────────────────────────────────────────────────────────── */
+.page-families .cta-band{padding:72px 0 48px;}
+.page-families .cta-band h2{font-size:clamp(2.2rem, 4vw, 3.4rem);margin-bottom:20px;}
+.page-families .cta-band .btn-light{font-weight:500;}
+@media (max-width:1080px){.page-families .cta-band{padding:56px 0 40px;}}
+
+/* 200% text: the footer email is one long word and was the only thing that pushed the page
+   sideways (523px at a 390px viewport). Sitewide footer, fixed here for this page only. */
+.page-families .site-footer a[href^="mailto:"]{overflow-wrap:anywhere;max-width:100%;}
+
+/* Reduced motion: hover zooms would land as instant jumps under the shared transition override. */
+@media (prefers-reduced-motion: reduce){
+  .page-families .fam-card:hover .fam-card-photo img,
+  .page-families .fam-work .img-frame:hover img,
+  .page-families .fam-work .img-frame:hover img.fade-gallery-in.is-shown{transform:none;}
+}

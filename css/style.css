@@ -1,10 +1,29 @@
 /* Sofia Miyake Photography — site styles */
 
-/* Fonts are loaded from each page's <head>, not with @import.
-   An @import here is invisible to the browser's preload scanner: it only
-   exists after this file has been fetched AND parsed, which serialises the
-   whole font chain behind it — and, because every hero is a CSS background,
-   delays the LCP image too. */
+/* Web fonts are self-hosted (fonts/, 9 Oct 2026). They used to come from Google Fonts:
+   a render-blocking stylesheet on another origin, then the font files from a third
+   origin, before any text could be drawn in them. Now the faces are declared here, so
+   the browser finds them as soon as this file is parsed, from the same connection.
+   Cormorant Garamond and Work Sans are variable fonts, so one file per style and subset
+   covers every weight; latin-ext loads only if a page uses those characters. Both
+   families are under the SIL Open Font License (free to self-host). */
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400 500;font-display:swap;src:url('../fonts/cormorant-garamond-italic-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400 500;font-display:swap;src:url('../fonts/cormorant-garamond-italic-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 600;font-display:swap;src:url('../fonts/cormorant-garamond-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 600;font-display:swap;src:url('../fonts/cormorant-garamond-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:300 600;font-display:swap;src:url('../fonts/work-sans-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:300 600;font-display:swap;src:url('../fonts/work-sans-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+
+/* Metric-matched fallbacks: until the web fonts arrive, Georgia and Arial are scaled
+   to take exactly the same space (measured in Chrome, 8 Oct 2026: a 480px block with an
+   H1 and a 60-word paragraph renders 282.52px tall either way), so the font swap no
+   longer shifts the layout. Body text is Work Sans 300, which is 5% narrower than 400,
+   so it gets its own face; Cormorant italic gets real Georgia Italic, not a slanted
+   Georgia. Android has neither local font and falls through to the generic stack. */
+@font-face{font-family:'Cormorant Fallback';src:local('Georgia');size-adjust:88.26%;ascent-override:104.69%;descent-override:32.52%;line-gap-override:0%;}
+@font-face{font-family:'Cormorant Fallback';src:local('Georgia Italic');font-style:italic;size-adjust:77.88%;ascent-override:118.65%;descent-override:36.85%;line-gap-override:0%;}
+@font-face{font-family:'Work Sans Fallback';src:local('Arial');font-weight:100 349;size-adjust:106.03%;ascent-override:87.71%;descent-override:22.92%;line-gap-override:0%;}
+@font-face{font-family:'Work Sans Fallback';src:local('Arial');font-weight:350 900;size-adjust:111.53%;ascent-override:83.39%;descent-override:21.79%;line-gap-override:0%;}
 
 :root{
   --cream:#f7f2ea;
@@ -16,8 +35,8 @@
   --gold:#b28a4f;
   --gold-light:#c9a875;
   --line:rgba(44,38,33,0.12);
-  --serif:'Cormorant Garamond', Georgia, serif;
-  --sans:'Work Sans', Helvetica, Arial, sans-serif;
+  --serif:'Cormorant Garamond', 'Cormorant Fallback', Georgia, serif;
+  --sans:'Work Sans', 'Work Sans Fallback', Helvetica, Arial, sans-serif;
 }
 
 *{box-sizing:border-box;}
@@ -318,6 +337,7 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 /* Story cards */
 .story-card{
   position:relative;display:block;min-height:420px;border-radius:2px;overflow:hidden;color:#fff;
+  background:#2a2620;   /* shows only on a card without a .card-bg photo */
 }
 .card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 0.6s ease;filter:blur(4px);transform:scale(1.04);}
 .story-card:hover .card-bg{transform:scale(1.08);}
@@ -410,27 +430,8 @@ html:not(.js) .reveal,html:not(.js) .reveal-group > *{opacity:1;transform:none;}
 @media (max-width:1080px){.gallery-masonry{columns:2;}}
 @media (max-width:640px){.gallery-masonry{columns:1;}}
 
-/* Scheduler embed */
-.cal-embed{background:#fff;border:1px solid var(--line);border-radius:2px;overflow:hidden;}
-.cal-embed iframe{display:block;width:100%;height:640px;border:none;}
-@media (max-width:700px){.cal-embed iframe{height:560px;}}
-
-/* HoneyBook contact form embed */
-.hb-embed{
-  background:#fff;border:1px solid var(--line);border-radius:2px;
-  max-width:720px;margin:0 auto;padding:8px;
-}
-.hb-embed iframe{display:block;width:100%;border:none;}
-/* Reserve the real form height, or everything below jumps when HoneyBook injects
-   the iframe, on the one page that exists to convert. Measured 7 Oct 2026: 971px
-   from 900px wide up, 986px at 431-899px, 1082px at 390-430px, 1099px at 360-375px,
-   1144px at 320px. Each reserve is the smallest height in its range, so no gap is
-   left below the form; the narrowest phones still shift 17-62px. The heights
-   follow the form's fields: re-measure if the HoneyBook form changes. */
-.hb-embed > div{min-height:971px;}
-@media (max-width:899px){.hb-embed > div{min-height:986px;}}
-@media (max-width:430px){.hb-embed > div{min-height:1082px;}}
-@media (max-width:700px){.hb-embed{padding:4px;}}
+/* The booking sheet, the inquiry form, the booking cards, the booking page and the
+   session dates are in css/bookings.css, loaded on /bookings and /fall-minis only. */
 
 /* About animated hero */
 .about-hero .ah-rule{
@@ -668,6 +669,9 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
   outline-offset:3px;
   border-radius:2px;
 }
+/* On the dark bands the gold ring measures 2.92:1, under the 3:1 a focus indicator
+   needs; cream there is about 15:1. */
+.cta-band :focus-visible,.promo-bar :focus-visible,.site-footer :focus-visible{outline-color:var(--cream);}
 
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
@@ -796,72 +800,11 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,
    already carry this information in .price-meta; families had none. */
 .card-spec{color:rgba(255,255,255,0.82);font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;margin-top:14px;}
 
-/* The one line that changes each season on /fall-minis. Everything else on that
-   page is now season-neutral so the URL holds its rankings year-round. */
-.season-flag{display:inline-block;margin:16px auto 0;padding:8px 18px;border:1px solid var(--gold-light);border-radius:2px;font-size:0.9rem;color:#f2ede4;background:rgba(20,17,14,0.35);}
-
 /* ── Booking page ──────────────────────────────────────────────────────── */
 
 /* The sticky header is ~62px. Without scroll-margin an anchored section lands
    underneath it, which reads as "the page jumped to the wrong place". */
 .anchor-section{scroll-margin-top:84px;}
-
-.booking-intro{max-width:660px;margin:0 auto 48px;color:var(--ink-soft);}
-.booking-lede{max-width:600px;margin:0 auto 40px;color:var(--ink-soft);}
-
-/* Route cards — the whole card is the target, so there is one obvious action
-   per route rather than a card plus a separate small button. */
-.route-card{
-  display:flex;flex-direction:column;position:relative;
-  padding:38px 30px 30px;background:var(--cream);
-  border:1px solid var(--line);border-radius:3px;
-  transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-.route-card:hover{
-  transform:translateY(-4px);border-color:var(--gold-light);
-  box-shadow:0 14px 38px rgba(20,17,14,0.10);color:inherit;
-}
-.route-step{
-  position:absolute;top:18px;right:22px;
-  font-family:var(--serif);font-size:2.4rem;line-height:1;
-  color:var(--gold);opacity:0.28;
-}
-.route-title{
-  font-family:var(--serif);font-size:1.5rem;line-height:1.2;
-  color:var(--ink);margin-bottom:6px;padding-right:44px;
-}
-.route-kicker{
-  font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;
-  color:var(--gold-text);margin-bottom:16px;
-}
-.route-body{color:var(--ink-soft);font-size:0.97rem;flex:1;margin-bottom:22px;}
-.route-cta{
-  align-self:flex-start;font-size:0.8rem;letter-spacing:0.14em;
-  text-transform:uppercase;color:var(--ink);
-  border-bottom:1px solid var(--gold);padding-bottom:3px;
-}
-.route-card:hover .route-cta{color:var(--gold);}
-
-/* Numbered "what happens next" list */
-.booking-steps{list-style:none;counter-reset:none;margin:0;padding:0;display:grid;gap:26px;}
-.booking-steps li{
-  display:grid;grid-template-columns:44px 1fr;gap:4px 20px;align-items:start;
-  padding-bottom:26px;border-bottom:1px solid var(--line);
-}
-.booking-steps li:last-child{border-bottom:none;padding-bottom:0;}
-.booking-steps .step-n{
-  grid-row:1 / span 2;
-  width:44px;height:44px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--serif);font-size:1.15rem;
-  color:var(--gold-text);border:1px solid var(--gold-light);
-}
-.booking-steps strong{font-family:var(--serif);font-weight:500;font-size:1.18rem;}
-.booking-steps span:not(.step-n){color:var(--ink-soft);font-size:0.96rem;}
-
-@media (max-width:1080px){
-  .route-card{padding:32px 24px 26px;}
-}
 
 /* ── Session journal: index cards + post pages ─────────────────────────── */
 
@@ -1029,62 +972,6 @@ section.dark .testimonial-attrib a,.testimonial.on-dark .testimonial-attrib a{bo
   .testimonial blockquote{font-size:1.15rem;}
 }
 
-/* ── Dated session list (/fall-minis) ──────────────────────────────────────
-   A <dl> on CSS grid rather than a <table>. Reasons, for the record:
-   a table of three short columns either overflows 375px or needs its type
-   shrunk to fit, and un-shrinking it means a horizontal scroller, which is
-   the one thing this block cannot have. A <dl> re-flows: three columns on a
-   desktop, date and spots on one line with the location under them on a
-   tablet, and a plain stack under 480px. One <dt> with two <dd>s also reads
-   in a sensible order to a screen reader — the date, then what goes with it —
-   whereas the same data as a table needs header scoping to say as much. The
-   dates are not a comparison grid; they are a list of one thing each, which
-   is what a definition list is for. */
-.session-dates{
-  margin:40px 0 36px;padding:0;list-style:none;
-  border-top:1px solid var(--line);
-  text-align:left;
-}
-.session-date{
-  display:grid;
-  grid-template-columns:minmax(190px,0.9fr) 1.4fr auto;
-  gap:4px 32px;align-items:baseline;
-  padding:18px 0;border-bottom:1px solid var(--line);
-}
-.session-date-day{
-  margin:0;font-family:var(--serif);font-size:1.22rem;color:var(--ink);
-  font-variant-numeric:tabular-nums;
-}
-/* Optional per-date location and remaining-spot count. Unused until real values exist. */
-.session-date-where{margin:0;color:var(--ink-soft);font-size:0.95rem;}
-.session-date-spots{
-  margin:0;justify-self:end;white-space:nowrap;
-  font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;
-  color:var(--gold-text);
-}
-/* A booked-out date stays on the page — it is the clearest evidence that the
-   dates are real — but it stops shouting. */
-.session-date.is-full .session-date-day{color:var(--ink-soft);}
-.session-date.is-full .session-date-spots{color:var(--ink-soft);}
-.session-dates-note{max-width:600px;margin:0 0 8px;color:var(--ink-soft);}
-
-@media (max-width:700px){
-  .session-date{grid-template-columns:1fr auto;gap:2px 16px;padding:16px 0;}
-  .session-date-day{grid-column:1;grid-row:1;}
-  .session-date-spots{grid-column:2;grid-row:1;justify-self:end;}
-  .session-date-where{grid-column:1 / -1;grid-row:2;}
-}
-/* Under 480px the date and the spot count no longer both fit on one line
-   without clipping, so everything gets its own row. At 375px the widest line
-   is the date, well inside the 311px the container leaves. */
-@media (max-width:480px){
-  .session-date{grid-template-columns:1fr;gap:3px;}
-  .session-date-day,.session-date-where,.session-date-spots{
-    grid-column:1;grid-row:auto;justify-self:start;
-  }
-  .session-date-day{font-size:1.15rem;}
-}
-
 /* ── Shared utilities ──────────────────────────────────────────────────────
    The two measures currently repeated as style="max-width:840px" and
    style="max-width:760px" on about a dozen containers, plus a
@@ -1182,3 +1069,45 @@ p.section-label > a:only-child{display:inline-block;padding:11px 10px;margin:-11
    30px line (.session-post p is setting the size here, not .post-back).
    7px of padding lands it on 44.2. */
 .post-back a{display:inline-block;padding:7px 10px;margin:-7px -10px;}
+
+/* == Header Bookings pill (sitewide) == */
+/* Bookings is the one direct link in every page's nav (the rest are dropdown groups),
+   so .main-nav > a is that link alone. It reads as the action: an outlined pill at the
+   end of the row on wide screens, filled on hover. Phones keep their stacked menu
+   rows, and main.js adds a small "Book" pill beside the menu button so booking stays
+   one tap away on every screen (the hero and closing buttons on the homepage are about
+   5,800px apart on a 390px phone). */
+.main-nav > a{font-weight:400;}
+@media (min-width:701px){
+  .main-nav{align-items:center;}
+  .main-nav > a{order:3;margin-left:8px;padding:9px 16px;border:1px solid rgba(132,95,51,0.55);border-radius:2px;color:var(--ink);font-weight:500;line-height:1;}
+  .main-nav > a:hover{background:var(--charcoal);border-color:var(--charcoal);color:#fff;}
+  .main-nav > a.active{background:none;color:var(--gold-text);border-color:var(--gold-text);}
+  .main-nav > a{position:relative;}
+  .main-nav > a::before{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:44px;transform:translateY(-50%);}
+}
+/* 701-819px: tighter header spacing, so the row does not wrap at 744 (iPad mini). */
+@media (min-width:701px) and (max-width:819px){
+  .header-inner{padding-left:20px;padding-right:20px;gap:14px;}
+  .main-nav{gap:16px;}
+  .main-nav > a{margin-left:0;padding:9px 12px;}
+}
+.header-book{display:none;}
+/* Phones: 16px side padding and a 10px gap fit wordmark, pill and menu button on one
+   row at full wordmark size down to 375px; below that the wordmark steps down to
+   1.2rem (it used to wrap to two lines at 320, making the header 108px tall), and
+   below 350px to 1.05rem with tighter padding, so the pill fits at 320 too. */
+@media (max-width:700px){.header-inner{padding-left:16px;padding-right:16px;gap:10px;}}
+@media (max-width:374px){.site-title a{font-size:1.2rem;}}
+@media (max-width:349px){.header-inner{padding-left:12px;padding-right:12px;gap:10px;}.site-title a{font-size:1.05rem;}}
+@media (max-width:700px){
+  .header-book{
+    display:inline-flex;align-items:center;margin-left:auto;position:relative;padding:8px 10px;flex:none;
+    border:1px solid rgba(132,95,51,0.55);border-radius:2px;
+    font:500 0.72rem/1 var(--sans);letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);
+  }
+  .header-book:hover{background:var(--charcoal);border-color:var(--charcoal);color:#fff;}
+  .header-book::before{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:44px;transform:translateY(-50%);}
+}
+@media (min-width:390px) and (max-width:700px){.header-book{min-height:36px;justify-content:center;font-size:0.76rem;}}
+/* == end Header Bookings pill == */

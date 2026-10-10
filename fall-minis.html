@@ -188,12 +188,10 @@
 </script>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
 <link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&amp;w=1600" media="(min-width:701px)" fetchpriority="high">
 <link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&amp;w=700" media="(max-width:700px)" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bookings.css">
 <script>document.documentElement.classList.add('js');setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('js-ready')){d.classList.remove('js');}},3000);</script>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-43D75ZN3B7"></script>
@@ -271,7 +269,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
     <p class="season-flag"><strong>Now booking: Fall 2026</strong> &middot; October weekends, golden hour</p>
     <p class="subhead">Last date: Sunday, October 25.</p>
     <p class="lede">$200 for about thirty minutes at golden hour, in Roseville, Rocklin or anywhere in the greater Sacramento area &mdash; 45+ edited images you'll actually print.</p>
-    <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-gold">Book Your Date</a>
+    <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-gold" data-sheet="Book a fall mini session" data-booking-type="mini_session" data-sheet-meta="$200 total &middot; 30 min &middot; deposit to book" aria-describedby="opens-new-tab">Choose a slot</a>
   </div>
 </section>
 
@@ -325,7 +323,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
       </li>
     </ul>
     <div class="center reveal">
-      <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-dark">Book Your Date</a>
+      <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-dark" data-sheet="Book a fall mini session" data-booking-type="mini_session" data-sheet-meta="$200 total &middot; 30 min &middot; deposit to book" aria-describedby="opens-new-tab">Choose a slot</a>
     </div>
   </div>
 </section>
@@ -333,6 +331,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 <section class="cream">
   <div class="container">
     <div class="reveal">
+      <span id="recent-minis" class="anchor-section" aria-hidden="true"></span>
       <p class="section-label">Recent Mini Sessions</p>
       <h2 class="center" style="margin-bottom:10px;">What these look like</h2>
       <p class="center" style="max-width:640px; margin:0 auto 44px;">Photographed this season in Roseville and Sacramento — the same light, the same time of day, the same thirty minutes.</p>
@@ -363,7 +362,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
       <div class="step">
         <div class="step-num">01</div>
         <h3>You pick a date</h3>
-        <p style="margin-top:12px;">Pick the evening that works straight from the scheduler below — once you choose a slot, it's yours. If you have a spot in mind, add it in the notes, or I can recommend one based on your vibe. You'll get a short styling note after booking — nothing complicated, just what tends to photograph well in this light.</p>
+        <p style="margin-top:12px;">Pick the evening that works straight from the booking calendar — once you pay the deposit, it's yours. If you have a spot in mind, add it in the notes, or I can recommend one based on your vibe. You'll get a short styling note after booking — nothing complicated, just what tends to photograph well in this light.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
@@ -387,7 +386,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
       <p style="margin-top:20px; opacity:0.9; font-size:1.08rem; line-height:1.8;">The Sacramento Valley gets a short run of this every year — dry gold grass, low sun, warm air, no haze. Once it goes, it is gone until next autumn. If you've been meaning to get family photos done, this is the window that makes them look the way you're picturing.</p>
     </div>
     <div class="center reveal" style="margin-top:32px;">
-      <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-gold">Book Your Date</a>
+      <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-gold" data-sheet="Book a fall mini session" data-booking-type="mini_session" data-sheet-meta="$200 total &middot; 30 min &middot; deposit to book" aria-describedby="opens-new-tab">Choose a slot</a>
     </div>
   </div>
 </section>
@@ -434,19 +433,35 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 <section id="book" class="cream">
   <div class="container">
     <div class="reveal">
-      <p class="section-label">Request Your Date</p>
+      <p class="section-label">Book Your Date</p>
       <h2 class="center" style="margin-bottom:10px;">Let's get you on the calendar</h2>
-      <p class="center" style="max-width:580px;margin:0 auto 40px;color:var(--ink-soft);">Pick the weekend slot that works and you're booked. If you have a spot in mind, add it in the notes &mdash; or I can recommend one based on your vibe.</p>
+      <p class="center booking-lede">Choose a time and pay the deposit to hold your date.</p>
     </div>
-    <div class="cal-embed reveal">
-      <iframe src="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" title="Book a mini session" loading="lazy"></iframe>
+    <div class="price-banner booking-card reveal">
+      <div class="pb-photo">
+        <img src="images/roseville-family-boys-running-to-parents.jpg" alt="Two small boys in matching plaid toddle across dry grass toward their parents' open arms" loading="lazy" width="1280" height="1600" class="bc-crop-family bc-photo-wide" srcset="/.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=640 640w" sizes="240px">
+        <img src="images/roseville-family-of-four-laughing.jpg" alt="A family of four laughing together, the father grinning at his older son and the mother smiling at the baby on her hip" loading="lazy" width="1600" height="1067" class="bc-photo-narrow" srcset="/.netlify/images?url=/images/roseville-family-of-four-laughing.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-of-four-laughing.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-of-four-laughing.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-of-four-laughing.jpg&amp;w=1280 1280w" sizes="100vw">
+      </div>
+      <div class="pb-info">
+        <h3 class="booking-card-title">Fall mini session</h3>
+        <p class="price-meta">30 minutes &middot; 45+ edited images</p>
+        <p class="price-tag"><span class="pt-line">For parents and kids in Roseville, Rocklin or Sacramento.</span> <span class="pt-line pt-when">Weekends through Oct&nbsp;25,&nbsp;4&ndash;7pm</span></p>
+      </div>
+      <div class="pb-action">
+        <div class="pb-price"><div class="price">$200</div><p class="price-note">Session total</p></div>
+        <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-dark" data-sheet="Book a fall mini session" data-booking-type="mini_session" data-sheet-meta="$200 total &middot; 30 min &middot; deposit to book" aria-describedby="opens-new-tab">Choose a slot</a>
+        <p class="provider-note">Pay the deposit via HoneyBook</p>
+      </div>
+      <ul class="pb-features">
+        <li>Suggest a location in your booking notes, or I&rsquo;ll choose&nbsp;one</li>
+        <li>Styling note after booking; gallery within two weeks of the session</li>
+      </ul>
+      <p class="pb-links"><a href="/bookings#extended-family">Ask about extended family</a> <a href="#recent-minis">Recent minis</a></p>
     </div>
-    <div class="center reveal" style="margin-top:24px;">
-      <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-dark">Open Scheduler in New Tab</a>
-    </div>
-    <div class="center reveal" style="margin-top:32px;">
-      <p style="color:var(--ink-soft);">Prefer to text or call? <strong>(805) 422-0130</strong><br><a href="mailto:contact@sofiamiyakephoto.com">contact@sofiamiyakephoto.com</a></p>
-    </div>
+    <div class="booking-alt reveal"><div class="booking-alt-row"><p class="booking-alt-label">Questions before you book, like where to meet?</p>
+      <div class="booking-alt-action"><a href="https://sofiamiyakephoto.hbportal.co/schedule/6a5e8eccd4b6bb554d1668ea" target="_blank" rel="noopener" class="btn btn-outline" data-sheet="Book a free call" data-sheet-meta="Free &middot; 15 minutes" data-booking-type="mini_questions_call" aria-describedby="opens-new-tab">Book a free call</a>
+      <p class="provider-note">15 minutes via HoneyBook</p></div></div>
+      <p class="booking-alt-links"><span>Or</span> <a href="sms:+18054220130">Text</a> <a href="tel:+18054220130">Call</a> <a href="mailto:contact@sofiamiyakephoto.com">Email Sofia</a></p></div>
   </div>
 </section>
 
@@ -454,12 +469,13 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
   <div class="container reveal center">
     <h2>The light's already going.</h2>
     <p>Mini sessions run in Roseville, Rocklin and the greater Sacramento area. $200, about thirty minutes, and 45+ edited images in a private gallery.</p>
-    <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-light">Book Your Date</a>
+    <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-light" data-sheet="Book a fall mini session" data-booking-type="mini_session" data-sheet-meta="$200 total &middot; 30 min &middot; deposit to book" aria-describedby="opens-new-tab">Choose a slot</a>
   </div>
 </section>
 
 </main>
 
+<span id="opens-new-tab" hidden>Opens in a new tab</span>
 <footer class="site-footer">
   <div class="footer-rule"></div>
   <h3>Sofia Miyake</h3>
@@ -469,6 +485,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
   <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a> · <a href="/sitemap" style="text-decoration:underline;">Site Map</a></p>
 </footer>
 
+<script src="js/bookings.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

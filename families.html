@@ -66,7 +66,7 @@
  "@context": "https://schema.org",
  "@type": "Service",
  "name": "Family Photography",
- "description": "Documentary family photography sessions in Roseville, Rocklin and greater Sacramento.",
+ "description": "Family photography sessions in Roseville, Rocklin and Greater Sacramento.",
  "serviceType": "Family Photography",
  "url": "https://sofiamiyakephoto.com/families",
  "provider": {
@@ -160,6 +160,14 @@
   },
   {
    "@type": "Question",
+   "name": "What if the kids won't sit still?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "I give kids something to do instead of somewhere to stand. I let things get a little chaotic. Sessions run 60 to 90 minutes, with as much direction as the day needs and no more."
+   }
+  },
+  {
+   "@type": "Question",
    "name": "What should we wear?",
    "acceptedAnswer": {
     "@type": "Answer",
@@ -179,7 +187,7 @@
    "name": "How many photos will we get?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Galleries typically include 50\u201380 edited images delivered as high-resolution digital files. You'll have everything you need for prints, frames, albums, and the family group chat."
+    "text": "Family, Fresh Family and Extended Family galleries typically include 50\u201380 edited images, delivered as high-resolution digital files in 3 weeks. Maternity galleries include 40+ edited images, delivered in 2 weeks. You'll have everything you need for prints, frames, albums, and the family group chat."
    }
   },
   {
@@ -219,12 +227,12 @@
 </script>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
-<link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-family-sessions-triptych.jpg&amp;w=1600" media="(min-width:1024px)" fetchpriority="high">
-<link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&amp;w=1200" media="(max-width:1023px)" fetchpriority="high">
+<link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&amp;w=1600" imagesrcset="/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&amp;w=1600 1x, /.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&amp;w=2400 2x" media="(width >= 1024px)" fetchpriority="high">
+<link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&amp;w=960" imagesrcset="/.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&amp;w=960 1x, /.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&amp;w=1600 2x, /.netlify/images?url=/images/roseville-parents-and-children-triptych.jpg&amp;w=2400 3x" media="(640px < width < 1024px)" fetchpriority="high">
+<link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&amp;w=640" imagesrcset="/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&amp;w=640 1x, /.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&amp;w=1067 2x" media="(400px < width <= 640px)" fetchpriority="high">
+<link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&amp;w=400" imagesrcset="/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&amp;w=400 1x, /.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&amp;w=800 2x, /.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&amp;w=1067 3x" media="(width <= 400px)" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/families.css">
 <script>document.documentElement.classList.add('js');setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('js-ready')){d.classList.remove('js');}},3000);</script>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-43D75ZN3B7"></script>
@@ -253,13 +261,13 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 /></noscript>
 <!-- End Meta Pixel Code -->
 </head>
-<body>
+<body class="page-families">
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <div class="promo-bar" id="promo-bar" hidden>
   <div class="promo-inner">
-    <a href="/fall-minis">Book your fall mini sessions <span class="promo-price">$200</span> <span class="promo-arrow" aria-hidden="true">&rarr;</span></a>
+    <a href="/fall-minis">Fall mini sessions <span class="promo-price">$200</span> &middot; through Oct&nbsp;25 <span class="promo-arrow" aria-hidden="true">&rarr;</span></a>
     <button type="button" class="promo-dismiss" aria-label="Dismiss this offer">&times;</button>
   </div>
 </div>
@@ -300,97 +308,150 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 <main id="main">
 
 <section class="hero compact">
-  <div class="hero-bg hero-triptych" style="--hero-wide:url('/.netlify/images?url=/images/roseville-family-sessions-triptych.jpg&amp;w=1600');--hero-narrow:url('/.netlify/images?url=/images/roseville-mom-daughter-cheek-to-cheek.jpg&amp;w=1200');--hero-narrow-pos:center 55%;"></div>
+  <div class="hero-bg hero-triptych"></div>
   <div class="hero-content">
     <div class="rule"></div>
     <span class="eyebrow">Families</span>
-    <h1 style="font-size:clamp(2.2rem, 4.6vw, 3.4rem);">Family photographer in Roseville and Rocklin</h1>
+    <h1>Family photographer in Roseville and Rocklin</h1>
     <p class="subhead">This is what your family actually looks like.</p>
-    <p class="lede">Not the version where everyone is still and staring at the camera. The real one — full of noise and movement and the particular way your kids laugh. <em>That</em> one is worth keeping.</p>
+    <p class="fam-hero-facts"><span class="fam-nw">From $350 for 1 hour&nbsp;&middot;</span> <span class="fam-nw">50&ndash;80 edited images in 3 weeks&nbsp;&middot;</span> <span class="fam-nw">Dogs welcome</span></p>
+    <div class="hero-actions">
+      <a href="/bookings#inquire" class="btn btn-light">Check availability</a>
+      <a href="#sessions" class="fam-hero-link">See sessions and pricing</a>
+    </div>
   </div>
 </section>
 
+<section class="fam-approach-section">
+  <div class="container">
+    <div class="fam-approach">
+      <div class="fam-approach-photo reveal"><img src="images/roseville-parents-swinging-toddler-plaid.jpg" alt="Parents swing their toddler between them by his hands while his older brother hangs from his father's other hand, both boys laughing with their feet off the ground" loading="lazy" width="1600" height="1584" srcset="/.netlify/images?url=/images/roseville-parents-swinging-toddler-plaid.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-parents-swinging-toddler-plaid.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-parents-swinging-toddler-plaid.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-parents-swinging-toddler-plaid.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-parents-swinging-toddler-plaid.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-parents-swinging-toddler-plaid.jpg&amp;w=1600 1600w" sizes="(min-width:900px) calc((min(1180px, 100vw) - 136px) * 0.4545 - 24px), (min-width:768px) 396px, (min-width:641px) min(496px, calc(100vw - 88px)), min(510px, calc(100vw - 74px))"></div>
+      <div class="fam-approach-head reveal">
+        <p class="section-label">The Approach</p>
+        <h2>It's more fun to be genuine</h2>
+      </div>
+      <div class="fam-approach-body reveal">
+        <p class="fam-lead">Not the version where everyone is still and staring at the camera. The real one — full of noise and movement and the particular way your kids laugh. <em>That</em> one is worth keeping.</p>
+        <p>I show up with a plan built around what you want from the session. I give kids something to do instead of somewhere to stand. And somewhere in the middle of the chaos, I find the photo you're going to print and hang on your wall.</p>
+        <p class="fam-pull">Your family doesn't need to be ready. They just need to be themselves.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<section>
+<section class="cream fam-work">
   <div class="container">
     <div class="reveal">
-      <p class="section-label">The Approach</p>
-      <h2 class="center">It's more fun to be genuine</h2>
+      <p class="section-label">The Work</p>
+      <h2 class="center" id="family-work-heading">Recent family sessions around Roseville</h2>
+      <p class="center fam-work-intro">Golden hour, open fields and families who stopped posing about ten minutes in.</p>
     </div>
-    <div class="two-col reveal-group" style="margin-top:48px; align-items:start;">
-      <p>I show up with a plan and a goal to fulfill your vision. I give kids something to do instead of somewhere to stand. I let things get a little chaotic. And somewhere in the middle of that chaos — when your toddler is spinning and your partner is laughing and you've completely forgotten I'm there — I find the photo you're going to print and hang on your wall.</p>
-      <p style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.5rem; line-height:1.5;">Your family doesn't need to be ready. They just need to be themselves.</p>
+    <ul class="fam-sr-only" aria-labelledby="family-work-heading">
+      <li>A father crouched down, forehead to forehead with his daughter</li>
+      <li>Two small boys in matching plaid toddle across dry grass toward their parents' open arms</li>
+      <li>A mother, eyes closed, kisses her toddler's cheek as he laughs into the camera, the pond and a dry hillside behind them</li>
+      <li>A mother, father and daughter walk hand in hand through golden grass, laughing</li>
+      <li>A mother tips her head back and lifts her toddler high overhead while the father, laughing, holds their older boy</li>
+      <li>A mother, father and their two older children hold hands in a circle on the grass in bright afternoon light, the parents laughing</li>
+    </ul>
+    <div class="fade-gallery reveal" data-fade-gallery aria-hidden="true">
+      <div class="img-frame"><img src="images/roseville-family-father-daughter-forehead-to-forehead.jpg" alt="A father crouched down, forehead to forehead with his daughter" loading="lazy" width="1030" height="1600" srcset="/.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=1030 1030w" sizes="(max-width:640px) calc(100vw - 80px), calc((min(1180px, 100vw) - 184px) / 3)"></div>
+      <div class="img-frame"><img src="images/roseville-family-boys-running-to-parents.jpg" alt="Two small boys in matching plaid toddle across dry grass toward their parents' open arms" loading="lazy" width="1280" height="1600" srcset="/.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=1280 1280w" sizes="(max-width:640px) calc(100vw - 80px), calc((min(1180px, 100vw) - 184px) / 3)"></div>
+      <div class="img-frame"><img src="images/roseville-mom-kissing-baby-by-pond.jpg" alt="A mother, eyes closed, kisses her toddler's cheek as he laughs into the camera, the pond and a dry hillside behind them" loading="lazy" width="1388" height="1600" srcset="/.netlify/images?url=/images/roseville-mom-kissing-baby-by-pond.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-mom-kissing-baby-by-pond.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-mom-kissing-baby-by-pond.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-mom-kissing-baby-by-pond.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-mom-kissing-baby-by-pond.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-mom-kissing-baby-by-pond.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-mom-kissing-baby-by-pond.jpg&amp;w=1388 1388w" sizes="(max-width:640px) calc((100vw - 80px) * 1.084), calc((min(1180px, 100vw) - 184px) / 3 * 1.084)"></div>
+      <div class="img-frame"><img src="images/roseville-family-hand-in-hand-field.jpg" alt="A mother, father and daughter walk hand in hand through golden grass, laughing" loading="lazy" width="1365" height="1600" srcset="/.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=1365 1365w" sizes="(max-width:640px) calc((100vw - 80px) * 1.065), calc((min(1180px, 100vw) - 184px) / 3 * 1.065)"></div>
+      <div class="img-frame"><img src="images/roseville-mom-lifting-baby-overhead.jpg" alt="A mother tips her head back and lifts her toddler high overhead while the father, laughing, holds their older boy" loading="lazy" width="1287" height="1600" srcset="/.netlify/images?url=/images/roseville-mom-lifting-baby-overhead.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-mom-lifting-baby-overhead.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-mom-lifting-baby-overhead.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-mom-lifting-baby-overhead.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-mom-lifting-baby-overhead.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-mom-lifting-baby-overhead.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-mom-lifting-baby-overhead.jpg&amp;w=1287 1287w" sizes="(max-width:640px) calc((100vw - 80px) * 1.005), calc((min(1180px, 100vw) - 184px) / 3 * 1.005)"></div>
+      <div class="img-frame"><img src="images/roseville-family-holding-hands-afternoon-light.jpg" alt="A mother, father and their two older children hold hands in a circle on the grass in bright afternoon light, the parents laughing" loading="lazy" width="1455" height="1600" srcset="/.netlify/images?url=/images/roseville-family-holding-hands-afternoon-light.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-holding-hands-afternoon-light.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-holding-hands-afternoon-light.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-holding-hands-afternoon-light.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-holding-hands-afternoon-light.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-holding-hands-afternoon-light.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-family-holding-hands-afternoon-light.jpg&amp;w=1455 1455w" sizes="(max-width:640px) calc((100vw - 80px) * 1.137), calc((min(1180px, 100vw) - 184px) / 3 * 1.137)"></div>
+    </div>
+    <div class="center reveal fam-work-more">
+      <a href="/recent-shoots" class="btn btn-dark">See more recent sessions</a>
     </div>
   </div>
 </section>
 
-<section class="cream">
+<section class="fam-quote">
+  <div class="container">
+    <figure class="fam-pullquote reveal">
+      <span class="fam-pullquote-mark" aria-hidden="true">&ldquo;</span>
+      <blockquote>Sofia was professional from the very beginning and made the entire session feel so relaxed and low-pressure. She somehow made everything look effortless &mdash; even with two toddlers causing chaos the entire time.</blockquote>
+      <figcaption class="fam-pullquote-attrib">Tara Cravens &middot; <a href="https://www.google.com/maps/place/?cid=3984129550021780191" target="_blank" rel="noopener">Google review</a></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="cream fam-sessions anchor-section" id="sessions">
   <div class="container">
     <div class="reveal">
       <p class="section-label">What We Can Do Together</p>
-      <h2 class="center" style="margin-bottom:60px;">Find your session.</h2>
+      <h2 class="center">Find your session.</h2>
     </div>
-    <div class="three-col reveal-group">
-      <div class="story-card">
-        <div class="card-bg" style="background-image:url('/.netlify/images?url=/images/roseville-family-session-evening-light.jpg&w=640');"></div>
-        <div class="story-card-content">
-          <p class="card-label">Family Photoshoot</p>
-          <h3>One Year. One Chapter. One More Time.</h3>
-          <p>Anniversaries, newborn babies, kids starting school — some moments deserve more than a phone snap. Milestone sessions give you a real record of exactly where your family is right now, before everything shifts again.</p>
-          <p class="card-spec">One hour &middot; 50&ndash;80 edited images &middot; delivered in 3 weeks</p>
-          <div class="card-booking"><span class="card-price">$350 · 1 hour</span><a href="/bookings#inquire" class="btn btn-light card-book-btn">Check Availability</a></div>
-        </div>
-      </div>
-      <div class="story-card">
-        <div class="card-bg" style="background-image:url('/.netlify/images?url=/images/roseville-parents-swinging-toddler-plaid.jpg&w=640');"></div>
-        <div class="story-card-content">
-          <p class="card-label">Extended Family</p>
-          <h3>The whole chaos. Documented.</h3>
-          <p>Grandparents, cousins, the dog — everyone in one frame. Extended sessions are relaxed and unhurried, with time for beautiful group shots and all the family fun.</p>
-          <p class="card-spec">90 minutes &middot; 50&ndash;80 edited images &middot; delivered in 3 weeks</p>
-          <div class="card-booking"><span class="card-price">$495 · 90 minutes</span><a href="/bookings#inquire" class="btn btn-light card-book-btn">Check Availability</a></div>
-        </div>
-      </div>
-      <div class="story-card">
-        <div class="card-bg" style="background-image:url('/.netlify/images?url=/images/roseville-mom-kissing-baby-by-pond.jpg&w=640');"></div>
-        <div class="story-card-content">
-          <p class="card-label">Fresh Family</p>
-          <h3>The moment everything changed.</h3>
-          <p>Adding a new person is one of the most beautiful things that can happen. Fresh family sessions are soft, unhurried, and focused on all of you.</p>
-          <p class="card-spec">One hour, at home or outdoors &middot; 50&ndash;80 edited images &middot; delivered in 3 weeks</p>
-          <div class="card-booking"><span class="card-price">$425 · 1 hour, at home or outdoors</span><a href="/bookings#inquire" class="btn btn-light card-book-btn">Check Availability</a></div>
-        </div>
-      </div>
+    <p class="fam-compare-help">Choose a session to see the details.</p>
+    <ul class="fam-compare">
+      <li><a href="#session-family"><span class="fam-compare-name">Family Photoshoot</span> <span class="fam-compare-price">$350 &middot; 1&nbsp;hour</span> <span class="fam-compare-for">For your family right now</span> <span class="fam-compare-arrow" aria-hidden="true">&rarr;</span></a></li>
+      <li><a href="#session-fresh"><span class="fam-compare-name">Fresh Family</span> <span class="fam-compare-price">$425 &middot; 1&nbsp;hour</span> <span class="fam-compare-for">When someone new joins</span> <span class="fam-compare-arrow" aria-hidden="true">&rarr;</span></a></li>
+      <li><a href="#session-extended"><span class="fam-compare-name">Extended Family</span> <span class="fam-compare-price">$495 &middot; 90&nbsp;minutes</span> <span class="fam-compare-for">For grandparents and cousins</span> <span class="fam-compare-arrow" aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+    <p class="fam-includes">Every family gallery: 50&ndash;80 edited <span class="fam-nw">high-resolution</span> digital images, delivered in 3&nbsp;weeks.</p>
+    <div class="fam-cards reveal-group">
+      <article class="fam-card">
+        <div class="fam-card-photo fam-card-photo-family"><img src="images/roseville-family-father-kissing-wife-daughter-on-hip.jpg" alt="A father holding his daughter on his hip kisses the mother while the girl grins at the camera, beside a reedy pond" loading="lazy" width="1270" height="1600" srcset="/.netlify/images?url=/images/roseville-family-father-kissing-wife-daughter-on-hip.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-father-kissing-wife-daughter-on-hip.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-father-kissing-wife-daughter-on-hip.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-father-kissing-wife-daughter-on-hip.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-father-kissing-wife-daughter-on-hip.jpg&amp;w=1270 1270w" sizes="(min-width:1081px) calc((min(1180px, 100vw) - 120px) / 3), (min-width:768px) calc((100vw - 66px) * 0.420), (min-width:641px) calc((100vw - 66px) * 0.400), calc(100vw - 64px)"></div>
+        <h3 id="session-family">Family Photoshoot</h3>
+        <p class="fam-price"><span class="fam-price-amount">$350</span> <span class="fam-price-time">1 hour</span></p>
+        <p class="fam-card-tagline">One year. One chapter. One more time.</p>
+        <p class="fam-card-copy">Anniversaries, kids starting school — some moments deserve more than a phone snap. I give you a real record of exactly where your family is right now, before everything shifts again.</p>
+        <a href="/bookings#inquire" class="btn btn-dark fam-card-btn" aria-label="Check availability for Family Photoshoot">Check Availability</a>
+      </article>
+      <article class="fam-card">
+        <div class="fam-card-photo fam-card-photo-fresh"><img src="images/roseville-mom-holding-baby-under-willow.jpg" alt="A mother smiles at the camera under the arching branches of a willow, holding her baby against her chest, the pond behind them" loading="lazy" width="1431" height="1600" srcset="/.netlify/images?url=/images/roseville-mom-holding-baby-under-willow.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-mom-holding-baby-under-willow.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-mom-holding-baby-under-willow.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-mom-holding-baby-under-willow.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-mom-holding-baby-under-willow.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-mom-holding-baby-under-willow.jpg&amp;w=1431 1431w" sizes="(min-width:1081px) calc((min(1180px, 100vw) - 120px) / 3 * 1.118), (min-width:768px) calc((100vw - 66px) * 0.470), (min-width:641px) calc((100vw - 66px) * 0.447), calc(100vw - 64px)"></div>
+        <h3 id="session-fresh">Fresh Family</h3>
+        <p class="fam-price"><span class="fam-price-amount">$425</span> <span class="fam-price-time">1 hour</span></p>
+        <p class="fam-card-tagline">When someone new joins your family.</p>
+        <p class="fam-card-copy">I photograph all of you together, at home or outdoors. Fresh family sessions are soft and unhurried.</p>
+        <a href="/bookings#inquire" class="btn btn-dark fam-card-btn" aria-label="Check availability for Fresh Family">Check Availability</a>
+      </article>
+      <article class="fam-card">
+        <div class="fam-card-photo fam-card-photo-extended"><img src="images/sacramento-family-toddler-on-shoulders-golden-hour.jpg" alt="A family of six walks away across a meadow at golden hour, a toddler riding on his father's shoulders and a baby in her mother's arm, two children beside them" loading="lazy" width="1330" height="1600" srcset="/.netlify/images?url=/images/sacramento-family-toddler-on-shoulders-golden-hour.jpg&amp;w=320 320w, /.netlify/images?url=/images/sacramento-family-toddler-on-shoulders-golden-hour.jpg&amp;w=400 400w, /.netlify/images?url=/images/sacramento-family-toddler-on-shoulders-golden-hour.jpg&amp;w=640 640w, /.netlify/images?url=/images/sacramento-family-toddler-on-shoulders-golden-hour.jpg&amp;w=960 960w, /.netlify/images?url=/images/sacramento-family-toddler-on-shoulders-golden-hour.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/sacramento-family-toddler-on-shoulders-golden-hour.jpg&amp;w=1330 1330w" sizes="(min-width:1081px) calc((min(1180px, 100vw) - 120px) / 3 * 1.039), (min-width:768px) calc((100vw - 66px) * 0.436), (min-width:641px) calc((100vw - 66px) * 0.416), calc(100vw - 64px)"></div>
+        <h3 id="session-extended">Extended Family</h3>
+        <p class="fam-price"><span class="fam-price-amount">$495</span> <span class="fam-price-time">90 minutes</span></p>
+        <p class="fam-card-tagline">The whole chaos. Documented.</p>
+        <p class="fam-card-copy">Grandparents, cousins, the dog — everyone in one frame. Extended sessions are relaxed and unhurried, with time for beautiful group shots and all the family fun.</p>
+        <a href="/bookings#inquire" class="btn btn-dark fam-card-btn" aria-label="Check availability for Extended Family">Check Availability</a>
+      </article>
     </div>
+    <p class="fam-minis-note reveal">If an hour is more than you need right now, <a href="/fall-minis">fall mini sessions</a> are thirty minutes at golden hour.</p>
   </div>
 </section>
-<section class="tight linen">
+
+<section class="fam-maternity">
   <div class="container narrow">
     <div class="reveal">
       <p class="section-label center">Before they arrive</p>
-      <h2 class="center" style="margin-bottom:28px;">Maternity sessions</h2>
+      <h2 class="center">Maternity sessions</h2>
+    </div>
+    <div class="reveal-group">
       <div class="price-card">
-        <p class="card-label">Maternity Session</p>
-        <div class="price">$350</div>
-        <p class="price-tag">An hour with the person you are still waiting to meet.</p>
-        <p class="price-meta">One hour &middot; golden hour, outdoors or at home</p>
-        <ul class="price-features">
-          <li>One-hour session</li>
-          <li>40+ edited images</li>
-          <li>Partner and older children welcome</li>
-          <li>Online gallery with download</li>
-          <li>Delivered in 2 weeks</li>
-          <li>Credited to your deposit if you book a <a href="/birth-stories">birth collection</a></li>
-        </ul>
-        <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
+        <div class="fam-maternity-summary">
+          <div class="price">$350</div>
+          <p class="price-tag">An hour with the person you are still waiting to meet.</p>
+          <p class="price-meta">One hour &middot; golden hour, outdoors or at home</p>
+        </div>
+        <div class="fam-maternity-details">
+          <ul class="price-features">
+            <li>40+ edited images</li>
+            <li>Partner and older children welcome</li>
+            <li>Online gallery with download</li>
+            <li>Delivered in 2 weeks</li>
+            <li>Credited to your deposit if you book a <a href="/birth-stories">birth collection</a></li>
+          </ul>
+          <a href="/bookings#inquire" class="btn btn-dark">Inquire Now</a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section>
+<section class="fam-process">
   <div class="container">
-    <div class="reveal">
+    <div class="reveal fam-process-intro">
       <p class="section-label">The Process</p>
       <h2 class="center">How it goes.</h2>
     </div>
@@ -398,144 +459,99 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
       <div class="step">
         <div class="step-num">01</div>
         <h3>We plan together</h3>
-        <p style="margin-top:12px;">Before your session, we'll connect to talk location, what your vision is, and what kind of images you're hoping for. I'll have suggestions — but you know your family best.</p>
+        <p>Start with my inquiry form. We'll connect to talk location, your vision, and what kind of images you're hoping for. I'll have suggestions — but you know your family best.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
         <h3>We let it happen</h3>
-        <p style="margin-top:12px;">Sessions run 60 to 90 minutes, with as much direction as the day needs and no more. I'm not posing everyone against a wall — I'm watching what unfolds and capturing it as it does.</p>
+        <p>Sessions run 60 to 90 minutes, with as much direction as the day needs and no more.</p>
       </div>
       <div class="step">
         <div class="step-num">03</div>
         <h3>You get your gallery</h3>
-        <p style="margin-top:12px;">Within three weeks your gallery arrives — edited, beautiful, and full of the images you'll actually want to share. Printed products are available too.</p>
+        <p>I deliver family galleries in three weeks and maternity galleries in two — edited, beautiful, and full of the images you'll actually want to share. Printed products are available too.</p>
       </div>
     </div>
-    <div class="center reveal">
+    <div class="center reveal fam-process-cta">
       <a href="/bookings#inquire" class="btn btn-dark">Check Availability</a>
     </div>
   </div>
 </section>
 
-<section class="dark">
+<section class="dark fam-where">
   <div class="container">
     <div class="reveal">
       <p class="section-label">Where We Shoot</p>
       <h2 class="center">Wherever you feel at home</h2>
     </div>
-    <div class="three-col reveal-group" style="margin-top:50px;">
+    <div class="three-col reveal-group">
       <div>
         <h3>At home</h3>
-        <p style="margin-top:12px; opacity:0.88;">Your living room, your backyard, your kitchen table. In-home sessions have a softness that's hard to replicate, and the comfort of known spaces.</p>
+        <p>Your living room, your backyard, your kitchen table. In-home sessions have a softness that's hard to replicate, and the comfort of known spaces.</p>
       </div>
       <div>
         <h3>Outdoors</h3>
-        <p style="margin-top:12px; opacity:0.88;">Golden hour at Maidu Regional Park, the oak fields off Blue Oaks, Johnson-Springview over in Rocklin, or the Granite Bay shoreline when the light drops. Outdoor sessions give you open light and room to move. If you have a spot that means something, I'd love to hear about it.</p>
+        <p>Golden hour at <strong>Maidu Regional Park</strong>, the <strong>oak fields off Blue Oaks</strong>, <strong>Johnson-Springview</strong> over in Rocklin, or the <strong>Granite Bay shoreline</strong> when the light drops. Outdoor sessions give you open light and room to move. If you have a spot that means something, I'd love to hear about it.</p>
       </div>
       <div>
         <h3>A place that's yours</h3>
-        <p style="margin-top:12px; opacity:0.88;">A favorite coffee spot in old town Roseville, the neighborhood you walk every morning, the park where your kids learned to ride bikes — Mahany, Maidu, wherever yours is. Meaningful locations make for meaningful photos.</p>
+        <p>A favorite coffee spot in <strong>old town Roseville</strong>, the neighborhood you walk every morning, the park where your kids learned to ride bikes — <strong>Mahany</strong>, or wherever yours is. Meaningful locations make for meaningful photos.</p>
       </div>
-    </div>
-    <div class="center reveal" style="margin-top:20px;">
-      <a href="/bookings#inquire" class="btn btn-gold">Check Availability</a>
     </div>
   </div>
 </section>
 
-
-
-<section>
-  <div class="container" style="max-width:840px;">
+<section class="fam-faq">
+  <div class="container narrow">
     <div class="reveal">
       <p class="section-label">Practical Details</p>
-      <h2 class="center" style="margin-bottom:44px;">Things people usually wonder</h2>
+      <h2 class="center">Things people usually wonder</h2>
     </div>
     <div class="faq-list reveal">
       <details class="faq-item">
-        <summary>When should we book?</summary>
+        <summary>When should we book?<span class="fam-faq-icon" aria-hidden="true"></span></summary>
         <div class="faq-answer">Anytime — there's no wrong season for family photos. That said, spring and fall book up quickly. If you have a milestone or holiday in mind, reach out at least 6–8 weeks ahead.</div>
       </details>
       <details class="faq-item">
-        <summary>What should we wear?</summary>
+        <summary>What if the kids won't sit still?<span class="fam-faq-icon" aria-hidden="true"></span></summary>
+        <div class="faq-answer">I give kids something to do instead of somewhere to stand. I let things get a little chaotic. Sessions run 60 to 90 minutes, with as much direction as the day needs and no more.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What should we wear?<span class="fam-faq-icon" aria-hidden="true"></span></summary>
         <div class="faq-answer">The short version: coordinate without matching, lean into texture and layers, and wear something you actually feel good in. No matching white shirts required.</div>
       </details>
       <details class="faq-item">
-        <summary>How long are sessions?</summary>
+        <summary>How long are sessions?<span class="fam-faq-icon" aria-hidden="true"></span></summary>
         <div class="faq-answer">Family and fresh family sessions are an hour. Extended family sessions are 90 minutes, so there's room for group shots with everyone. I'd rather give you time to settle in than rush.</div>
       </details>
       <details class="faq-item">
-        <summary>How many photos will we get?</summary>
-        <div class="faq-answer">Galleries typically include 50–80 edited images delivered as high-resolution digital files. You'll have everything you need for prints, frames, albums, and the family group chat.</div>
+        <summary>How many photos will we get?<span class="fam-faq-icon" aria-hidden="true"></span></summary>
+        <div class="faq-answer">Family, Fresh Family and Extended Family galleries typically include 50–80 edited images, delivered as high-resolution digital files in 3 weeks. Maternity galleries include 40+ edited images, delivered in 2 weeks. You'll have everything you need for prints, frames, albums, and the family group chat.</div>
       </details>
       <details class="faq-item">
-        <summary>Do you offer printed products?</summary>
+        <summary>Do you offer printed products?<span class="fam-faq-icon" aria-hidden="true"></span></summary>
         <div class="faq-answer">Yes — fine art prints, albums, and wall art are available. There's nothing like seeing your family on the wall of your own home.</div>
       </details>
       <details class="faq-item">
-        <summary>Can we bring the dog?</summary>
+        <summary>Can we bring the dog?<span class="fam-faq-icon" aria-hidden="true"></span></summary>
         <div class="faq-answer">Always yes. Dogs make every session better. (Cats are negotiable.)</div>
       </details>
       <details class="faq-item">
-        <summary>What if the weather doesn't cooperate?</summary>
+        <summary>What if the weather doesn't cooperate?<span class="fam-faq-icon" aria-hidden="true"></span></summary>
         <div class="faq-answer">For outdoor sessions, we'll keep an eye on conditions together and reschedule if needed — no fees for weather changes. I have a short list of beautiful indoor backups if you'd like a plan B.</div>
       </details>
       <details class="faq-item">
-        <summary>What does a session cost?</summary>
+        <summary>What does a session cost?<span class="fam-faq-icon" aria-hidden="true"></span></summary>
         <div class="faq-answer">Family sessions are $350 for an hour, $425 for a fresh family session at home or outdoors, and $495 for a 90-minute extended family session. Prints, albums and wall art are available separately.</div>
       </details>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="container reveal" style="max-width:760px;">
-    <p class="center">If an hour is more than you need right now, <a href="/fall-minis">fall mini sessions</a> are thirty minutes at golden hour. You can also see <a href="/recent-shoots">recent family sessions around Roseville and Rocklin</a> to get a feel for how a session actually runs.</p>
-  </div>
-</section>
-
-<section class="cream">
-  <div class="container">
-    <div class="reveal">
-      <p class="section-label">The Work</p>
-      <h2 class="center" style="margin-bottom:10px;">Recent family sessions in Roseville and Rocklin</h2>
-      <p class="center" style="max-width:620px;margin:0 auto 10px;color:var(--ink-soft);">Golden hour, open fields and families who stopped posing about ten minutes in.</p>
-    </div>
-    <div class="fade-gallery reveal" data-fade-gallery style="margin-top:30px;">
-      <div class="img-frame"><img src="images/roseville-family-boys-running-to-parents.jpg" alt="Two small boys in matching plaid toddle across dry grass toward their parents' open arms" loading="lazy" width="1280" height="1600" srcset="/.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=1280 1280w" sizes="(max-width:640px) calc((100vw - 84px) / 3), calc((min(1180px, 100vw) - 112px) / 3)"></div>
-      <div class="img-frame"><img src="images/roseville-parents-holding-hands-toddler-ahead.jpg" alt="Parents walk hand in hand down a curving park path while their toddler runs ahead" loading="lazy" width="1419" height="1600" srcset="/.netlify/images?url=/images/roseville-parents-holding-hands-toddler-ahead.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-parents-holding-hands-toddler-ahead.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-parents-holding-hands-toddler-ahead.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-parents-holding-hands-toddler-ahead.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-parents-holding-hands-toddler-ahead.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-parents-holding-hands-toddler-ahead.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-parents-holding-hands-toddler-ahead.jpg&amp;w=1419 1419w" sizes="(max-width:640px) calc((100vw - 84px) * 0.370), calc((min(1180px, 100vw) - 112px) * 0.370)"></div>
-      <div class="img-frame"><img src="images/roseville-family-of-three-by-the-pond.jpg" alt="A family of three close together by the pond in late afternoon light" loading="lazy" width="1304" height="1600" srcset="/.netlify/images?url=/images/roseville-family-of-three-by-the-pond.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-of-three-by-the-pond.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-of-three-by-the-pond.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-of-three-by-the-pond.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-of-three-by-the-pond.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-of-three-by-the-pond.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-family-of-three-by-the-pond.jpg&amp;w=1304 1304w" sizes="(max-width:640px) calc((100vw - 84px) * 0.340), calc((min(1180px, 100vw) - 112px) * 0.340)"></div>
-      <div class="img-frame"><img src="images/roseville-family-father-daughter-forehead-to-forehead.jpg" alt="A father crouched down, forehead to forehead with his daughter" loading="lazy" width="1030" height="1600" srcset="/.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-father-daughter-forehead-to-forehead.jpg&amp;w=1030 1030w" sizes="(max-width:640px) calc((100vw - 84px) / 3), calc((min(1180px, 100vw) - 112px) / 3)"></div>
-      <div class="img-frame"><img src="images/roseville-family-walking-dirt-path-daughter-on-shoulders.jpg" alt="A family walking a dirt path away from the camera, their daughter on his shoulders" loading="lazy" width="1600" height="1388" srcset="/.netlify/images?url=/images/roseville-family-walking-dirt-path-daughter-on-shoulders.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-walking-dirt-path-daughter-on-shoulders.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-walking-dirt-path-daughter-on-shoulders.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-walking-dirt-path-daughter-on-shoulders.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-walking-dirt-path-daughter-on-shoulders.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-walking-dirt-path-daughter-on-shoulders.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-family-walking-dirt-path-daughter-on-shoulders.jpg&amp;w=1600 1600w" sizes="(max-width:640px) calc((100vw - 84px) * 0.480), calc((min(1180px, 100vw) - 112px) * 0.480)"></div>
-      <div class="img-frame"><img src="images/roseville-family-of-three-on-path-golden-hour.jpg" alt="A family of three together on the path at golden hour" loading="lazy" width="1600" height="1066" srcset="/.netlify/images?url=/images/roseville-family-of-three-on-path-golden-hour.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-of-three-on-path-golden-hour.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-of-three-on-path-golden-hour.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-of-three-on-path-golden-hour.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-of-three-on-path-golden-hour.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-of-three-on-path-golden-hour.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-family-of-three-on-path-golden-hour.jpg&amp;w=1600 1600w" sizes="(max-width:640px) calc((100vw - 84px) * 0.625), calc((min(1180px, 100vw) - 112px) * 0.625)"></div>
-      <div class="img-frame"><img src="images/roseville-family-hand-in-hand-field.jpg" alt="A mother, father and daughter walk hand in hand through golden grass, laughing" loading="lazy" width="1365" height="1600" srcset="/.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-family-hand-in-hand-field.jpg&amp;w=1365 1365w" sizes="(max-width:640px) calc((100vw - 84px) * 0.355), calc((min(1180px, 100vw) - 112px) * 0.355)"></div>
-      <div class="img-frame"><img src="images/roseville-mom-baby-golden-grass.jpg" alt="A mother sits in golden grass with her baby daughter on her lap, smiling at the camera" loading="lazy" width="1178" height="1600" srcset="/.netlify/images?url=/images/roseville-mom-baby-golden-grass.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-mom-baby-golden-grass.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-mom-baby-golden-grass.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-mom-baby-golden-grass.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-mom-baby-golden-grass.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-mom-baby-golden-grass.jpg&amp;w=1178 1178w" sizes="(max-width:640px) calc((100vw - 84px) / 3), calc((min(1180px, 100vw) - 112px) / 3)"></div>
-      <div class="img-frame"><img src="images/roseville-dad-carrying-two-sons.jpg" alt="A laughing father leans in behind his two young sons in matching plaid" loading="lazy" width="1364" height="1600" srcset="/.netlify/images?url=/images/roseville-dad-carrying-two-sons.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-dad-carrying-two-sons.jpg&amp;w=320 320w, /.netlify/images?url=/images/roseville-dad-carrying-two-sons.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-dad-carrying-two-sons.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-dad-carrying-two-sons.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-dad-carrying-two-sons.jpg&amp;w=1280 1280w, /.netlify/images?url=/images/roseville-dad-carrying-two-sons.jpg&amp;w=1364 1364w" sizes="(max-width:640px) calc((100vw - 84px) * 0.355), calc((min(1180px, 100vw) - 112px) * 0.355)"></div>
-    </div>
-    <div class="center reveal" style="margin-top:36px;">
-      <a href="/recent-shoots" class="btn btn-dark">See more recent sessions</a>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="reveal">
-      <p class="section-label">In Their Words</p>
-      <h2 class="center" style="margin-bottom:40px;">What a client said</h2>
-    </div>
-    <figure class="testimonial reveal">
-      <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-      <blockquote>I had some last minute soccer pictures taken for a tournament and she was amazing. Very professional and the results came in quick. I would highly recommend her.</blockquote>
-      <figcaption class="testimonial-attrib">Samuel Beltran &middot; <a href="https://www.google.com/maps/place/?cid=3984129550021780191" target="_blank" rel="noopener">Google</a></figcaption>
-    </figure>
-  </div>
-</section>
-
 <section class="cta-band">
   <div class="container reveal center">
     <h2>Let's document this chapter</h2>
-    <p>Sessions book up, especially in spring and fall. If you know you want photos this season, don't wait — let's figure out the details together.</p>
+    <p>Sessions book up, especially in spring and fall. If you know you want photos this season, don't wait — start with my inquiry form, and I'll help you plan the location and the images you want.</p>
     <a href="/bookings#inquire" class="btn btn-light">Check Availability</a>
   </div>
 </section>

@@ -22,6 +22,12 @@ head_swaps = [
   '<meta property="og:description" content="%s">' % DESC),
  (r'<meta property="og:image" content="[^"]*">',
   '<meta property="og:image" content="https://sofiamiyakephoto.com/images/og/home.jpg">'),
+ # Without these the page kept privacy.html's Twitter card text, so a shared
+ # /sitemap link previewed as the Privacy Policy.
+ (r'<meta name="twitter:title" content="[^"]*">',
+  '<meta name="twitter:title" content="%s">' % TITLE),
+ (r'<meta name="twitter:description" content="[^"]*">',
+  '<meta name="twitter:description" content="%s">' % DESC),
  # The template carries privacy.html's BreadcrumbList. Without these two swaps the
  # generated page tells Google it is the privacy policy, which is how sitemap.html
  # ended up with the wrong trail.
@@ -104,6 +110,15 @@ main += group('cream', 'Galleries and journal',
    'A full gallery of wedding work, separate from the pricing page.'),
   ('/recent-shoots', 'Recent sessions',
    'The index of recent session stories, newest first.'),
+  ('/recent-shoots/roseville-toddler-and-baby-family-session', 'Out ahead on his own',
+   'A Roseville family session with a toddler and a baby: parents hand in hand on a paved path, '
+   'the toddler out ahead, the mother and baby in dry grass &mdash; September 2026.'),
+  ('/recent-shoots/roseville-pond-family-session', 'Under a grey sky at the pond',
+   'A Roseville family session under a flat grey sky: a family of four in plaid by a muddy pond, '
+   'a toddler swung between his parents, and a lot of laughing &mdash; September 2026.'),
+  ('/recent-shoots/roseville-willow-pond-family-session', 'Mostly off the ground',
+   'A Roseville family session by a pond and willows: a daughter swung between her parents, '
+   'lifted overhead and carried on shoulders in warm September sun &mdash; September 2026.'),
   ('/recent-shoots/roseville-golden-hour-family-session', 'An evening in the long grass',
    'A golden-hour family session in Roseville &mdash; September 2026.'),
   ('/recent-shoots/sacramento-golden-hour-family-session', 'The last hour of the light',
@@ -118,8 +133,10 @@ main += group('linen', 'About',
    'The approach behind the work &mdash; why these photographs look the way they do.'),
   ('/miyake-rant', 'Miyake Rant',
    'Longer-form writing on photography, honestly held opinions included.'),
+  ('/on-the-lives-we-live', 'On the lives we live',
+   'An essay on weddings, births and families &mdash; and why history is what gives a picture meaning.'),
   ('/the-artists-escape', "The Artist's Escape",
-   'A project page, separate from the client work.'),
+   'An essay in progress; the full text is not yet published.'),
 ])
 
 main += group('cream', 'Small print',

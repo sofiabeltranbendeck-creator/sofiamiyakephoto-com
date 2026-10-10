@@ -1,0 +1,317 @@
+/* Sofia Miyake Photography — /recent-shoots only (recent-shoots.html, body.page-recent).
+   Loaded right after style.css. Every rule is scoped to .page-recent so nothing here can
+   reach another page, and shared components (.hero.compact, .post-card, .cta-band) are
+   adjusted from here rather than in style.css.
+
+   Width ranges are continuous and the same everywhere on this page, including the img
+   sizes attributes: phones (max-width:640.98px), tablets (min-width:641px) and
+   (max-width:1023.98px), desktops (min-width:1024px); the card grid's own 2-up range ends
+   at 980.98px. A fractional width (page zoom) can never fall between two ranges. */
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+/* A stacked hero at every width: the photographs as a full-bleed band with no scrim, then
+   the words on the dark ground the site's dark bands use (--charcoal, as section.dark and
+   .cta-band). Same structure as /families; each page tunes its own band.
+   The band is three real <img> cells (6px charcoal gutters), not one composite
+   background: each cell picks its own srcset candidate for its size and the screen's
+   density, so there is exactly one request per visible cell. The right cell (the mother
+   and baby) is the eager, high-priority LCP image and the only cell on phones; the other
+   two are loading="lazy", which costs nothing on desktop (they are in the first viewport,
+   so they load at first layout) and means a phone, where they are display:none, never
+   requests them. Every band height below comes from the viewport or aspect-ratio, never
+   from an image, so nothing moves when a photograph arrives.
+     >=1024px    min(clamp(440px, 34vw, 540px), 100svh - 340px), floored at 320px, with a
+                 tighter text panel (no rule, no h1 margin), so the whole browse link sits
+                 on the first screen at 1366x768 and 1440x900 with the promo bar. Cells
+                 there are about square or wider: the running family is anchored at 85%
+                 (dad's hair from y ~460 to the boots at ~1495 of 1600 stay in), the mother
+                 and baby at the bottom (her face and the baby's foot), the forehead touch
+                 centred.
+     641-1023px  the band at 2.25:1; each cell about 3:4, full photo height.
+     <=640px     the mother and baby alone in a clamp(280px, 82vw, 380px) band; 62% keeps
+                 both heads and the baby's foot (heads at y ~545, foot at ~1300 of 1600).
+     Short screens: a compact band (220px on phones up to 800px tall, 240px on tablets up
+                 to 720px tall) and tighter type, so the browse link fits on the first
+                 screen of a 390x664 phone with the promo bar; every face stays in.
+   Base rules come first and every width or height override after them, so the short-
+   screen sizes are not undone by a later base rule. */
+.page-recent .hero.compact{display:block;min-height:0;padding:0;background:var(--charcoal);}
+.page-recent .recent-hero-panels{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:minmax(0,1fr);
+  gap:6px;background:var(--charcoal);
+}
+.page-recent .recent-hero-cell{
+  display:block;width:100%;height:100%;max-width:none;min-width:0;
+  object-fit:cover;object-position:var(--hero-pos, 50% 50%);
+}
+.page-recent .recent-hero-left{--hero-pos:50% 85%;}
+.page-recent .recent-hero-middle{--hero-pos:50% 50%;}
+.page-recent .recent-hero-right{--hero-pos:50% 100%;}
+
+/* The masthead: "Recent shoots" as the headline, the place as a quieter line under it
+   (in the gold the old eyebrow carried). One h1, two lines; the space between the spans
+   keeps the accessible name "Recent shoots around Roseville and Sacramento". */
+.page-recent .hero h1{font-size:clamp(2.4rem, 5.4vw, 3.5rem);line-height:1.1;text-wrap:balance;}
+.page-recent .hero h1 > span{display:block;}
+.page-recent .recent-h1-place{margin-top:8px;font-size:1.25rem;line-height:1.45;font-style:italic;color:#e0c091;}
+.page-recent .hero .lede{text-wrap:balance;}
+
+/* "Browse the sessions": a quiet text link under the lede rather than a third button
+   (the page closes on two). 44px tall, cream on charcoal (about 15:1), the underline and
+   arrow in the light gold; the arrow dips on hover. The underline sits on the words only:
+   flex items inherit a parent's text-decoration, which gave the arrow a stub of its own. */
+.page-recent .recent-browse{
+  display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:14px;padding:0 6px;
+  font-family:var(--sans);font-size:0.8rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--cream);text-decoration:none;
+}
+.page-recent .recent-browse-text{
+  text-decoration:underline;text-decoration-color:var(--gold-light);
+  text-decoration-thickness:1px;text-underline-offset:6px;
+}
+.page-recent .recent-browse-arrow{display:inline-block;color:var(--gold-light);transition:transform 0.3s ease;}
+.page-recent .recent-browse:hover{color:var(--gold-light);}
+.page-recent .recent-browse:hover .recent-browse-arrow{transform:translateY(3px);}
+/* The site's gold focus ring is 2.9:1 on charcoal; cream there, as on the other dark bands. */
+.page-recent .hero :focus-visible{outline-color:var(--cream);}
+
+@media (min-width:1024px){
+  .page-recent .recent-hero-panels{
+    height:max(320px, min(clamp(440px, 34vw, 540px), calc(100vh - 340px)));
+    height:max(320px, min(clamp(440px, 34vw, 540px), calc(100svh - 340px)));
+  }
+  .page-recent .hero.compact .hero-content{max-width:1200px;padding:24px 48px 28px;}
+  .page-recent .hero .rule{display:none;}
+  .page-recent .hero h1{margin:0;}
+  .page-recent .hero .lede{max-width:36em;margin-top:10px;}
+  .page-recent .recent-browse{margin-top:8px;}
+}
+@media (min-width:641px) and (max-width:1023.98px){
+  .page-recent .recent-hero-panels{aspect-ratio:2.25/1;}
+  /* 792 - 2 x 48 = 696px of text. */
+  .page-recent .hero.compact .hero-content{max-width:792px;padding:40px 48px 48px;}
+}
+@media (max-width:640.98px){
+  .page-recent .recent-hero-panels{grid-template-columns:minmax(0,1fr);height:clamp(280px, 82vw, 380px);}
+  .page-recent .recent-hero-left,
+  .page-recent .recent-hero-middle{display:none;}
+  .page-recent .recent-hero-right{--hero-pos:50% 62%;}
+  .page-recent .hero.compact .hero-content{padding:32px 24px 40px;}
+}
+/* Short screens. On a 390x664 phone with the promo bar the browse link sat below the
+   fold; this brings it up without dropping a face from any cell. */
+@media (max-width:640.98px) and (max-height:800px),
+       (min-width:641px) and (max-width:1023.98px) and (max-height:720px){
+  .page-recent .hero.compact .hero-content{padding:24px;}
+  .page-recent .hero .rule{display:none;}
+  .page-recent .hero h1{font-size:2rem;line-height:1.1;}
+  .page-recent .recent-h1-place{margin-top:6px;font-size:1.0625rem;}
+  .page-recent .hero .lede{font-size:16px;line-height:1.5;margin-top:12px;}
+  .page-recent .recent-browse{margin-top:8px;}
+}
+@media (max-width:640.98px) and (max-height:800px){
+  .page-recent .recent-hero-panels{height:220px;}
+}
+@media (min-width:641px) and (max-width:1023.98px) and (max-height:720px){
+  /* At 240px each cell is wider than tall, so the crops move up to the faces. */
+  .page-recent .recent-hero-panels{aspect-ratio:auto;height:240px;}
+  .page-recent .recent-hero-left{--hero-pos:50% 40%;}
+  .page-recent .recent-hero-middle{--hero-pos:50% 30%;}
+  .page-recent .recent-hero-right{--hero-pos:50% 40%;}
+}
+
+/* ── Sessions section and intro ─────────────────────────────────────────── */
+.page-recent .recent-intro{max-width:58ch;margin:0 auto 12px;font-weight:400;text-wrap:balance;}
+/* The two routes as their own row under the intro: 44px targets, ink with a dark-gold
+   underline at rest, dark gold on hover (5.14:1). A 12px gap keeps both on one row at
+   390px; they wrap and stay centred on anything narrower. */
+.page-recent .recent-intro-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:0 0 32px;}
+.page-recent .recent-intro-actions a{
+  display:inline-flex;align-items:center;min-height:44px;padding:0 4px;
+  font-weight:500;color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-text);
+  text-decoration-thickness:1px;text-underline-offset:4px;
+}
+.page-recent .recent-intro-actions a:hover{color:var(--gold-text);}
+/* From 641px a shorter, quieter lead-in to the grid. */
+@media (min-width:641px){
+  .page-recent .recent-sessions{padding-top:56px;}
+  .page-recent .recent-intro{max-width:52ch;line-height:1.5;}
+  .page-recent .recent-intro-actions{margin-bottom:28px;}
+}
+
+/* ── Session cards ───────────────────────────────────────────────────────── */
+/* The sessions are an ordered list (newest first): six items, one heading and one link
+   each, so assistive technology announces the count and each position. "Browse the
+   sessions" lands on the list itself; the margin keeps the first row clear of the sticky
+   header. The column counts restate style.css's on this page's continuous ranges, so a
+   cover's ratio always matches its column. */
+.page-recent .post-grid{list-style:none;margin:0;padding:0;scroll-margin-top:96px;}
+/* Each item is a column: the card link fills it (so the action lines align across a row),
+   and the phone-only price route in the third item follows the link instead of being
+   pushed under the next card. */
+.page-recent .post-grid > li{min-width:0;display:flex;flex-direction:column;}
+@media (min-width:641px) and (max-width:980.98px){
+  .page-recent .post-grid{grid-template-columns:1fr 1fr;gap:32px;}
+}
+@media (max-width:640.98px){
+  .page-recent .post-grid{grid-template-columns:1fr;gap:32px;}
+}
+/* 4:5 covers in the 3-up and 2-up grids; 5:4 on phones, where one column at 4:5 would
+   make six cards an endless scroll. Each cover sets its own framing on a class:
+     --cover-pos    object-position at 4:5
+     --cover-pos-m  object-position at 5:4 (phones)
+     --cover-zoom / --cover-origin  an extra crop, for a frame that object-fit alone cannot
+                    frame. The hover zoom multiplies it, so hovering never widens the crop
+                    back out. Each img's sizes value carries its cover and zoom factors. */
+.page-recent .post-card{flex:1 1 auto;scroll-margin:96px 0 24px;}
+.page-recent .post-card-img img{
+  aspect-ratio:4/5;
+  object-position:var(--cover-pos, 50% 50%);
+  transform:scale(var(--cover-zoom, 1));
+  transform-origin:var(--cover-origin, 50% 50%);
+}
+.page-recent .post-card:hover .post-card-img img,
+.page-recent .post-card:focus-visible .post-card-img img{transform:scale(calc(var(--cover-zoom, 1) * 1.045));}
+@media (max-width:640.98px){
+  .page-recent .post-card-img img{
+    aspect-ratio:5/4;
+    object-position:var(--cover-pos-m, var(--cover-pos, 50% 50%));
+  }
+}
+/* Keyboard focus: one ring round the whole card, in the dark gold that measures 5.14:1
+   on the cream ground (a focus ring needs 3:1). The offset clears the photo edge; it fits
+   inside the grid gaps and the 32px page gutter on a phone. */
+.page-recent .post-card:focus-visible{outline:2px solid var(--gold-text);outline-offset:8px;border-radius:2px;}
+/* Hover and focus turn the title the dark gold (style.css's light gold is about 2.9:1). */
+.page-recent .post-card:hover .post-card-title,
+.page-recent .post-card:focus-visible .post-card-title{color:var(--gold-text);}
+
+/* Pond (1154x1600): the top third is empty grey sky. Above 640px the cover closes in
+   1.14x about the bottom centre (x 71-1083, y 332-1600), keeping both boys' feet and the
+   parents' heads. Phones keep the plain 5:4 crop. */
+.page-recent .cover-pond{--cover-pos:50% 100%;--cover-pos-m:50% 74%;--cover-zoom:1.14;--cover-origin:50% 100%;}
+/* Swing (1100x1650): the parents' faces and her boots off the ground at 4:5; at 5:4 the
+   faces and the swing, cut at her shins. */
+.page-recent .cover-swing{--cover-pos:50% 80%;--cover-pos-m:50% 70%;}
+/* Father and toddler from behind on the path (1157x1600): both pairs of feet at 4:5, the
+   father's head with the joined hands at 5:4. Neither child's face is in the frame. */
+.page-recent .cover-trail{--cover-pos:50% 85%;--cover-pos-m:50% 60%;}
+/* Golden hour (siblings-circling-evening-light, 1600x1067). This session is blurred: every
+   child's face in it is covered. The blanket frame used before showed the boy's face sharp
+   (his blur had landed on the grass beside him). In this frame the two blurred faces are
+   small and turned into the circle. No extra magnification, so the blurs stay as small as
+   the frame allows and the evening field stays around the three figures; 60% gives the
+   left sibling room. 4:5 shows x 448-1302 at full height; 5:4 shows x 160-1494. */
+.page-recent .cover-circling{--cover-pos:60% 50%;--cover-pos-m:60% 50%;}
+/* Sacramento, the parents' kiss beneath the bare oak (1450x1600): no child in the frame.
+   4:5 shows x 85-1365 at full height; 5:4 shows y 264-1424, both heads and the oak fork. */
+.page-recent .cover-kiss{--cover-pos:50% 50%;--cover-pos-m:50% 60%;}
+/* Afternoon circle (1455x1600): neither child faces the camera. Above 640px a 1.08x zoom
+   about the bottom centre trims the upper foliage and keeps every head and both boys'
+   feet; at 5:4 the father's head, cut at the shins. */
+.page-recent .cover-circle{--cover-pos:50% 50%;--cover-pos-m:50% 72%;--cover-zoom:1.08;--cover-origin:50% 100%;}
+@media (max-width:640.98px){
+  .page-recent .cover-pond,
+  .page-recent .cover-circle{--cover-zoom:1;}
+}
+
+/* Titles are h3s (one per session, for heading navigation); the card link takes its name
+   from the title through aria-labelledby. The date-and-place line is quieter (ink-soft,
+   7.4:1 on cream) so the photographs and titles lead; 14px on phones, 13px from 641px.
+   On the action line only "View session" is set in tracked capitals and underlined; the
+   count after it is plain sentence case. */
+.page-recent .post-card-title{font-size:1.75rem;line-height:1.1;margin:0 0 12px;font-weight:500;text-wrap:balance;}
+.page-recent .post-card-meta{font-size:0.875rem;font-weight:400;letter-spacing:0.08em;color:var(--ink-soft);}
+.page-recent .post-card-blurb{margin-bottom:14px;font-weight:400;font-size:1rem;line-height:1.55;text-wrap:pretty;}
+/* One baseline per row for the action lines: the card is a full-height flex column (grid
+   rows stretch), and the line takes up the slack above it. */
+.page-recent .post-card-more{margin-top:auto;font-size:0.875rem;line-height:1.5;font-weight:500;letter-spacing:0.02em;text-transform:none;}
+.page-recent .post-card-view{text-transform:uppercase;letter-spacing:0.1em;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;}
+@media (min-width:641px){
+  .page-recent .post-card-meta{font-size:0.8125rem;letter-spacing:0.06em;}
+}
+/* Phones only: one route to the prices halfway down the list, after the third card and
+   outside its link. Hidden from 641px, where the intro's links stay in view longer. */
+.page-recent .recent-midroute{margin:24px 0 0;text-align:center;}
+.page-recent .recent-midroute a{
+  display:inline-flex;align-items:center;min-height:44px;padding:0 4px;
+  font-weight:500;color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-text);
+  text-decoration-thickness:1px;text-underline-offset:4px;
+}
+.page-recent .recent-midroute a:hover{color:var(--gold-text);}
+@media (min-width:641px){
+  .page-recent .recent-midroute{display:none;}
+}
+
+/* Keyboard focus never lands on something still faded out: a .reveal block (or a card in
+   a .reveal-group) that holds focus is shown at once, with no transition. */
+.page-recent .reveal:focus-within,
+.page-recent .reveal-group:focus-within > *{opacity:1;transform:none;transition:none;}
+
+/* Reduced motion: no movement beyond the base crop. Hovered or focused covers keep their
+   fixed privacy/framing zoom without the extra 1.045x, and the browse arrow stays put. */
+@media (prefers-reduced-motion: reduce){
+  .page-recent .post-card:hover .post-card-img img,
+  .page-recent .post-card:focus-visible .post-card-img img{transform:scale(var(--cover-zoom, 1));}
+  .page-recent .recent-browse-arrow{transition:none;}
+  .page-recent .recent-browse:hover .recent-browse-arrow{transform:none;}
+}
+
+/* ── Review ──────────────────────────────────────────────────────────────── */
+/* A lead-in to the closing band: more space above the quote than below it, so it reads
+   with the band rather than with the cards. */
+.page-recent .recent-proof{padding:16px 0 64px;}
+@media (max-width:640.98px){
+  .page-recent .recent-proof{padding-bottom:48px;}
+}
+/* Tara Cravens' review as an editorial pull quote, no box: the same treatment and
+   values as /families (css/families.css .fam-pullquote), copied here so the two pages
+   do not share a file. The review link keeps a 44px hit area through padding and an
+   equal negative margin, with the underline drawn at the text. */
+.page-recent .recent-pullquote{max-width:34em;margin:0 auto;text-align:center;font-size:1.75rem;}
+.page-recent .recent-pullquote-mark{display:block;font-family:var(--serif);font-size:4.4rem;line-height:0.6;color:var(--gold);margin:0 0 4px;height:0.42em;}
+.page-recent .recent-pullquote blockquote{
+  margin:0;font-family:var(--serif);font-style:italic;font-weight:400;font-size:1em;line-height:1.45;
+  color:var(--ink);text-wrap:balance;
+}
+.page-recent .recent-pullquote-attrib{
+  margin-top:24px;font-family:var(--sans);font-size:0.8rem;letter-spacing:0.16em;text-transform:uppercase;
+  font-weight:400;color:var(--gold-text);
+}
+@media (max-width:700.98px){
+  .page-recent .recent-pullquote{font-size:1.3rem;}
+  .page-recent .recent-pullquote-mark{font-size:3.6rem;}
+  .page-recent .recent-pullquote-attrib{margin-top:18px;font-size:0.76rem;}
+}
+.page-recent .recent-pullquote-attrib a{
+  display:inline-block;padding:12px 4px;margin:-12px -4px;border-bottom:0;
+  text-decoration:underline;text-decoration-color:var(--gold-light);text-decoration-thickness:1px;text-underline-offset:4px;
+}
+.page-recent .recent-pullquote-attrib a:hover{text-decoration-color:var(--gold);color:var(--gold-text);}
+
+/* ── Closing band: two ways forward ──────────────────────────────────────── */
+/* A larger closing line, and a quiet rule under the band so it ends the page instead of
+   dissolving into the footer's charcoal. */
+.page-recent .cta-band{padding:72px 0 48px;border-bottom:1px solid rgba(242,237,228,0.14);}
+.page-recent .cta-band h2{font-size:clamp(2.4rem,3.8vw,3.2rem);}
+@media (max-width:1023.98px){
+  .page-recent .cta-band{padding:56px 0 40px;}
+}
+.page-recent .cta-band p{text-wrap:balance;}
+/* What "Check availability" opens, said before the buttons. */
+.page-recent .cta-band .cta-next{font-size:1rem;max-width:40em;margin:12px auto 0;}
+.page-recent .cta-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:24px;}
+.page-recent .cta-actions .btn{margin-top:0;}
+/* The primary reads as the primary: weight 500 ink on white, and the hover keeps ink text
+   (white on the gold-light hover is about 2:1). The secondary is a quieter outline, still
+   11:1 on the band. */
+.page-recent .cta-actions .btn-light{color:var(--ink);font-weight:500;}
+.page-recent .cta-actions .btn-light:hover{background:var(--gold-light);color:var(--ink);}
+.page-recent .btn-outline-light{background:transparent;color:#d9d2c6;font-weight:400;box-shadow:inset 0 0 0 1px rgba(242,237,228,0.38);}
+.page-recent .btn-outline-light:hover{background:rgba(242,237,228,0.08);color:#fff;box-shadow:inset 0 0 0 1px rgba(242,237,228,0.7);}
+/* Stacked full-width on a phone; the longer label needs the tighter padding and
+   tracking to stay on one line at 320px. */
+@media (max-width:480.98px){
+  .page-recent .cta-actions{flex-direction:column;align-items:stretch;}
+  .page-recent .cta-actions .btn{text-align:center;padding:14px 12px;letter-spacing:0.08em;}
+}
