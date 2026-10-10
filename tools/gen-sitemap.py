@@ -106,10 +106,29 @@ def images_in(path):
     Image CDN query (/.netlify/images?url=/images/x.jpg&w=640). The sitemap
     lists the MASTER url, never the CDN one: the CDN url is a transform of the
     master, and listing both offers Google the same photograph twice.
+
+    Also reads the page's own linked stylesheets (css/home.css and the like),
+    which set some photographs as backgrounds. HTML matches come first, then
+    stylesheet-only ones in order of appearance.
     """
     s = io.open(path, encoding='utf-8').read()
+    texts = [s]
+    for tag in re.findall(r'<link\b[^>]*>', s, re.I):
+        href = re.search(r'\bhref=["\']?/?(css/[A-Za-z0-9_.\-]+\.css)', tag, re.I)
+        if not href or not re.search(r'\brel=["\']?stylesheet\b', tag, re.I):
+            continue
+        # style.css is shared by every page, so reading it would attach every
+        # page's hero to every URL. Only page-specific sheets count.
+        css = href.group(1)
+        if css == 'css/style.css':
+            continue
+        if not os.path.exists(css):
+            sys.stderr.write('MISSING stylesheet, skipped: %s (in %s)\n' % (css, path))
+            continue
+        texts.append(io.open(css, encoding='utf-8').read())
     seen = []
-    for m in re.findall(r'/?images/[A-Za-z0-9_.\-]+\.(?:jpg|jpeg|png|webp)', s, re.I):
+    for m in re.findall(r'/?images/[A-Za-z0-9_.\-]+\.(?:jpg|jpeg|png|webp)',
+                        '\n'.join(texts), re.I):
         p = '/' + m.lstrip('/')
         if p in SKIP_IMAGES or p in seen:
             continue
