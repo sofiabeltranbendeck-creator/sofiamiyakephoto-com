@@ -73,6 +73,25 @@ html.promo-on{--promo-h:44px;}
 :where(.home) .hero-sub a{display:block;width:fit-content;margin-top:4px;color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:1px;text-underline-offset:4px;}
 :where(.home) .hero-sub a:hover{color:var(--gold-text);}
 :where(.home) .hero-plate .hero-actions{justify-content:flex-start;align-items:baseline;gap:24px;margin-top:24px;}
+/* The lead plate (Landin, 10 Oct): the live site's wording back. The place line in the
+   kicker style; the name as the H1, "Photography" on its own line in the header logo's
+   accent (--gold-text: the logo's --gold measures 2.84:1 on cream); "Defeat Oblivion" in
+   the serif italic of the sign-off, in its own capitals; then Book a Session and an
+   outlined Explore (the live site's white .btn-light would vanish on the cream plate). */
+:where(.home) .hero-plate h1 .accent{display:block;color:var(--gold-text);}
+:where(.home) .hero-tagline{margin:14px 0 0;font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.5rem;line-height:1.2;color:var(--ink);}
+/* The two buttons share a row wherever the plate allows (24px sides, not 32, so they fit
+   on tablets and from about 1270px up; 1180-1270 stacks them); on phones they split the
+   row between them and stack, full width, only below 360px. */
+:where(.home) .hero-slide--lead .hero-actions{gap:12px;}
+:where(.home) .hero-slide--lead .hero-actions .btn{padding-left:24px;padding-right:24px;}
+@media (max-width:700px){
+  :where(.home) .hero-slide--lead .hero-actions{gap:8px;}
+  :where(.home) .hero-slide--lead .hero-actions .btn{flex:1 1 auto;padding-left:15px;padding-right:15px;text-align:center;}
+  :where(.home) .hero-tagline{margin-top:10px;font-size:1.3rem;}
+}
+:where(.home) .hero-plate .btn-light{background:transparent;color:var(--gold-text);box-shadow:inset 0 0 0 1px var(--gold-text);}
+:where(.home) .hero-plate .btn-light:hover{background:var(--charcoal);color:#fff;box-shadow:inset 0 0 0 1px var(--charcoal);}
 :where(.home) .text-link{color:var(--gold-text);border-bottom:1px solid rgba(132,95,51,0.4);padding:0 0 3px;font-size:0.875rem;line-height:1.3;letter-spacing:0.04em;text-transform:none;}
 :where(.home) .text-link:hover{color:var(--ink);border-bottom-color:var(--ink);}
 :where(.home) .hero-credit{position:absolute;left:max(32px,calc((100% - 1280px) / 2 + 32px));bottom:-38px;margin:0;line-height:1;}
@@ -259,6 +278,9 @@ html.promo-on{--promo-h:44px;}
    clears the plate (64px below the photo) and the credit line beside it. The hero,
    this band and the quote under it are one linen sheet. */
 :where(.home) .home-work{background:var(--linen);}
+/* The cover's Explore button lands here: clear of the sticky header (67-73px), with
+   "Selected work" just under it, as the links' focus margin above does. */
+:where(.home) #work{scroll-margin-top:88px;}
 :where(.home) .home-work .container.wide{max-width:1280px;}
 :where(.home) .home-work h2.section-label{margin:0 0 28px;}
 :where(.home) .fade-gallery--feature{gap:28px;}
