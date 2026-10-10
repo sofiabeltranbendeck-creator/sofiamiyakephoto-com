@@ -1,0 +1,520 @@
+/* Sofia Miyake Photography — booking styles (bookings.html and fall-minis.html only).
+   Split out of css/style.css on 9 Oct 2026 so the other 23 pages stop downloading about
+   8 KB (gzipped) of render-blocking rules they never use: the booking sheet, the HoneyBook
+   inquiry form, the booking cards, the booking page's routes and steps, and the dated
+   session list. Loaded right after style.css. These blocks used to sit in the middle of
+   style.css, so they now come after rules that used to follow them; every such pair with
+   equal specificity and a shared property was checked against both pages, at 390, 820 and
+   1440px with the sheet open and closed, and none of them lands on the same element. The
+   pieces other pages share (.price-banner on /portraits, .price-card and .price-tag on the
+   service pages, .anchor-section on the homepage) stay in style.css. */
+
+/* Booking sheet (bookings.js): the HoneyBook calendars open over the page under a bar
+   in the site's style, instead of sitting in it as 1,671-2,238px frames. The
+   browser's own dialog sizing (max-width/height, padding, border) is reset so the
+   sheet is truly full screen on phones. display is set on [open] only, or a
+   closed dialog would show. CSS variables do not reach ::backdrop in older
+   browsers, so its colour is written out. */
+html.sheet-open{overflow:hidden;scrollbar-gutter:stable;}
+.booking-sheet{
+  margin:auto;padding:0;border:none;max-width:none;max-height:none;
+  width:min(920px, calc(100vw - 48px));height:calc(100vh - 48px);height:calc(100dvh - 48px);
+  background:#fff;color:var(--ink);border-radius:2px;overflow:hidden;
+  box-shadow:0 24px 70px rgba(20,17,14,0.35);
+}
+.booking-sheet[open]{display:flex;flex-direction:column;animation:sheet-in 0.32s cubic-bezier(.2,.7,.2,1);}
+.booking-sheet.is-closing{animation:sheet-out 0.18s ease forwards;}
+.booking-sheet::backdrop{background:rgba(20,17,14,0.38);backdrop-filter:blur(2px);animation:backdrop-in 0.32s ease;}
+.booking-sheet.is-closing::backdrop{animation:backdrop-out 0.18s ease forwards;}
+@keyframes sheet-in{from{opacity:0;transform:translateY(18px);}}
+@keyframes sheet-out{to{opacity:0;transform:translateY(10px);}}
+@keyframes backdrop-in{from{opacity:0;}}
+@keyframes backdrop-out{to{opacity:0;}}
+.booking-sheet-bar{
+  flex:none;display:flex;align-items:center;gap:22px;
+  padding:14px 28px;background:var(--cream);border-bottom:1px solid var(--line);
+  box-shadow:inset 0 3px 0 var(--gold);
+}
+.booking-sheet-heading{flex:1;min-width:0;}
+.booking-sheet-title{font-family:var(--serif);font-size:1.625rem;font-weight:500;line-height:1.2;margin:0;}
+.booking-sheet-note{display:flex;flex-wrap:wrap;align-items:center;gap:2px 14px;margin:3px 0 0;font-size:0.8125rem;line-height:1.4;font-weight:400;color:var(--ink-soft);}
+.booking-sheet-meta{color:var(--gold-text);font-size:0.875rem;}
+@media (max-width:359px){.booking-sheet-meta{font-size:0.8125rem;}}  /* one line at 320px */
+.booking-sheet-meta[hidden]{display:none;}
+.booking-sheet-secure{display:inline-flex;align-items:center;gap:6px;}
+.booking-sheet-secure svg{flex:none;width:13px;height:13px;color:var(--gold-text);}
+/* The strip under the calendar (bookings.js): "Need help booking?" at the left, "Start over
+   in a new tab" at the right; Help opens a panel underneath. It can scroll (at most half
+   the sheet), which would clip an outside focus ring, so rings are drawn inside. */
+.booking-sheet-foot{
+  flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 18px;
+  min-height:50px;max-height:50%;overflow-y:auto;
+  padding:3px 16px calc(3px + env(safe-area-inset-bottom, 0px));background:var(--cream);border-top:1px solid var(--line);
+  font-size:0.875rem;line-height:1.4;font-weight:400;color:var(--ink-soft);
+}
+.booking-sheet-foot :focus-visible{outline-offset:-2px;}
+/* Controls: text at 44px tall; links underline their label span only. */
+.booking-sheet-foot button,.booking-sheet-foot a{
+  display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;background:none;cursor:pointer;
+  font:inherit;color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;
+}
+.booking-sheet-foot a{text-decoration:none;}
+.booking-sheet-foot a span{text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+.booking-sheet-foot button:hover,.booking-sheet-foot a:hover{color:var(--gold-text);}
+/* Help: the disclosure at the left, with a caret. */
+.booking-sheet-foot > .booking-sheet-help{margin-right:auto;}
+.booking-sheet-foot .booking-sheet-help{color:var(--ink-soft);text-decoration:none;gap:6px;min-width:56px;}
+.booking-sheet-foot .booking-sheet-help::after{
+  content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);transition:transform 0.2s ease;
+}
+.booking-sheet-foot .booking-sheet-help[aria-expanded="true"]::after{transform:translateY(1px) rotate(-135deg);}
+.booking-sheet-foot .booking-sheet-help:hover{color:var(--gold-text);}
+.booking-sheet-help-actions{flex-basis:100%;display:flex;flex-direction:column;align-items:center;padding:0 0 6px;border-top:1px solid var(--line);}
+.booking-sheet-help-actions[hidden]{display:none;}
+.booking-sheet-help-actions p{margin:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0 14px;}
+.booking-sheet-help-actions .booking-sheet-foot-note{max-width:520px;margin:0 auto 4px;padding:0 12px;font-size:0.8125rem;line-height:1.45;color:var(--ink-soft);}
+/* Restart's confirmation button. */
+.booking-sheet-foot [data-sheet-restart-yes]{
+  padding:0 18px;min-height:44px;margin:4px 0;background:var(--charcoal);color:#fff;text-decoration:none;border-radius:2px;
+}
+.booking-sheet-foot [data-sheet-restart-yes]:hover{background:var(--gold-text);color:#fff;}
+.booking-sheet-foot [data-sheet-restart-yes]:focus-visible{outline:2px solid #fff;outline-offset:-5px;}
+/* The provider: in the bar on wide screens; on phones in the strip from 390px, and
+   inside Help below that, where the strip has no room. */
+.booking-sheet-foot-secure{display:none;}
+.booking-sheet-foot-provider{display:none;align-items:center;gap:5px;font-size:0.8125rem;color:var(--ink-soft);}
+.booking-sheet-foot-provider svg{width:12px;height:12px;flex:none;}
+@media (min-width:701px){.booking-sheet-foot{padding-left:28px;padding-right:28px;}}
+@media (max-width:480px){.booking-sheet-help-actions .booking-sheet-foot-secure{display:block;}}
+@media (min-width:390px) and (max-width:480px){
+  .booking-sheet-foot-provider{display:inline-flex;}
+  .booking-sheet-help-actions .booking-sheet-foot-secure{display:none;}
+}
+.booking-sheet-close{
+  flex:none;width:44px;height:44px;display:grid;place-items:center;padding:0;
+  border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--ink);cursor:pointer;
+  transition:background 0.2s ease,color 0.2s ease;
+}
+.booking-sheet-close:hover{background:var(--charcoal);color:#fff;}
+/* The site-wide focus ring squares off whatever it lands on (border-radius:2px);
+   the close button keeps its circle. */
+.booking-sheet-close:focus-visible{border-radius:50%;}
+.booking-sheet-close svg{width:18px;height:18px;}
+.booking-sheet-body{position:relative;flex:1;min-height:0;}
+.booking-sheet-body iframe{display:block;width:100%;height:100%;border:none;}
+.booking-sheet-body iframe[hidden]{display:none;}
+/* Loading panel over the frame; bookings.js adds .is-done once HoneyBook has drawn. */
+.booking-sheet-status{
+  position:absolute;inset:0;z-index:1;margin:0;padding:24px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;
+  background:#fff;font-family:var(--sans);font-style:normal;font-size:0.9375rem;font-weight:400;color:var(--ink-soft);
+  transition:opacity 0.3s ease,visibility 0s linear 0s;
+}
+.booking-sheet-status{overflow-y:auto;justify-content:safe center;}
+/* A short viewport (landscape phone, keyboard up): a slimmer bar so the calendar and
+   the help strip keep their room; the strip and the panel scroll rather than clip. */
+
+.booking-sheet-status.is-done{opacity:0;visibility:hidden;transition:opacity 0.3s ease,visibility 0s linear 0.3s;}
+.booking-sheet-spinner{
+  display:block;width:120px;height:2px;background:var(--line);position:relative;overflow:hidden;border-radius:2px;
+}
+.booking-sheet-spinner::after{
+  content:"";position:absolute;inset:0;width:40%;background:var(--gold);
+  animation:sheet-progress 1.1s ease-in-out infinite;
+}
+@keyframes sheet-progress{from{transform:translateX(-100%);}to{transform:translateX(250%);}}
+@media (prefers-reduced-motion: reduce){.booking-sheet-spinner::after{animation:none;width:100%;opacity:0.5;}}
+.booking-sheet-status a,.booking-sheet-status button{
+  font:inherit;color:var(--gold-text);text-decoration:underline;text-underline-offset:4px;
+  background:none;border:0;padding:0;cursor:pointer;
+}
+.booking-sheet-trouble{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;}
+.booking-sheet-status .booking-sheet-trouble a,.booking-sheet-status .booking-sheet-trouble button{
+  display:inline-flex;align-items:center;min-height:44px;padding:0 20px;
+  border:1px solid var(--line);border-radius:2px;background:#fff;
+  font-family:var(--sans);font-style:normal;font-size:0.9rem;color:var(--ink);text-decoration:none;
+}
+.booking-sheet-status .booking-sheet-trouble a:hover,.booking-sheet-status .booking-sheet-trouble button:hover{border-color:var(--gold);color:var(--gold-text);}
+@media (max-width:480px){.booking-sheet-trouble{flex-direction:column;align-items:stretch;}.booking-sheet-trouble a,.booking-sheet-trouble button{justify-content:center;}}
+@media (prefers-reduced-motion: reduce){
+  .booking-sheet[open],.booking-sheet.is-closing,.booking-sheet::backdrop,.booking-sheet.is-closing::backdrop{animation:none;}
+  .booking-sheet-status,.booking-sheet-status.is-done{transition:none;}
+}
+/* HoneyBook's wedding scheduler switches to its two-column layout somewhere between
+   a 739px and a 757px frame, and that layout overflows sideways until the frame is
+   much wider: at 757px the time slots and its Continue button were cut off, at 920px
+   they fit (8 Oct 2026). So a sheet that cannot be 920px wide stays at 736px, where
+   it uses its stacked layout. */
+@media (max-width:967px){.booking-sheet{width:min(736px, calc(100vw - 48px));}}
+@media (max-width:700px){
+  .booking-sheet{width:100%;height:100vh;height:100dvh;border-radius:0;box-shadow:none;}
+  .booking-sheet-bar{gap:12px;padding:8px 12px 8px 18px;}
+  .booking-sheet-title{font-size:1.22rem;}
+  .booking-sheet-note{font-size:0.8125rem;}
+}
+/* On phones (480px and below) the bar keeps the title and the price line only;
+   "Secure booking via HoneyBook" moves into the Help panel. The strip uses its short
+   labels ("Help", "New tab (starts over)"). */
+.booking-sheet-short{display:none;}
+@media (max-width:480px){
+  .booking-sheet-secure,.booking-sheet-long{display:none;}
+  .booking-sheet-short{display:inline;}
+  .booking-sheet-note{font-size:0.8125rem;column-gap:10px;}
+  .booking-sheet-foot{gap:0 22px;}
+  .booking-sheet-foot #booking-sheet-ask{display:block;flex-basis:100%;text-align:center;padding-top:8px;}
+}
+
+/* Compact: bookings.js sets .is-compact when the visible height (keyboard up, landscape
+   phone) is under 520px. A slimmer bar keeps room for the calendar and the strip.
+   After the phone rules on purpose, so it wins over them. */
+.booking-sheet.is-compact .booking-sheet-bar{padding-top:4px;padding-bottom:4px;}
+.booking-sheet.is-compact .booking-sheet-title{font-size:1.1rem;}
+.booking-sheet.is-compact .booking-sheet-note{display:none;}
+
+/* HoneyBook contact form embed */
+.hb-embed{
+  position:relative;background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:2px;
+  max-width:720px;margin:0 auto;padding:6px 28px;
+}
+.hb-embed iframe{display:block;width:100%;border:none;}
+/* The card's own header, above HoneyBook's fields: prices for the sessions this form
+   is for, and email or phone for anyone who would rather not fill in a form; then a
+   hint for dates that are not fixed, since the form's date field wants one. */
+.hb-embed-head{
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:0 20px;
+  padding:4px 0;border-bottom:1px solid var(--line);font-size:0.85rem;font-weight:400;color:var(--ink-soft);
+}
+.hb-embed-head p{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:0 14px;}
+.hb-embed-prices,.hb-embed-contact,.hb-embed-hint{font-size:0.875rem;line-height:1.5;}
+.hb-embed-prices{display:flex;flex-wrap:wrap;align-items:center;gap:0 14px;}
+.hb-embed-prices[hidden]{display:none !important;}
+@media (max-width:480px){
+  .hb-embed-head .hb-embed-prices-wide{display:grid;grid-template-columns:1fr 1fr;column-gap:12px;flex-basis:100%;padding-top:6px;}
+  .hb-embed-head .hb-embed-prices-wide .hb-embed-label{grid-column:1 / -1;}
+}
+.hb-embed-label{font-size:0.875rem;letter-spacing:0;text-transform:none;color:var(--gold-text);}
+.hb-embed-prices b{font-weight:500;}
+.hb-embed-head .hb-embed-contact{font-size:0.8125rem;}
+.hb-embed-head{background:var(--cream);margin:-6px -28px 0;padding:8px 28px;row-gap:8px;}
+.hb-embed-head .hb-embed-prices-wide a{font-size:0.9375rem;}
+.hb-embed-contact{color:var(--ink-soft);}
+.hb-embed-head .hb-embed-contact a{color:var(--ink-soft);min-width:44px;justify-content:center;}
+.hb-embed-head a,.hb-embed-fallback a{
+  display:inline-flex;align-items:center;min-height:44px;
+  color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;
+}
+.hb-embed-head a:hover,.hb-embed-fallback a:hover{color:var(--gold-text);}
+.hb-embed-hint{margin:18px 0 0;font-weight:400;color:var(--ink-soft);text-wrap:pretty;}
+/* Under the form: the site's privacy page, a full-size target on the fields' inset. */
+.hb-embed-privacy{margin:0 0 6px;font-size:0.8125rem;}
+.hb-embed-privacy a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-soft);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+.hb-embed-privacy a:hover{color:var(--gold-text);}
+@media (min-width:701px){.hb-embed-privacy{margin-left:18px;margin-right:18px;}}
+@media (max-width:480px){.hb-embed-privacy{padding:0 18px;}}
+/* HoneyBook insets its field labels about 18px inside the frame; the header and hint
+   line up with them on the wide layout. */
+@media (min-width:701px){.hb-embed-hint{margin-left:18px;margin-right:18px;}.hb-embed-head{padding:6px 46px;row-gap:0;}}
+/* bookings.js: a quiet line in the reserved space until HoneyBook says the form is ready;
+   if its script never arrives, the space collapses to a fallback with email and phone.
+   Without JavaScript the form cannot load at all, so the space is not reserved. */
+.hb-embed-frame{position:relative;}
+.hb-embed-status{
+  position:absolute;left:0;right:0;top:110px;margin:0;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;
+  font-family:var(--sans);font-style:normal;font-size:0.9375rem;font-weight:400;color:var(--ink-soft);pointer-events:none;
+}
+.hb-embed.is-loading .hb-embed-status::before{
+  content:"";display:block;width:120px;height:2px;border-radius:2px;
+  background:linear-gradient(var(--gold),var(--gold)) no-repeat var(--line);background-size:40% 100%;
+  animation:hb-progress 1.1s ease-in-out infinite;
+}
+@keyframes hb-progress{from{background-position:-60% 0;}to{background-position:160% 0;}}
+@media (prefers-reduced-motion: reduce){.hb-embed.is-loading .hb-embed-status::before{animation:none;background-size:100% 100%;opacity:0.5;}}
+html:not(.js) .hb-embed-status{display:none;}
+.hb-embed.is-failed .hb-embed-status{position:static;padding:28px 8px 0;}
+.hb-embed-fallback{padding:12px 8px 28px;text-align:center;}
+.hb-embed-fallback p{margin:0 auto 8px;max-width:440px;color:var(--ink-soft);}
+/* Reserve the real form height, or everything below jumps when HoneyBook injects
+   the iframe, on the one page that exists to convert. Measured 8 Oct 2026 with the
+   current padding and phone gutters: 986px from 481px wide up (1037px at 481),
+   1009-1037px at 431-480, 1037-1054px at 391-430, 1082px at 360-390, 1127px at 320.
+   Each reserve is the smallest height in its range, so no gap opens below the form;
+   the 320px phone still shifts 45px. The heights follow the form's fields and fonts:
+   re-measure if the HoneyBook form changes, including a restyle in its editor.
+   On failure the wrapper folds away but keeps its frame, so a form that arrives late
+   can still say it is ready and come back. */
+.hb-embed-frame > div[class^="hb-p-"]{min-height:986px;}
+@media (max-width:480px){.hb-embed-frame > div[class^="hb-p-"]{min-height:1009px;}}
+@media (max-width:430px){.hb-embed-frame > div[class^="hb-p-"]{min-height:1037px;}}
+@media (max-width:390px){.hb-embed-frame > div[class^="hb-p-"]{min-height:1082px;}}
+.hb-embed.is-failed .hb-embed-frame > div[class^="hb-p-"]{height:0;min-height:0;overflow:hidden;}
+html:not(.js) .hb-embed-frame > div[class^="hb-p-"]{min-height:0;}
+@media (max-width:700px){.hb-embed{padding:4px 12px;}.hb-embed-head{margin:-4px -12px 0;padding:4px 12px;row-gap:0;}.hb-embed-hint{margin-top:12px;}}
+@media (max-width:480px){
+  .hb-embed{padding:4px;}
+  .hb-embed-head{margin:-4px -4px 0;padding:4px 22px;}  /* text lines up with HoneyBook's labels */
+  .hb-embed-hint{padding-left:18px;padding-right:18px;}
+}
+/* Text, call and email on /fall-minis as real tap targets under its booking card, in
+   the same quiet link style as the inquiry form's header on /bookings. */
+.contact-alt{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 24px;margin:0 auto 24px;font-weight:400;font-size:0.92rem;color:var(--ink-soft);}
+.contact-alt a{
+  display:inline-flex;align-items:center;min-height:44px;
+  color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;
+}
+.contact-alt a:hover{color:var(--gold-text);}
+.contact-alt b{font-weight:500;}
+.contact-alt i{font-style:normal;margin-left:6px;color:var(--ink-soft);}
+/* On a phone the label sits on its own line above the links; the number and address
+   are dropped (the phone and mail apps show them) so the links fit on one line. */
+@media (max-width:480px){
+  .contact-alt span{flex-basis:100%;text-align:center;}
+  .contact-alt i{display:none;}
+}
+
+/* Booking cards (bookings, fall-minis) stand in front of the HoneyBook sheet. They
+   reuse .price-banner, tightened into one system: the photo fills its cell instead
+   of setting the row height, every card has the same columns and action width, and
+   the type is a step heavier and darker than the banner's, because these lines are
+   read closely just before a payment. On one column the price and button come
+   straight after the summary, ahead of the details (at 375px the button used to
+   start 975px into the section). */
+.booking-card{background:#fdfaf5;grid-template-columns:240px minmax(0,1fr) minmax(0,1.2fr) 200px;gap:24px;min-height:240px;padding-right:32px;}
+.booking-card .pb-photo{min-height:0;}
+.booking-card .pb-photo img{position:absolute;inset:0;}
+.booking-card .pb-photo::after{content:none;}  /* the banner's scrim was for a label these cards don't have */
+.booking-card .pb-photo img.bc-crop-family{object-position:50% 62%;}
+/* Each mini card carries two photos: a portrait one for the wide card's tall photo
+   column and a landscape one for the phone's wide strip, where all four faces fit.
+   The hidden one is lazy and display:none, so it is never downloaded. */
+.booking-card .pb-photo .bc-photo-narrow{display:none;}
+@media (max-width:900px){
+  .booking-card .pb-photo .bc-photo-wide{display:none;}
+  .booking-card .pb-photo .bc-photo-narrow{display:block;object-position:50% 55%;}
+}
+.booking-card .pb-photo img.bc-crop-wedding{object-position:50% 100%;}
+/* Action comes before the details in the markup (that is the phone reading order);
+   on the wide grid it is placed back in the last column. */
+.booking-card .pb-features{grid-column:3;grid-row:1;}
+.booking-card .pb-action{grid-column:4;grid-row:1;}
+.booking-card-title{font-family:var(--serif);font-weight:500;font-size:1.65rem;line-height:1.15;margin:0 0 8px;color:var(--ink);}
+.booking-card .price-tag + .price-tag{margin-top:-6px;}
+.booking-card .price-tag .pt-line{display:block;}
+.booking-card .price-tag{margin:0;font-family:var(--sans);font-style:normal;font-size:0.95rem;font-weight:400;line-height:1.5;color:var(--ink);text-wrap:pretty;}
+.booking-card .price-meta{margin:0 0 12px;font-size:0.95rem;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink-soft);}
+.booking-card .price-tag .pt-when{margin-top:6px;font-weight:500;text-wrap:balance;}
+.booking-card .pb-features{gap:10px;}
+.booking-card .pb-features li{font-weight:400;font-size:0.97rem;line-height:1.5;color:var(--ink);text-wrap:pretty;}
+/* A dash centred on a two-line item floats between the lines; here it sits on the first. */
+.booking-card .pb-features li::before{top:0.75em;transform:none;}
+.booking-card .pb-features a,.booking-card .pb-links a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+.booking-card .pb-features a:hover,.booking-card .pb-links a:hover{color:var(--gold-text);}
+/* Onward links (extended family, galleries, collections) get a second row under the
+   summary and details. They follow the action in the markup, and the action's column
+   starts in the first row, so tab order matches reading order: summary, details,
+   button, then these. No session facts carry links, so nothing in the details column
+   is reached after the button that sits to its right. */
+.booking-card{row-gap:0;}
+.booking-card .pb-photo,.booking-card .pb-action{grid-row:1 / 3;}
+.booking-card .pb-action{padding:28px 0;}
+.booking-card .pb-info,.booking-card .pb-features{padding-bottom:8px;}
+.booking-card .pb-links{grid-column:2 / 4;grid-row:2;align-self:start;margin:0;padding:4px 0 26px;display:flex;flex-wrap:wrap;gap:0 28px;}
+.booking-card .pb-links a{display:inline-flex;align-items:center;min-height:44px;font-size:0.875rem;font-weight:400;}
+.booking-card .pb-links a:not(:hover){color:var(--ink-soft);}
+@media (min-width:901px){
+  .booking-card .pb-links{display:grid;grid-template-columns:subgrid;row-gap:0;}
+  .booking-card .pb-links a{justify-self:start;}
+  .booking-card .pb-links a + a{margin-left:20px;}
+}
+.booking-card .pb-action{align-self:stretch;justify-content:center;}
+/* Text columns start level at the top whatever their length; the price and button
+   stay centred. */
+.booking-card .pb-info,.booking-card .pb-features{align-self:start;padding-top:40px;}
+.booking-card .pb-action .btn{margin-top:0;width:100%;display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 12px;line-height:1.2;text-align:center;font-size:0.875rem;font-weight:500;letter-spacing:0.06em;}
+.booking-card .pb-action .btn-dark:hover{background:var(--gold-text);}
+.provider-note{margin:0;font-size:0.8125rem;font-weight:400;color:var(--ink-soft);}
+.booking-card .pb-price{text-align:center;}
+.price-note{margin:4px 0 0;font-size:0.8125rem;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-soft);}
+@media (max-width:1080px){.booking-card{grid-template-columns:190px minmax(0,1.2fr) minmax(0,1fr) 200px;gap:24px;padding-right:28px;}}
+@media (max-width:900px){
+  .booking-card{grid-template-columns:1fr;gap:20px;min-height:0;padding:0 24px 20px;}
+  .booking-card .pb-photo{height:160px;margin:0 -24px;}
+  .booking-card .pb-action .provider-note{grid-column:1 / -1;}
+  .booking-card .pb-info,.booking-card .pb-features{padding-top:0;}
+  .booking-card .pb-features,.booking-card .pb-action,.booking-card .pb-links,.booking-card .pb-photo{grid-column:auto;grid-row:auto;}
+  .booking-card .pb-info,.booking-card .pb-features{padding-bottom:0;}
+  .booking-card{row-gap:16px;}
+  .booking-card .pb-action{padding:0;}
+  .booking-card .pb-links{padding:0;margin-top:-8px;gap:0 12px;}
+  .booking-card .pb-links a{font-size:0.875rem;}
+  .booking-card .pb-price{text-align:left;}
+  .booking-card .pb-photo img.bc-crop-wedding{object-position:50% 40%;}
+  .booking-card .pb-action{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 20px;align-items:center;}
+  .booking-card .pb-features{padding-top:16px;border-top:1px solid var(--line);}
+}
+@media (max-width:340px){.booking-card .pb-action{grid-template-columns:1fr;}}
+@media (min-width:390px) and (max-width:900px){
+  .booking-card .pb-links a + a::before{content:"";width:1px;height:1em;margin-right:12px;background:var(--line);}
+}
+/* The booking sections give their cards and the inquiry form more of a phone's width. */
+@media (max-width:480px){#book > .container,#call > .container,#inquire > .container{padding:0 16px;}}
+
+/* The one line that changes each season on /fall-minis. Everything else on that
+   page is now season-neutral so the URL holds its rankings year-round. */
+.season-flag{display:inline-block;margin:16px auto 0;padding:8px 18px;border:1px solid var(--gold-light);border-radius:2px;font-size:0.9rem;color:#f2ede4;background:rgba(20,17,14,0.35);}
+
+/* The booking page is read closely before money changes hands: its supporting text
+   is a step heavier than the site's 300 body weight. */
+.booking-intro{max-width:660px;margin:0 auto 48px;color:var(--ink-soft);font-weight:400;text-wrap:pretty;}
+.booking-lede{max-width:600px;margin:0 auto 40px;color:var(--ink-soft);font-weight:400;text-wrap:pretty;}
+.booking-intro a,.booking-lede a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;padding:12px 0;margin:-12px 0;}
+@media (max-width:480px){.booking-lede{margin-bottom:20px;}}
+.booking-lede{text-wrap:balance;}
+
+/* Route cards — the whole card is the target, so there is one obvious action
+   per route rather than a card plus a separate small button. */
+.route-card{
+  display:flex;flex-direction:column;position:relative;
+  padding:38px 30px 30px;background:#fdfaf5;
+  border:1px solid var(--line);border-radius:3px;
+  transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.route-card:hover{
+  transform:translateY(-4px);border-color:var(--gold-light);
+  box-shadow:0 14px 38px rgba(20,17,14,0.10);color:inherit;
+}
+.route-title{
+  font-family:var(--serif);font-size:1.5rem;line-height:1.2;
+  color:var(--ink);margin-bottom:6px;
+}
+.route-kicker{
+  font-size:0.8125rem;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold-text);margin-bottom:16px;
+}
+.route-body{color:var(--ink-soft);font-weight:400;font-size:0.97rem;flex:1;margin-bottom:22px;text-wrap:pretty;}
+.route-cta{
+  align-self:flex-start;display:inline-flex;align-items:center;min-height:48px;padding:0 18px;line-height:1.2;
+  font-size:0.875rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--charcoal);
+  border:1px solid var(--charcoal);border-radius:2px;transition:background 0.2s ease,color 0.2s ease,border-color 0.2s ease;
+}
+.route-card:hover .route-cta{color:#fff;background:var(--gold-text);border-color:var(--gold-text);}
+@media (min-width:1081px){.route-cta{min-width:200px;justify-content:center;}}
+.route-note{margin-top:10px;font-size:0.8125rem;font-weight:400;color:var(--ink-soft);}
+/* One client's words under the routes: a Google review, quoted verbatim. */
+.route-quote{max-width:660px;margin:36px auto 0;text-align:center;}
+.route-quote blockquote{margin:0;font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.5;color:var(--ink);text-wrap:balance;}
+.route-quote figcaption{margin-top:0;font-size:0.875rem;font-weight:400;color:var(--ink-soft);}
+.route-quote figcaption a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-soft);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+.route-quote figcaption a:hover{color:var(--gold-text);}
+@media (max-width:480px){.route-quote{margin-top:32px;}.route-quote blockquote{font-size:1.125rem;}}
+/* Under a mini booking card: the free call, for anyone with questions before paying.
+   The question and the call (with its note) share a row on wide screens, tops level;
+   Text / Call / Email sit beneath, smaller. Phones: stacked and centred. */
+.booking-alt{display:flex;flex-direction:column;align-items:center;gap:4px;margin:28px auto 0;text-align:center;}
+.booking-alt-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:8px 20px;}
+.booking-alt p{margin:0;}
+.booking-alt-label{display:flex;align-items:center;min-height:44px;font-size:0.95rem;font-weight:400;color:var(--ink-soft);}
+.booking-alt .btn{margin-top:0;}
+.booking-alt-action{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.booking-alt-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 12px;font-size:0.8125rem;font-weight:400;color:var(--ink-soft);}
+.booking-alt-links a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:0 4px;color:var(--ink-soft);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+.btn-outline{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(132,95,51,0.45);}
+.booking-alt .btn-outline{padding:11px 18px;min-height:44px;font-size:0.875rem;font-weight:500;letter-spacing:0.04em;}
+.btn-outline:hover{background:var(--charcoal);color:#fff;}
+@media (max-width:700px){
+  .booking-alt{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:20px;}
+  .booking-alt-row{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .booking-alt-label{min-height:0;}
+}
+/* Under the wedding card: a wedding client's words, then email for anyone who would
+   rather write than book a call. */
+.booking-quote{max-width:620px;margin:36px auto 0;text-align:center;}
+.booking-quote blockquote{margin:0;font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.5;color:var(--ink);text-wrap:balance;}
+.booking-quote figcaption{display:flex;align-items:center;justify-content:center;min-height:44px;margin-top:0;font-size:0.875rem;font-weight:400;color:var(--ink-soft);}
+.booking-email{margin:16px auto 0;}
+@media (max-width:480px){.booking-quote{margin-top:28px;}.booking-quote blockquote{font-size:1.125rem;}}
+/* Prices and recent work, quietly, under the three routes. */
+.route-more{margin:24px auto 0;max-width:760px;text-align:center;font-size:0.9rem;font-weight:400;color:var(--ink-soft);text-wrap:pretty;}
+.route-more{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 18px;}
+.route-more a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+.route-more-label{color:var(--ink-soft);}
+.route-more-proof{margin-top:12px;}
+.route-more a:hover{color:var(--gold-text);}
+
+/* Numbered "what happens next" list */
+.booking-steps{list-style:none;counter-reset:none;margin:0;padding:0;display:grid;gap:26px;}
+.booking-steps li{
+  display:grid;grid-template-columns:44px 1fr;gap:4px 20px;align-items:start;
+  padding-bottom:26px;border-bottom:1px solid var(--line);
+}
+.booking-steps li:last-child{border-bottom:none;padding-bottom:0;}
+.booking-steps .step-n{
+  grid-row:1 / span 2;
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:1.15rem;
+  color:var(--gold-text);border:1px solid var(--gold-light);
+}
+.booking-steps strong{font-family:var(--serif);font-weight:500;font-size:1.18rem;}
+.booking-steps span:not(.step-n){color:var(--ink-soft);font-size:0.96rem;}
+
+@media (max-width:1080px){
+  .route-card{padding:32px 24px 26px;}
+}
+
+/* ── Dated session list (/fall-minis) ──────────────────────────────────────
+   A <dl> on CSS grid rather than a <table>. Reasons, for the record:
+   a table of three short columns either overflows 375px or needs its type
+   shrunk to fit, and un-shrinking it means a horizontal scroller, which is
+   the one thing this block cannot have. A <dl> re-flows: three columns on a
+   desktop, date and spots on one line with the location under them on a
+   tablet, and a plain stack under 480px. One <dt> with two <dd>s also reads
+   in a sensible order to a screen reader — the date, then what goes with it —
+   whereas the same data as a table needs header scoping to say as much. The
+   dates are not a comparison grid; they are a list of one thing each, which
+   is what a definition list is for. */
+.session-dates{
+  margin:40px 0 36px;padding:0;list-style:none;
+  border-top:1px solid var(--line);
+  text-align:left;
+}
+.session-date{
+  display:grid;
+  grid-template-columns:minmax(190px,0.9fr) 1.4fr auto;
+  gap:4px 32px;align-items:baseline;
+  padding:18px 0;border-bottom:1px solid var(--line);
+}
+.session-date-day{
+  margin:0;font-family:var(--serif);font-size:1.22rem;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+/* Optional per-date location and remaining-spot count. Unused until real values exist. */
+.session-date-where{margin:0;color:var(--ink-soft);font-size:0.95rem;}
+.session-date-spots{
+  margin:0;justify-self:end;white-space:nowrap;
+  font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold-text);
+}
+/* A booked-out date stays on the page — it is the clearest evidence that the
+   dates are real — but it stops shouting. */
+.session-date.is-full .session-date-day{color:var(--ink-soft);}
+.session-date.is-full .session-date-spots{color:var(--ink-soft);}
+.session-dates-note{max-width:600px;margin:0 0 8px;color:var(--ink-soft);}
+
+@media (max-width:700px){
+  .session-date{grid-template-columns:1fr auto;gap:2px 16px;padding:16px 0;}
+  .session-date-day{grid-column:1;grid-row:1;}
+  .session-date-spots{grid-column:2;grid-row:1;justify-self:end;}
+  .session-date-where{grid-column:1 / -1;grid-row:2;}
+}
+/* Under 480px the date and the spot count no longer both fit on one line
+   without clipping, so everything gets its own row. At 375px the widest line
+   is the date, well inside the 311px the container leaves. */
+@media (max-width:480px){
+  .session-date{grid-template-columns:1fr;gap:3px;}
+  .session-date-day,.session-date-where,.session-date-spots{
+    grid-column:1;grid-row:auto;justify-self:start;
+  }
+  .session-date-day{font-size:1.15rem;}
+}
+

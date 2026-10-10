@@ -83,12 +83,10 @@
 </script>
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap">
 <link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-family-photographer-hero-wide.jpg&amp;w=1600" media="(min-width:701px)" fetchpriority="high">
 <link rel="preload" as="image" href="/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&amp;w=800" media="(max-width:700px)" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bookings.css">
 <script>document.documentElement.classList.add('js');setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('js-ready')){d.classList.remove('js');}},3000);</script>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-43D75ZN3B7"></script>
@@ -123,7 +121,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 
 <div class="promo-bar" id="promo-bar" hidden>
   <div class="promo-inner">
-    <a href="/fall-minis">Book your fall mini sessions <span class="promo-price">$200</span> <span class="promo-arrow" aria-hidden="true">&rarr;</span></a>
+    <a href="/fall-minis">Fall mini sessions <span class="promo-price">$200</span> &middot; through Oct&nbsp;25 <span class="promo-arrow" aria-hidden="true">&rarr;</span></a>
     <button type="button" class="promo-dismiss" aria-label="Dismiss this offer">&times;</button>
   </div>
 </div>
@@ -178,84 +176,137 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
   <div class="container">
     <div class="reveal">
       <p class="section-label">Start Here</p>
-      <h2 class="center" style="margin-bottom:14px;">Which of these is you?</h2>
-      <p class="center booking-intro">Every price is published on the service pages &mdash; have a look through those and the <a href="/recent-shoots">recent sessions</a> first. Documentary photography isn&rsquo;t for everyone, and I&rsquo;d rather you know the style fits before you put money down.</p>
+      <h2 class="center" style="margin-bottom:14px;">What are you booking?</h2>
+      <p class="center booking-intro">Book a mini session, arrange a free wedding call, or tell me what you&rsquo;re planning.</p>
     </div>
     <div class="three-col reveal-group">
 
-      <a class="route-card" href="#book">
-        <span class="route-step">01</span>
-        <span class="route-title">I know what I want</span>
-        <span class="route-kicker">Mini sessions &middot; $200</span>
-        <span class="route-body">Pick an open weekend slot, sign, pay &mdash; the date is yours straight away. No back-and-forth.</span>
-        <span class="route-cta">Book a slot now</span>
+      <a class="route-card" href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" data-sheet="Book a fall mini session" data-booking-type="mini_session" data-sheet-meta="$200 total &middot; 30 min &middot; deposit to book" aria-labelledby="rt-mini rc-mini" aria-describedby="rk-mini rb-mini rn-mini opens-new-tab">
+        <span class="route-title" id="rt-mini">Book a fall mini session</span>
+        <span class="route-kicker" id="rk-mini">$200 total &middot; 30 min &middot; 4&ndash;7pm</span>
+        <span class="route-body" id="rb-mini">Parents and kids in Roseville, Rocklin or Sacramento, October weekends to the 25th. 45+ edited images in two weeks. Suggest a place, or I&rsquo;ll pick.</span>
+        <span class="route-cta" id="rc-mini">Choose a slot</span>
+        <span class="route-note" id="rn-mini">Pay the deposit via HoneyBook</span>
       </a>
 
-      <a class="route-card" href="#call">
-        <span class="route-step">02</span>
-        <span class="route-title">I&rsquo;m planning a wedding</span>
-        <span class="route-kicker">Free 15-minute call</span>
-        <span class="route-body">Wedding days are all different. Let&rsquo;s talk through your day, your venue and which collection actually fits.</span>
-        <span class="route-cta">Book a call</span>
+      <a class="route-card" href="https://sofiamiyakephoto.hbportal.co/schedule/6a5e8eccd4b6bb554d1668ea" target="_blank" rel="noopener" data-sheet="Book your wedding call" data-booking-type="wedding_call" data-sheet-meta="Free &middot; 15 minutes" aria-labelledby="rt-wed rc-wed" aria-describedby="rk-wed rb-wed rn-wed opens-new-tab">
+        <span class="route-title" id="rt-wed">Book a wedding call</span>
+        <span class="route-kicker" id="rk-wed">Free &middot; 15 minutes</span>
+        <span class="route-body" id="rb-wed">Talk through your day and which collection fits. Collections run $1,075 to $3,925, with no obligation to book.</span>
+        <span class="route-cta" id="rc-wed">Choose a call time</span>
+        <span class="route-note" id="rn-wed">Scheduling via HoneyBook</span>
       </a>
 
-      <a class="route-card" href="#inquire">
-        <span class="route-step">03</span>
-        <span class="route-title">I have questions first</span>
-        <span class="route-kicker">Families, births, seniors, portraits, engagements</span>
-        <span class="route-body">Send your date and what you have in mind. Births especially &mdash; those get booked around a due date, not a calendar slot.</span>
-        <span class="route-cta">Send the details</span>
+      <a class="route-card" href="#inquire" aria-labelledby="rt-full rc-full" aria-describedby="rk-full rb-full rn-full">
+        <span class="route-title" id="rt-full">Ask about a full session</span>
+        <span class="route-kicker" id="rk-full">Reply within 1&ndash;2 business days</span>
+        <span class="route-body" id="rb-full">Families from $350, with room for grandparents. Births from $1,200. Seniors and portraits from $225.</span>
+        <span class="route-cta" id="rc-full">Start an inquiry</span>
+        <span class="route-note" id="rn-full">Inquiry form via HoneyBook</span>
       </a>
 
     </div>
+    <p class="route-more reveal"><span class="route-more-label">Session pricing:</span> <a href="/fall-minis">Minis</a> <a href="/families">Families</a> <a href="/birth-stories">Births</a> <a href="/seniors">Seniors</a> <a href="/portraits">Portraits</a> <a href="/weddings">Weddings</a></p>
+    <figure class="route-quote reveal">
+      <blockquote>&ldquo;Sofia was professional from the very beginning and made the entire session feel so relaxed and low-pressure. She somehow made everything look effortless &mdash; even with two toddlers causing chaos the entire time.&rdquo;</blockquote>
+      <figcaption>Tara Cravens &middot; <a href="https://www.google.com/maps/place/?cid=3984129550021780191" target="_blank" rel="noopener" aria-describedby="opens-new-tab">Google review</a></figcaption>
+    </figure>
+    <p class="route-more route-more-proof reveal"><a href="/recent-shoots">See recent sessions</a></p>
   </div>
 </section>
 
-<!-- 01 · Self-serve booking --------------------------------------------- -->
+<!-- Self-serve booking --------------------------------------------------- -->
 <section id="book" class="cream anchor-section">
   <div class="container">
     <div class="reveal">
-      <p class="section-label">01 &middot; Ready to book</p>
-      <h2 class="center" style="margin-bottom:10px;">Mini sessions &mdash; pick your slot</h2>
-      <p class="center booking-lede">Choose an open weekend slot, sign the agreement and pay. The date is yours the moment you&rsquo;re done &mdash; nothing waits on me. Full details are on the <a href="/fall-minis">mini sessions page</a>.</p>
+      <p class="section-label">Mini sessions</p>
+      <h2 class="center" style="margin-bottom:10px;">Pick your slot</h2>
+      <p class="center booking-lede">Choose a time and pay the deposit to hold your date. <a href="/fall-minis">Mini session details</a></p>
     </div>
-    <div class="cal-embed reveal">
-      <iframe src="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" title="Book a mini session" loading="lazy"></iframe>
+    <div class="price-banner booking-card reveal">
+      <div class="pb-photo">
+        <img src="images/roseville-family-boys-running-to-parents.jpg" alt="Two small boys in matching plaid toddle across dry grass toward their parents' open arms" loading="lazy" width="1280" height="1600" class="bc-crop-family bc-photo-wide" srcset="/.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=240 240w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-boys-running-to-parents.jpg&amp;w=640 640w" sizes="240px">
+        <img src="images/roseville-family-of-four-laughing.jpg" alt="A family of four laughing together, the father grinning at his older son and the mother smiling at the baby on her hip" loading="lazy" width="1600" height="1067" class="bc-photo-narrow" srcset="/.netlify/images?url=/images/roseville-family-of-four-laughing.jpg&amp;w=400 400w, /.netlify/images?url=/images/roseville-family-of-four-laughing.jpg&amp;w=640 640w, /.netlify/images?url=/images/roseville-family-of-four-laughing.jpg&amp;w=960 960w, /.netlify/images?url=/images/roseville-family-of-four-laughing.jpg&amp;w=1280 1280w" sizes="100vw">
+      </div>
+      <div class="pb-info">
+        <h3 class="booking-card-title">Fall mini session</h3>
+        <p class="price-meta">30 minutes &middot; 45+ edited images</p>
+        <p class="price-tag"><span class="pt-line">For parents and kids in Roseville, Rocklin or Sacramento.</span> <span class="pt-line pt-when">Weekends through Oct&nbsp;25,&nbsp;4&ndash;7pm</span></p>
+      </div>
+      <div class="pb-action">
+        <div class="pb-price"><div class="price">$200</div><p class="price-note">Session total</p></div>
+        <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-dark" data-sheet="Book a fall mini session" data-booking-type="mini_session" data-sheet-meta="$200 total &middot; 30 min &middot; deposit to book" aria-describedby="opens-new-tab">Choose a slot</a>
+        <p class="provider-note">Pay the deposit via HoneyBook</p>
+      </div>
+      <ul class="pb-features">
+        <li>Suggest a location in your booking notes, or I&rsquo;ll choose&nbsp;one</li>
+        <li>Styling note after booking; gallery within two weeks of the session</li>
+      </ul>
+      <p class="pb-links"><a href="#extended-family">Ask about extended family</a> <a href="/fall-minis#recent-minis">Recent minis</a></p>
     </div>
-    <div class="center reveal" style="margin-top:24px;">
-      <a href="https://sofiamiyakephoto.hbportal.co/public/6ac699b166539912fbed5118" target="_blank" rel="noopener" class="btn btn-dark">Open scheduler in a new tab</a>
-    </div>
+    <div class="booking-alt reveal"><div class="booking-alt-row"><p class="booking-alt-label">Questions before you book, like where to meet?</p>
+      <div class="booking-alt-action"><a href="https://sofiamiyakephoto.hbportal.co/schedule/6a5e8eccd4b6bb554d1668ea" target="_blank" rel="noopener" class="btn btn-outline" data-sheet="Book a free call" data-sheet-meta="Free &middot; 15 minutes" data-booking-type="mini_questions_call" aria-describedby="opens-new-tab">Book a free call</a>
+      <p class="provider-note">15 minutes via HoneyBook</p></div></div>
+      <p class="booking-alt-links"><span>Or</span> <a href="sms:+18054220130">Text</a> <a href="tel:+18054220130">Call</a> <a href="mailto:contact@sofiamiyakephoto.com">Email Sofia</a></p></div>
   </div>
 </section>
 
-<!-- 02 · Wedding call ---------------------------------------------------- -->
+<!-- Wedding call --------------------------------------------------------- -->
 <section id="call" class="linen anchor-section">
   <div class="container">
     <div class="reveal">
-      <p class="section-label">02 &middot; Planning a wedding?</p>
-      <h2 class="center" style="margin-bottom:10px;">Book a free 15-minute call</h2>
-      <p class="center booking-lede">Pick a time that works for you. We&rsquo;ll talk about your day, your venue and which <a href="/weddings">wedding collection</a> fits &mdash; no pressure, and no charge.</p>
+      <p class="section-label">Weddings</p>
+      <h2 class="center" style="margin-bottom:10px;">Start with a free call</h2>
+      <p class="center booking-lede">Talk through your plans and find the coverage that fits, before anything is signed.</p>
     </div>
-    <div class="cal-embed reveal">
-      <iframe src="https://sofiamiyakephoto.hbportal.co/schedule/6a5e8eccd4b6bb554d1668ea" title="Schedule a wedding inquiry call" loading="lazy"></iframe>
+    <div class="price-banner booking-card reveal">
+      <div class="pb-photo">
+        <img src="images/sacramento-wedding-ceremony-kiss.jpg" alt="Bride and groom share a kiss during the ceremony" loading="lazy" width="1429" height="1600" class="bc-crop-wedding" srcset="/.netlify/images?url=/images/sacramento-wedding-ceremony-kiss.jpg&amp;w=240 240w, /.netlify/images?url=/images/sacramento-wedding-ceremony-kiss.jpg&amp;w=400 400w, /.netlify/images?url=/images/sacramento-wedding-ceremony-kiss.jpg&amp;w=640 640w, /.netlify/images?url=/images/sacramento-wedding-ceremony-kiss.jpg&amp;w=960 960w" sizes="(max-width:900px) 100vw, 240px">
+      </div>
+      <div class="pb-info">
+        <h3 class="booking-card-title">Wedding call</h3>
+        <p class="price-tag">Bring your date, venue and any questions, whatever you know so far.</p>
+      </div>
+      <div class="pb-action">
+        <div class="pb-price"><div class="price">Free</div><p class="price-note">15-minute call</p></div>
+        <a href="https://sofiamiyakephoto.hbportal.co/schedule/6a5e8eccd4b6bb554d1668ea" target="_blank" rel="noopener" class="btn btn-dark" data-sheet="Book your wedding call" data-booking-type="wedding_call" data-sheet-meta="Free &middot; 15 minutes" aria-describedby="opens-new-tab">Choose a call time</a>
+        <p class="provider-note">Scheduling via HoneyBook</p>
+      </div>
+      <ul class="pb-features">
+        <li>No obligation to book</li>
+        <li>Collections $1,075 to $3,925</li>
+      </ul>
+      <p class="pb-links"><a href="/weddings">See the collections</a> <a href="/wedding-gallery">See the wedding gallery</a></p>
     </div>
-    <div class="center reveal" style="margin-top:24px;">
-      <a href="https://sofiamiyakephoto.hbportal.co/schedule/6a5e8eccd4b6bb554d1668ea" target="_blank" rel="noopener" class="btn btn-dark">Open scheduler in a new tab</a>
-    </div>
+    <figure class="booking-quote reveal">
+      <blockquote>&ldquo;Her work is unbelievable pieces of art that capture every emotion and detail we wanted to remember.&rdquo;</blockquote>
+      <figcaption>Michael, April 2026 &middot; Zola review</figcaption>
+    </figure>
+    <p class="booking-alt-links booking-email reveal">Prefer to email your plans? <a href="mailto:contact@sofiamiyakephoto.com?subject=Wedding%20photography%20inquiry">Email Sofia</a></p>
   </div>
 </section>
 
-<!-- 03 · Inquiry form ---------------------------------------------------- -->
+<!-- Inquiry form --------------------------------------------------------- -->
 <section id="inquire" class="cream anchor-section">
   <div class="container">
     <div class="reveal">
-      <p class="section-label">03 &middot; Questions first</p>
+      <span id="extended-family" class="anchor-section" aria-hidden="true"></span>
+      <p class="section-label">Full sessions</p>
       <h2 class="center" style="margin-bottom:10px;">Tell me about your story</h2>
-      <p class="center booking-lede">Whatever you&rsquo;re planning &mdash; a wedding, a <a href="/birth-stories">birth</a>, a <a href="/families">family session</a> &mdash; send me the details and I&rsquo;ll reply within 1&ndash;2 business days.</p>
+      <p class="center booking-lede">I&rsquo;ll reply within 1&ndash;2 business days about availability, before any agreement or deposit.</p>
     </div>
     <div class="hb-embed reveal">
-      <!-- HONEYBOOK CONTACT FORM -->
-      <div class="hb-p-6a5e8eccd4b6bb554d1668f7-2"></div>
+      <div class="hb-embed-head">
+        <p class="hb-embed-prices hb-embed-prices-wide"><span class="hb-embed-label">Sessions from</span> <a href="/families"><span>Families <b>$350</b></span></a> <a href="/birth-stories"><span>Births <b>$1,200</b></span></a> <a href="/seniors"><span>Seniors <b>$225</b></span></a> <a href="/portraits"><span>Portraits <b>$225</b></span></a></p>
+        <p class="hb-embed-contact">Reach Sofia: <a href="tel:+18054220130">Call (805) 422-0130</a> <a href="mailto:contact@sofiamiyakephoto.com">Email</a></p>
+      </div>
+      <p class="hb-embed-hint">Date is optional. Tell me who&rsquo;s joining and what you&rsquo;d like photographed.</p>
+      <script>addEventListener('message',function(e){var d=e.data&&e.data.hbEvent;if(d&&d.type==='hb_contact_form_loaded'&&/^https:\/\/[a-z0-9-]+\.honeybook\.com$/.test(e.origin))window.__hbFormReady=e.source;});</script>
+      <div class="hb-embed-frame">
+        <p class="hb-embed-status">Loading the inquiry form&hellip;</p>
+        <!-- HONEYBOOK CONTACT FORM -->
+        <div class="hb-p-6a5e8eccd4b6bb554d1668f7-2"></div>
+      </div>
       <img height="1" width="1" style="display:none" src="https://www.honeybook.com/p.png?pid=6a5e8eccd4b6bb554d1668f7" alt="">
       <script>
         (function(h,b,s,n,i,p,e,t) {
@@ -265,6 +316,12 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
         })(window,document,"script","https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.min.js","6a5e8eccd4b6bb554d1668f7");
       </script>
       <!-- END HONEYBOOK CONTACT FORM -->
+      <div class="hb-embed-fallback" hidden>
+        <p>Send the same details by email or phone and I&rsquo;ll reply within 1&ndash;2 business days.</p>
+        <p><a href="mailto:contact@sofiamiyakephoto.com">contact@sofiamiyakephoto.com</a> &middot; <a href="tel:+18054220130">(805) 422-0130</a></p>
+      </div>
+      <p class="hb-embed-privacy"><a href="/privacy">Privacy policy</a></p>
+      <noscript><div class="hb-embed-fallback"><p>The inquiry form needs JavaScript. Email <a href="mailto:contact@sofiamiyakephoto.com">contact@sofiamiyakephoto.com</a> or call <a href="tel:+18054220130">(805) 422-0130</a>.</p></div></noscript>
     </div>
   </div>
 </section>
@@ -274,12 +331,13 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
   <div class="container" style="max-width:940px;">
     <div class="reveal">
       <p class="section-label">What happens next</p>
-      <h2 class="center" style="margin-bottom:48px;">However you start, this is the order of things</h2>
+      <h2 class="center" style="margin-bottom:14px;">Full sessions and weddings, in order</h2>
+      <p class="center booking-lede" style="margin-bottom:48px;">Mini sessions are simpler: choose a time, pay the deposit, and I&rsquo;ll send a short styling note.</p>
     </div>
     <ol class="booking-steps reveal-group">
-      <li><span class="step-n">1</span><strong>You reach out</strong><span>A booked slot, a call, or a message with your date and what you have in mind.</span></li>
+      <li><span class="step-n">1</span><strong>You reach out</strong><span>A call, or a message with your date and what you have in mind.</span></li>
       <li><span class="step-n">2</span><strong>We sort the details</strong><span>Location, timing, who&rsquo;s coming, what you want to walk away with. I&rsquo;ll send a styling note if it helps.</span></li>
-      <li><span class="step-n">3</span><strong>Agreement and deposit</strong><span>Everything signed through HoneyBook. The date isn&rsquo;t held until this is done.</span></li>
+      <li><span class="step-n">3</span><strong>Agreement and deposit</strong><span>Everything goes through HoneyBook, and the date isn&rsquo;t held until it&rsquo;s done.</span></li>
       <li><span class="step-n">4</span><strong>The session</strong><span>I keep out of the way and photograph what actually happens.</span></li>
       <li><span class="step-n">5</span><strong>Your gallery</strong><span>A private online gallery you can download from and share. Delivery times are listed on each service page.</span></li>
     </ol>
@@ -296,6 +354,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
 
 </main>
 
+<span id="opens-new-tab" hidden>Opens in a new tab</span>
 <footer class="site-footer">
   <div class="footer-rule"></div>
   <h3>Sofia Miyake</h3>
@@ -305,6 +364,7 @@ src="https://www.facebook.com/tr?id=1368697491897106&ev=PageView&noscript=1" alt
   <p class="fine">© Sofia Miyake Photography · Roseville · Sacramento · California · <a href="/privacy" style="text-decoration:underline;">Privacy Policy</a> · <a href="/sitemap" style="text-decoration:underline;">Site Map</a></p>
 </footer>
 
+<script src="js/bookings.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

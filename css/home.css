@@ -1,0 +1,556 @@
+/* Sofia Miyake Photography — homepage styles (index.html only).
+   Split out of css/style.css on 9 Oct 2026 so the other 25 pages stop downloading about
+   8 KB (gzipped) of rules they never use. Loaded right after style.css, where this block
+   used to sit at the very end, so the cascade order is the same. The sitewide pieces the
+   homepage work added (the header Bookings and Book pills, the fallback fonts, the
+   self-hosted faces) stay in style.css. */
+
+/* == Homepage 2026-10 redesign == */
+/* index.html only: every rule below is scoped to <body class="home"> through :where(),
+   which adds no specificity. To revert, restore index.html and delete through
+   "end Homepage 2026-10" (see .work/homepage-polish). */
+
+/* The promo bar is hidden in the HTML and shown by main.js, which runs after first
+   paint and pushed the whole page down 44px (most of the homepage's 0.063 CLS). The
+   homepage's head script now adds .promo-on before anything paints, using the same
+   dismissal key and end date, so the bar is in place from the first frame. Other
+   pages keep the main.js path. */
+html.promo-on .promo-bar[hidden]{display:block;}
+html.promo-on{--promo-h:44px;}
+@media (max-width:359px){html.promo-on{--promo-h:60px;}}   /* the bar wraps to two lines */
+/* Focus scrolled into view clears the sticky header (Shift+Tab could hide it). */
+:where(.home) .hero-cover a,:where(.home) .home-work a,:where(.home) .home-quote a,:where(.home) .home-services a,:where(.home) .home-about a,:where(.home) .home-reviews a,:where(.home) .home-close a{scroll-margin-top:88px;}
+
+/* Two type tokens for every small uppercase line on the page: the label (credits,
+   kicker, captions, tile labels, citations, text links) and the section eyebrow. */
+:where(.home) .hero-credit,:where(.home) .hero-kicker,:where(.home) .fade-slot figcaption,:where(.home) .text-link,:where(.home) .home-reviews .reviews-footer{
+  font-family:var(--sans);font-weight:500;font-size:0.74rem;line-height:1.4;letter-spacing:0.16em;text-transform:uppercase;
+}
+:where(.home) .home-services .section-label,:where(.home) .home-close .section-label,:where(.home) .home-work h2.section-label{
+  font-family:var(--sans);font-weight:500;font-size:0.85rem;line-height:1.4;letter-spacing:0.2em;
+}
+/* One H2 size for every section heading, a clear step below the H1. */
+:where(.home) .home-services h2,:where(.home) .about-text h2{font-size:clamp(1.9rem,2.7vw,2.4rem);}
+/* Small links get a 44px tap target from an overlay, not padding, so the focus ring
+   hugs the words and nothing grows the line box. */
+:where(.home) .text-link,:where(.home) .fade-slot figcaption a,:where(.home) .quote-cite a,:where(.home) .hero-credit a,:where(.home) .home-reviews .reviews-footer a{position:relative;display:inline-block;}
+:where(.home) .hero-sub a{position:relative;}
+:where(.home) .text-link::before,:where(.home) .fade-slot figcaption a::before,:where(.home) .quote-cite a::before,:where(.home) .hero-credit a::before,:where(.home) .home-reviews .reviews-footer a::before,:where(.home) .hero-sub a::before{
+  content:"";position:absolute;left:-4px;right:-4px;top:50%;height:44px;transform:translateY(-50%);
+}
+
+/* Cover: the photograph uncovered, a cream title plate over the sky at its lower right
+   (her hands and hair stay left of the plate at 1440 wide), and a credit line like a
+   print label. One H1, one filled button. The plate, credit and Selected work band share
+   the header's 1280px edge; 100% (not 100vw) keeps them on it when a scrollbar shows. */
+:where(.home) .hero-cover{position:relative;padding:0;background:var(--linen);}
+:where(.home) .hero-photo{position:relative;height:clamp(500px,76vh,820px);background:#2a2620;overflow:hidden;}
+:where(.home) .hero-cover .hero-bg::after{content:none;}
+/* Retina screens get a 2x file, and wide 1x screens the 2400px original: w=1600 on a
+   1920px-wide screen is upscaled 1.2x. url() stays first for browsers without
+   image-set(); -webkit-image-set() serves Safari before 17. Scoped to .hero-cover, so
+   the bookings hero is unchanged. The preloads in index.html use the same breakpoints. */
+:where(.home) .hero-cover .hero-bg-lead{
+  background-image:url('/.netlify/images?url=/images/roseville-family-photographer-hero-wide.jpg&w=1600');
+  background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-family-photographer-hero-wide.jpg&w=1600') 1x,url('/.netlify/images?url=/images/roseville-family-photographer-hero-wide.jpg&w=2400') 2x);
+  background-image:image-set(url('/.netlify/images?url=/images/roseville-family-photographer-hero-wide.jpg&w=1600') 1x,url('/.netlify/images?url=/images/roseville-family-photographer-hero-wide.jpg&w=2400') 2x);
+  background-position:center top;
+}
+@media (min-width:1601px){
+  :where(.home) .hero-cover .hero-bg-lead{background-image:url('/.netlify/images?url=/images/roseville-family-photographer-hero-wide.jpg&w=2400');}
+}
+:where(.home) .hero-plate{
+  position:absolute;z-index:3;right:max(40px,calc((100% - 1280px) / 2 + 32px));bottom:-64px;
+  width:min(440px,32vw);background:var(--cream);padding:40px 40px 36px;
+  box-shadow:0 0 0 1px rgba(44,38,33,0.10),0 12px 24px -18px rgba(44,38,33,0.22);
+}
+:where(.home) .hero-plate .rule{width:40px;height:2px;background:var(--gold);margin:0 0 18px;}
+/* The page's typographic peak: every other heading on the page is set smaller. */
+:where(.home) .hero-plate h1,:where(.home) .hero-plate .hero-title{font-size:clamp(2.2rem,3.3vw,3rem);line-height:1.04;margin:0;color:var(--ink);text-wrap:balance;}
+:where(.home) .hero-kicker{display:block;line-height:1.55;letter-spacing:0.2em;color:var(--gold-text);margin-bottom:16px;}
+:where(.home) .hero-kicker > span:not(.visually-hidden){display:block;}
+:where(.home) .hero-sub{margin:18px 0 0;font-size:1.02rem;font-weight:400;color:var(--ink);}
+:where(.home) .hero-sub a{display:block;width:fit-content;margin-top:4px;color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:1px;text-underline-offset:4px;}
+:where(.home) .hero-sub a:hover{color:var(--gold-text);}
+:where(.home) .hero-plate .hero-actions{justify-content:flex-start;align-items:baseline;gap:24px;margin-top:24px;}
+:where(.home) .text-link{color:var(--gold-text);border-bottom:1px solid rgba(132,95,51,0.4);padding:0 0 3px;font-size:0.875rem;line-height:1.3;letter-spacing:0.04em;text-transform:none;}
+:where(.home) .text-link:hover{color:var(--ink);border-bottom-color:var(--ink);}
+:where(.home) .hero-credit{position:absolute;left:max(32px,calc((100% - 1280px) / 2 + 32px));bottom:-38px;margin:0;line-height:1;}
+:where(.home) .hero-credit a{color:var(--gold-text);}
+:where(.home) .hero-credit a:hover{color:var(--ink);}
+@media (max-width:1179px){
+  :where(.home) .hero-photo{height:clamp(380px,52vh,640px);}
+  :where(.home) .hero-plate{position:relative;right:auto;bottom:auto;width:auto;max-width:600px;margin:-64px auto 0;}
+  :where(.home) .hero-credit{position:static;text-align:center;margin:22px 0 0;padding:0 16px;}
+}
+@media (min-width:701px) and (max-width:1179px){
+  :where(.home) .hero-plate h1,:where(.home) .hero-plate .hero-title{font-size:2.75rem;line-height:1.05;max-width:18ch;}
+  :where(.home) .hero-sub{max-width:40ch;}
+}
+@media (min-width:701px) and (max-width:900px){
+  :where(.home) .hero-plate{max-width:560px;padding:36px;}
+}
+@media (min-width:701px) and (max-width:1179px) and (max-height:820px){
+  :where(.home) .hero-photo{height:clamp(280px,41vh,640px);}
+  /* The longer headline (9 Oct) sets in three lines here, not four, so the button stays on
+     a 1024x768 screen with the promo bar showing. */
+  :where(.home) .hero-plate h1,:where(.home) .hero-plate .hero-title{font-size:2.4rem;max-width:24ch;}
+}
+@media (min-width:1180px) and (max-height:800px){
+  :where(.home) .hero-photo{height:70vh;}
+  :where(.home) .hero-plate{padding:32px 36px 30px;}
+  :where(.home) .hero-plate h1,:where(.home) .hero-plate .hero-title{font-size:2.6rem;}
+}
+/* Landscape phones: a short photo, so the H1 reaches the first screen. */
+@media (max-width:1179px) and (max-height:500px){
+  :where(.home) .hero-photo{height:max(150px,calc(100svh - 160px - var(--promo-h, 0px)));}
+  :where(.home) .hero-plate{margin-top:-40px;}
+}
+/* Phones: the tall crop from its top edge. The photo is sized from the screen height
+   minus everything under it (--stack: header, promo bar when it shows, the plate down
+   to the button, and 12px to spare), so the main button is on the first screen (fold.mjs
+   checks 24 phone sizes, with and without the promo bar).
+   The 800px file serves every phone up to 2x density (1200px only at 3x): on a
+   Slow 4G phone at 1.75x the 1200px file added 48 KB and about 0.9s to LCP.
+   It is also capped at 95.8vw + 12px, where the plate's top edge sits just above the
+   father's hairline: the girl and her bow stay whole, and his face is either under the
+   plate or, on no phone, cut through by its edge. */
+@media (max-width:700px){
+  :where(.home) .hero-cover{--stack:425px;}
+  :where(.home) .hero-cover .hero-bg-lead{
+    background-image:url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=800');
+    background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=800') 2x,url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=1200') 3x);
+    background-image:image-set(url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=800') 2x,url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=1200') 3x);
+    background-position:center top;
+  }
+  :where(.home) .hero-photo{height:clamp(150px,min(calc(100svh - var(--stack) - var(--promo-h, 0px)),calc(95.8vw + 12px)),420px);}
+  :where(.home) .hero-plate{width:calc(100% - 32px);margin:-16px auto 0;padding:20px 20px 22px;}
+  :where(.home) .hero-plate .rule{margin-bottom:14px;}
+  :where(.home) .hero-kicker{font-size:0.72rem;letter-spacing:0.14em;margin-bottom:12px;}
+  :where(.home) .hero-plate h1,:where(.home) .hero-plate .hero-title{font-size:2.1rem;}
+  :where(.home) .hero-sub{margin-top:12px;}
+  :where(.home) .hero-plate .hero-actions{margin-top:18px;}
+}
+@media (max-width:700px) and (max-height:740px){
+  :where(.home) .hero-cover{--stack:397px;}
+  :where(.home) .hero-plate{padding:18px 20px 20px;}
+  :where(.home) .hero-plate .rule{display:none;}
+  :where(.home) .hero-kicker{margin-bottom:10px;}
+  :where(.home) .hero-plate h1,:where(.home) .hero-plate .hero-title{font-size:1.8rem;}
+  :where(.home) .hero-sub{margin-top:10px;font-size:0.95rem;}
+  :where(.home) .hero-plate .hero-actions{margin-top:14px;}
+}
+/* The shortest screens (about 600px tall or less): a smaller kicker and plate. */
+@media (max-width:700px) and (max-height:600px){
+  :where(.home) .hero-kicker{font-size:0.68rem;line-height:1.35;margin-bottom:8px;}
+  :where(.home) .hero-photo{height:clamp(130px,min(calc(100svh - var(--stack) - var(--promo-h, 0px)),calc(95.8vw + 12px)),420px);}
+  :where(.home) .hero-cover{--stack:391px;}
+  :where(.home) .hero-plate h1,:where(.home) .hero-plate .hero-title{font-size:1.65rem;}
+}
+@media (min-width:501px) and (max-width:700px){
+  :where(.home) .hero-cover .hero-bg-lead{
+    background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=800') 1x,url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=1200') 2x);
+    background-image:image-set(url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=800') 1x,url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=1200') 2x);
+  }
+}
+/* Portrait tablets: the wide 16:9 file cut through the girl's crown at 768-820px, so
+   they get the tall crop from its top edge, as phones do (1200px is the source width). */
+@media (min-width:701px) and (max-width:900px) and (orientation:portrait){
+  :where(.home) .hero-cover .hero-bg-lead{
+    background-image:url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=1200');
+    background-position:center top;
+  }
+}
+
+/* Rotating cover (Landin, 9 Oct): the three slides that were here before, each a bright
+   photograph (no shading) with its own cream plate, crossfading every 3s (main.js). The
+   plate moves with the slide so it stays off the faces: lower right on the lead, lower
+   left on the minis, upper right on the wedding. The slides share one grid cell, so the
+   cover is as tall as its tallest slide and nothing below it moves when they change. */
+:where(.home) .hero-rotator .hero-slides{display:grid;}
+:where(.home) .hero-rotator .hero-slide{grid-area:1 / 1;position:relative;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity 1.1s ease,visibility 0s linear 1.1s;}
+:where(.home) .hero-rotator .hero-slide.is-active{z-index:1;opacity:1;visibility:visible;transition:opacity 1.1s ease,visibility 0s linear 0s;}
+/* The page's h1 stays exposed to screen readers while the lead is out of view; the slide's
+   opacity keeps it invisible on screen (main.js hides the rest of that slide). */
+:where(.home) .hero-rotator .hero-slide--lead:not(.is-active) h1{visibility:visible;}
+:where(.home) .hero-plate .hero-title{font-family:var(--serif);font-weight:500;}
+:where(.home) .hero-rotator p.hero-kicker{margin-top:0;}
+/* Slides two and three fetch their photographs once the page has loaded (main.js adds
+   .is-armed), so they never compete with the lead photo, and the rotation waits for each.
+   Each uses the same density scheme as the lead at every breakpoint and sits 1px in from
+   the screen's side edges: Chrome's largest-contentful-paint only counts a later image that
+   is strictly larger, and without this the minis photo (a plain 1x file) measured a hair
+   larger than the lead and moved a phone's LCP from 1.5s to whenever it first rotated in. */
+:where(.home) .hero-rotator .hero-slide:not(.hero-slide--lead) .hero-bg{left:1px;right:1px;}
+:where(.home) .hero-slide.is-armed .hero-bg-minis-slide{background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=1600');background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=1600') 1x,url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=2400') 2x);background-image:image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=1600') 1x,url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=2400') 2x);background-position:center 90%;}
+:where(.home) .hero-slide.is-armed .hero-bg-wedding-slide{background-image:url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=1600');background-position:center 58%;}
+@media (min-width:1601px){
+  :where(.home) .hero-slide.is-armed .hero-bg-minis-slide{background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=2400');}
+}
+@media (max-width:700px){
+  :where(.home) .hero-slide.is-armed .hero-bg-minis-slide{background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800');background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800') 2x,url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=1100') 3x);background-image:image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800') 2x,url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=1100') 3x);background-position:center 30%;}
+  :where(.home) .hero-slide.is-armed .hero-bg-wedding-slide{background-image:url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=800');background-image:-webkit-image-set(url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=800') 2x,url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=1066') 3x);background-image:image-set(url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=800') 2x,url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=1066') 3x);background-position:center 60%;}
+}
+@media (min-width:501px) and (max-width:700px){
+  :where(.home) .hero-slide.is-armed .hero-bg-minis-slide{background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800');background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800') 1x,url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=1100') 2x);background-image:image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800') 1x,url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=1100') 2x);}
+  :where(.home) .hero-slide.is-armed .hero-bg-wedding-slide{background-image:url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=800');background-image:-webkit-image-set(url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=800') 1x,url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=1066') 2x);background-image:image-set(url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=800') 1x,url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=1066') 2x);}
+}
+@media (max-width:700px) and (orientation:landscape){
+  :where(.home) .hero-slide.is-armed .hero-bg-minis-slide{background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=800');background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=800') 1x,url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=1200') 2x);background-image:image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=800') 1x,url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=1200') 2x);background-position:center 90%;}
+  :where(.home) .hero-slide.is-armed .hero-bg-wedding-slide{background-position:center 58%;}
+}
+@media (min-width:701px) and (max-width:900px) and (orientation:portrait){
+  :where(.home) .hero-slide.is-armed .hero-bg-minis-slide{background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=1100');background-position:center 30%;}
+  :where(.home) .hero-slide.is-armed .hero-bg-wedding-slide{background-image:url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=1066');background-position:center 60%;}
+}
+/* Where each plate sits, so it moves on every turn and stays off faces (rendered at
+   1280x720 to 1920x1080): lower right on the lead; bottom centre on the minis, over the
+   middle panel's hands, with the triptych anchored low so every face sits above it; lower
+   left on the wedding, over the backs of the seated guests, the couple clear in the middle. */
+@media (min-width:1180px){
+  :where(.home) .hero-slide--minis .hero-plate{right:auto;left:50%;transform:translateX(-50%);}
+  :where(.home) .hero-slide--weddings .hero-plate{right:auto;left:max(40px,calc((100% - 1280px) / 2 + 32px));}
+}
+/* Tablets: the plate overlaps the photo's foot as before, aligned right, centred, then
+   left, the same order as on a desktop. */
+@media (min-width:701px) and (max-width:1179px){
+  :where(.home) .hero-rotator .hero-plate{width:calc(100% - 80px);}
+  :where(.home) .hero-slide--lead .hero-plate{margin-right:40px;}
+  :where(.home) .hero-slide--weddings .hero-plate{margin-left:40px;}
+  :where(.home) .hero-slide--lead .hero-credit{text-align:right;padding:0 40px;}
+}
+/* Phones: the plate sits under the photo on every slide (there is no room beside it); the
+   plates stretch to the tallest one, so the cream box keeps one size as the slides turn.
+   Tablets keep each plate at its own height: stretched, the shorter ones were half empty. */
+@media (max-width:700px){
+  :where(.home) .hero-rotator .hero-plate{flex:1 0 auto;display:flex;flex-direction:column;justify-content:center;}
+}
+/* The tabs: three short bars under the cover, one per slide (main.js builds them). On a
+   desktop they sit in the band under the photo, between the two lower plate positions.
+   Complete here, not built on the old .hero-dots rules in style.css, which only the
+   retired dark carousel used. */
+:where(.home) .hero-rotator .hero-dots{position:relative;left:auto;right:auto;bottom:auto;z-index:4;display:flex;justify-content:center;gap:0;min-height:44px;margin:8px 0 0;}
+:where(.home) .hero-rotator + .home-work{padding-top:24px;}
+@media (min-width:701px){:where(.home) .hero-rotator + .home-work{padding-top:40px;}}
+@media (min-width:1180px){:where(.home) .hero-rotator + .home-work{padding-top:20px;}}
+:where(.home) .hero-rotator .hero-dots button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:0;background:none;cursor:pointer;}
+:where(.home) .hero-rotator .hero-dots button:focus-visible{outline:none;}
+/* Short bars at 3.16:1 on linen; the current one longer and in --gold-text (4.63:1), so it
+   reads by length as well as colour. */
+:where(.home) .hero-rotator .hero-dots button::before{content:"";display:block;width:18px;height:3px;border:0;border-radius:2px;background:#9c7b52;transform:none;transition:width 0.35s ease,background-color 0.35s ease;}
+:where(.home) .hero-rotator .hero-dots button:hover::before{background:var(--gold-text);}
+:where(.home) .hero-rotator .hero-dots button[aria-selected="true"]::before{width:34px;background:var(--gold-text);transform:none;}
+@media (forced-colors:active){
+  :where(.home) .hero-rotator .hero-dots button::before{background:CanvasText;forced-color-adjust:none;}
+  :where(.home) .hero-rotator .hero-dots button[aria-selected="true"]::before{background:Highlight;}
+}
+:where(.home) .hero-rotator .hero-dots button:focus-visible::before{outline:2px solid var(--gold-text);outline-offset:4px;}
+/* Desktop: below the plates, which hang 64px under the photo (left, centre or right), so
+   the tabs sit in one place on every slide and no plate ever covers them. */
+@media (min-width:1180px){
+  :where(.home) .hero-rotator .hero-dots{margin-top:72px;}
+}
+@media (prefers-reduced-motion:reduce){
+  :where(.home) .hero-rotator .hero-slide,:where(.home) .hero-rotator .hero-slide.is-active{transition:none;}
+}
+
+/* Selected work: three matted frames (the fade gallery), each drawing from its own
+   genre pool, with a caption that links to those services. Its 136px top padding
+   clears the plate (64px below the photo) and the credit line beside it. The hero,
+   this band and the quote under it are one linen sheet. */
+:where(.home) .home-work{background:var(--linen);}
+:where(.home) .home-work .container.wide{max-width:1280px;}
+:where(.home) .home-work h2.section-label{margin:0 0 28px;}
+:where(.home) .fade-gallery--feature{gap:28px;}
+:where(.home) .fade-slot{margin:0;min-width:0;}
+/* Each frame carries an empty overlay link to the genre of the photo it is showing
+   (main.js updates it mid-crossfade), so a tap on the picture goes somewhere. The
+   photo stays a plain image with its alt; the overlay is out of the tab order and
+   hidden from assistive tech, since the caption links already name those pages. */
+:where(.home) .frame-link{position:absolute;inset:0;z-index:3;}
+:where(.home) .fade-gallery .img-frame img.work-kiss{max-width:none;width:118%;height:118%;left:-9.4%;top:-18%;}
+:where(.home) .fade-gallery .img-frame img.work-zoom-18{max-width:none;width:118%;height:118%;left:-9%;top:-18%;}
+:where(.home) .fade-gallery .img-frame img.work-zoom-10{max-width:none;width:110%;height:110%;left:-5%;top:-10%;}
+/* The crossfade's opacity runs linear here, so the photo's link (switched halfway, at
+   450ms) changes exactly when the incoming photo becomes the more visible one. */
+:where(.home) .fade-gallery .img-frame img.fade-gallery-in{transition:opacity 0.9s linear, transform 1.6s cubic-bezier(0.2,0.6,0.2,1);}
+:where(.home) .fade-slot figcaption{margin-top:16px;text-align:center;color:var(--gold-text);text-wrap:balance;font-size:0.8125rem;letter-spacing:0.08em;}
+:where(.home) .fade-slot figcaption a{color:inherit;text-decoration:underline;text-decoration-color:rgba(132,95,51,0.4);text-decoration-thickness:1px;text-underline-offset:4px;}
+:where(.home) .fade-slot figcaption a.is-current{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:1px;text-underline-offset:4px;}
+:where(.home) .fade-slot figcaption a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+:where(.home) .work-more{text-align:center;margin:0;}
+@media (max-width:700px){
+  :where(.home) .home-work .container.wide{padding:0 16px;}
+  :where(.home) .fade-gallery.fade-gallery--feature{grid-template-columns:1fr 1fr;gap:20px 12px;}
+  :where(.home) .fade-gallery--feature .fade-slot:first-child{grid-column:1 / -1;}
+  :where(.home) .fade-gallery--feature .fade-slot:first-child .img-frame{border-width:8px;}
+  :where(.home) .fade-gallery--feature .fade-slot:not(:first-child) .img-frame{border-width:6px;}
+  :where(.home) .fade-slot figcaption{margin-top:12px;}
+  /* The two half-width frames are about 160px wide: their two genres stack as two
+     44px rows instead of wrapping at the middot. */
+  :where(.home) .fade-slot:not(:first-child) figcaption{display:flex;flex-direction:column;align-items:center;margin-top:-2px;}
+  :where(.home) .fade-slot:not(:first-child) figcaption > span{display:none;}
+  :where(.home) .fade-slot:not(:first-child) figcaption a{padding:14.5px 8px;line-height:15px;}
+  :where(.home) .fade-slot:not(:first-child) figcaption a::before{content:none;}
+}
+
+@media (min-width:541px) and (max-width:700px){
+  :where(.home) .fade-gallery.fade-gallery--feature{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 16px;}
+  :where(.home) .fade-gallery--feature .fade-slot:first-child{grid-column:auto;}
+  :where(.home) .fade-gallery--feature .fade-slot:first-child .img-frame{border-width:6px;}
+}
+
+/* One line of praise, right under the work, on the same sheet. */
+:where(.home) .home-quote{background:var(--linen);}
+:where(.home) .home-quote .quote-mark{color:var(--gold);}
+:where(.home) .home-quote blockquote{
+  margin:0 auto;max-width:24ch;font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.6rem,2.8vw,2.3rem);line-height:1.3;color:var(--ink);text-wrap:balance;
+}
+:where(.home) .home-quote .review-stars{margin:22px 0 8px;font-size:0.9rem;color:var(--gold-text);}
+/* Credits: a name and a source a visitor can read and check, in sentence case. */
+:where(.home) .quote-cite,:where(.home) .review-item figcaption{font-family:var(--sans);font-weight:500;font-size:0.875rem;line-height:1.5;letter-spacing:0.03em;text-transform:none;}
+:where(.home) .quote-cite{margin:0;color:var(--gold-text);}
+:where(.home) .quote-cite a{color:inherit;text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+@media (max-width:700px){:where(.home) .home-quote blockquote{font-size:1.45rem;}}
+
+/* Services, on cream: six square photo tiles on the gallery's grid (each column sits
+   under a gallery frame), in the gallery's column order (families, weddings, portraits
+   over births, engagements, seniors), the genre as the heading and a real starting
+   price. The link is the heading alone, stretched over the tile, so its accessible
+   name is "Families", not the alt text plus the label plus the price. */
+:where(.home) .home-services{background:var(--cream);}
+:where(.home) .home-services .container,:where(.home) .home-about .container,:where(.home) .home-reviews .container{max-width:1280px;}
+:where(.home) .home-services h2{margin-bottom:0;}
+:where(.home) .services-intro{max-width:42ch;margin:14px auto 0;text-align:center;font-size:1rem;line-height:1.5;font-weight:400;color:var(--ink-soft);text-wrap:balance;}
+:where(.home) .story-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px 28px;margin-top:44px;}
+:where(.home) .story-tile{position:relative;color:var(--ink);}
+/* 4:3, not square (round 22): the landscape family photo keeps both parents whole, and the
+   portrait-format photos are framed for this shape (crops rendered at 387x290 and 173x130). */
+:where(.home) .tile-photo{aspect-ratio:4/3;overflow:hidden;border-radius:2px;background:#e4d9c7;}
+:where(.home) .tile-photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;}
+/* Birth Stories: the whole frame is mostly knit blanket at tile size, so the image is
+   drawn at 140% and offset to centre the newborn's feet and the parent's fingertip. */
+:where(.home) .tile-photo--feet img{width:140%;height:140%;max-width:none;margin:-22.8% 0 0 -29.8%;}
+:where(.home) .story-tile h3{font-family:var(--serif);font-weight:500;font-size:1.65rem;line-height:1.2;margin:14px 0 0;color:var(--ink);}
+:where(.home) .tile-label{margin:4px 0 0;font-family:var(--serif);font-style:italic;font-weight:500;font-size:0.95rem;line-height:1.35;color:var(--ink);}
+@media (min-width:1024px){:where(.home) .story-tile .tile-label{font-size:1.0625rem;line-height:1.35;margin-top:4px;}}
+@media (min-width:701px) and (max-width:1023px){:where(.home) .story-tile .tile-label{font-size:1rem;}}
+:where(.home) .story-tile h3 a{display:inline-flex;align-items:baseline;gap:8px;color:inherit;}
+:where(.home) .story-tile h3 a::after{content:"";position:absolute;inset:0;z-index:1;}
+:where(.home) .story-tile:hover h3 a{color:var(--ink);}
+@supports selector(:has(a)){
+  :where(.home) .story-tile h3 a:focus-visible{outline:none;}
+  :where(.home) .story-tile:has(h3 a:focus-visible){outline:2px solid var(--gold-text);outline-offset:6px;border-radius:2px;}
+}
+:where(.home) .story-tile .arrow{display:inline-block;color:var(--gold);transition:transform 0.3s ease;}
+:where(.home) .tile-price{margin:8px 0 0;font-size:1rem;line-height:1.5;font-weight:500;color:var(--ink);}
+:where(.home) .tile-price .tile-unit,:where(.home) .tile-price.tile-extra{font-weight:400;}
+:where(.home) .tile-price .tile-unit{color:var(--ink-soft);}
+:where(.home) .tile-price.tile-extra{margin-top:0;color:var(--ink-soft);}
+:where(.home) .tile-call{position:relative;z-index:2;margin:2px 0 0;font-size:1rem;}
+:where(.home) .tile-call a{display:inline-block;min-height:44px;padding:6px 0 14px;line-height:1.5;color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:rgba(132,95,51,0.4);text-underline-offset:4px;}
+:where(.home) .tile-call a:hover{color:var(--ink);}
+@media (min-width:375px) and (max-width:700px){:where(.home) .tile-call{font-size:0.875rem;}}
+@media (hover:hover) and (pointer:fine){
+  :where(.home) .story-tile:hover .tile-photo img{transform:scale(1.04);}
+  :where(.home) .story-tile:hover .arrow{transform:translateX(6px);}
+}
+:where(.home) .tiles-note{max-width:560px;margin:36px auto 0;text-align:center;font-size:0.9375rem;line-height:1.5;font-weight:400;color:var(--ink-soft);}
+:where(.home) .tiles-note p{margin:0 0 6px;color:var(--ink);}
+/* Delivery times open on request: a 44px summary in the label style, a chevron that turns. */
+:where(.home) .tiles-delivery summary{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 4px;cursor:pointer;list-style:none;font:500 0.8125rem/1.4 var(--sans);letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-text);}
+:where(.home) .tiles-delivery summary::-webkit-details-marker{display:none;}
+:where(.home) .tiles-delivery summary::after{content:"";width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform 0.2s ease;}
+:where(.home) .tiles-delivery[open] summary::after{transform:translateY(2px) rotate(-135deg);}
+:where(.home) .tiles-delivery summary:hover{color:var(--ink);}
+:where(.home) .tiles-delivery ul{margin:2px auto 6px;}
+:where(.home) .tiles-note p.tiles-reply{text-wrap:balance;margin:12px 0 8px;font-size:0.9375rem;line-height:1.5;color:var(--ink-soft);}
+:where(.home) .tiles-note ul{list-style:none;margin:0 auto;padding:0;text-align:center;}
+:where(.home) .tiles-note li{margin:0;padding:3px 0;}
+:where(.home) .tiles-note .tn-k{font-weight:500;color:var(--ink);}
+:where(.home) .tiles-aside{max-width:640px;margin:24px auto 0;padding:20px 0 0;border-top:1px solid rgba(132,95,51,0.35);text-align:center;font-size:0.95rem;font-weight:400;color:var(--ink);text-wrap:balance;}
+:where(.home) .tiles-aside .aside-lead a{position:relative;display:inline-block;color:var(--ink);text-decoration:underline;text-decoration-color:rgba(132,95,51,0.35);text-underline-offset:4px;}
+:where(.home) .tiles-aside .aside-lead a::before{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:44px;transform:translateY(-50%);}
+html.minis-expired [data-expires="2026-10-26"]{display:none;}
+:where(.home) .tiles-aside .aside-lead{display:block;margin-bottom:8px;font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.35;}
+:where(.home) .tiles-aside .aside-facts{display:block;margin:0 0 4px;font-size:1rem;font-weight:500;letter-spacing:0;color:var(--ink);}
+:where(.home) .tiles-aside .aside-when{display:block;margin:0 0 10px;font-size:0.875rem;color:var(--ink-soft);}
+:where(.home) .tiles-aside .aside-btn{display:table;margin:18px auto 0;padding:13px 22px;min-height:44px;border:1px solid var(--gold-text);border-radius:2px;font:500 0.8125rem/1 var(--sans);letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-text);}
+:where(.home) .tiles-aside .aside-btn:hover{background:var(--charcoal);border-color:var(--charcoal);color:#fff;}
+@media (min-width:701px) and (max-width:1023px){
+  :where(.home) .story-tiles{gap:40px 28px;}
+  :where(.home) .story-tile h3{font-size:1.5rem;}
+}
+@media (max-width:1023px){:where(.home) .tile-price .tile-unit,:where(.home) .tile-price.tile-extra{font-size:0.9375rem;}}
+@media (max-width:700px){
+  
+  :where(.home) .home-services .container{padding:0 16px;}
+  :where(.home) .story-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 12px;}
+  :where(.home) .story-tile h3{font-size:1.2rem;margin-top:12px;}
+  :where(.home) .tile-label{font-size:0.98rem;}
+  :where(.home) .tile-price .tile-unit{display:block;}
+  :where(.home) .tile-price .tile-sep{display:none;}
+  :where(.home) .tiles-aside{padding:20px 4px 0;}
+  :where(.home) .tiles-note{font-size:0.95rem;}
+}
+
+/* Hi, I'm Sofia, on linen: her photo in the gallery's white mat, her own words beside
+   it, one text measure. */
+:where(.home) .home-about{background:var(--linen);}
+/* The photo column stays 436px: the 988px-tall source is at its 2x limit there. */
+:where(.home) .about-grid{display:grid;grid-template-columns:minmax(0,436px) minmax(0,1fr);grid-template-rows:1fr auto auto 1fr;column-gap:96px;row-gap:0;align-items:start;}
+:where(.home) .about-photo{grid-column:1;grid-row:1 / -1;align-self:center;}
+:where(.home) .about-intro{grid-column:2;grid-row:2;}
+:where(.home) .about-more{grid-column:2;grid-row:3;}
+:where(.home) .about-photo .img-frame{
+  position:relative;aspect-ratio:4/5;border:12px solid #fff;background:#2a2620;
+  box-shadow:0 0 0 1px rgba(44,38,33,0.10),0 14px 30px -14px rgba(44,38,33,0.35);
+}
+:where(.home) .about-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+:where(.home) .about-text h2{margin:0;}
+:where(.home) .about-text p,:where(.home) .about-text p.about-lead,:where(.home) .about-facts{max-width:560px;}
+:where(.home) .about-text p{margin:16px 0 0;font-size:1.05rem;font-weight:400;color:var(--ink);}
+:where(.home) .about-text p.about-lead{margin-top:18px;font-family:var(--serif);font-style:italic;font-size:1.4rem;line-height:1.45;}
+:where(.home) .about-facts{list-style:none;padding:12px 0 0;margin:26px 0 24px;border-top:1px solid rgba(132,95,51,0.3);}
+:where(.home) .about-facts li{padding:8px 0;font-size:0.95rem;font-weight:400;color:var(--ink);text-wrap:pretty;}
+@media (min-width:901px) and (max-width:1179px){
+  :where(.home) .about-grid{grid-template-columns:2fr 3fr;column-gap:48px;}
+}
+/* Tablets: the photo beside the introduction, the facts across the full width below,
+   so no empty column runs down beside the text. */
+@media (min-width:701px) and (max-width:900px){
+  :where(.home) .about-grid{grid-template-columns:minmax(0,240px) minmax(0,1fr);grid-template-rows:auto auto;column-gap:32px;row-gap:28px;}
+  :where(.home) .about-photo{grid-row:1;align-self:start;}
+  :where(.home) .about-intro{grid-row:1;}
+  :where(.home) .about-more{grid-column:1 / -1;grid-row:2;width:100%;max-width:none;justify-self:start;border-top:1px solid rgba(132,95,51,0.3);padding-top:12px;}
+  :where(.home) .about-more .about-facts{max-width:640px;margin-top:0;border-top:0;padding-top:0;}
+}
+@media (max-width:700px){
+  
+  :where(.home) .about-grid{grid-template-columns:1fr;grid-template-rows:none;row-gap:24px;}
+  :where(.home) .about-text p.about-lead{font-size:1.3rem;}
+  :where(.home) .about-photo,:where(.home) .about-intro,:where(.home) .about-more{grid-column:1;grid-row:auto;}
+  :where(.home) .about-more .about-facts{margin-top:0;}
+  :where(.home) .about-photo .img-frame{aspect-ratio:1/1;border-width:6px;}
+}
+
+/* Reviews, on the same linen as the about section, set off by a hairline: a wedding
+   client's story set large, a portrait client's beside it, both in the serif, their
+   credits on one baseline. */
+:where(.home) .home-reviews{background:var(--linen);}
+:where(.home) .home-reviews .container::before{content:"";display:block;max-width:1216px;height:1px;margin:0 auto;background:rgba(132,95,51,0.3);}
+:where(.home) .home-reviews h2{margin:0;}
+:where(.home) .review-pair{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:56px;max-width:1040px;margin:44px auto 0;align-items:stretch;}
+:where(.home) .review-item{display:flex;flex-direction:column;margin:0;}
+:where(.home) .review-item blockquote{margin:0 0 16px;font-family:var(--serif);font-size:1.35rem;line-height:1.5;font-weight:400;color:var(--ink);text-wrap:pretty;}
+:where(.home) .review-item.review-lead blockquote{font-size:1.35rem;line-height:1.5;}
+:where(.home) .review-item blockquote strong{font-weight:500;}
+@media (min-width:901px){:where(.home) .review-item:not(.review-lead) blockquote{max-width:30ch;text-wrap:pretty;}}
+:where(.home) .review-item figcaption{margin-top:auto;color:var(--gold-text);}
+:where(.home) .review-item figcaption a{position:relative;color:inherit;text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+:where(.home) .review-item figcaption a::before{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:44px;transform:translateY(-50%);}
+:where(.home) .home-reviews .reviews-footer{margin-top:40px;}
+:where(.home) .home-reviews .reviews-footer a.text-link{border-bottom-color:rgba(132,95,51,0.4);}
+:where(.home) .home-reviews .reviews-footer a.text-link:hover{border-bottom-color:var(--ink);color:var(--ink);}
+@media (max-width:900px){:where(.home) .review-pair{grid-template-columns:1fr;max-width:620px;gap:32px;}}
+@media (max-width:700px){:where(.home) .review-item blockquote,:where(.home) .review-item.review-lead blockquote{font-size:1.2rem;line-height:1.5;}}
+
+/* Back cover: one ask, the reply promise, the wedding call and the sign-off. The
+   button is the light gold of the sign-off (charcoal on it is 7.45:1); the site's
+   dark gold measured 2.92:1 against this band. */
+
+:where(.home) .home-close .section-label{color:var(--gold-light);text-wrap:balance;}
+:where(.home) .home-close h2{text-wrap:balance;font-size:clamp(2rem,2.7vw,2.4rem);line-height:1.1;}
+:where(.home) .home-reviews h2{font-size:clamp(1.8rem,2.3vw,2.1rem);}
+:where(.home) .home-close .btn-gold{background:var(--gold-light);color:var(--charcoal);font-weight:500;}
+:where(.home) .home-close .btn-gold:hover{background:#fff;color:var(--charcoal);}
+:where(.home) .home-close .close-small{margin-top:22px;font-size:0.9rem;max-width:560px;margin-left:auto;margin-right:auto;}
+:where(.home) .home-close .close-phone{margin-top:12px;}
+@media (min-width:701px){:where(.home) .close-small a[href="/bookings#call"]{white-space:nowrap;}}
+:where(.home) .home-close p:not(.signoff):not(.section-label){font-weight:400;text-wrap:balance;}
+:where(.home) .close-small a{color:#fff;text-decoration:underline;text-decoration-color:rgba(201,168,117,0.6);text-underline-offset:4px;}
+:where(.home) .home-close p.signoff{margin:40px auto 0;font-family:var(--serif);font-style:italic;font-size:clamp(1.65rem,2.2vw,2rem);line-height:1.15;color:var(--gold-light);}
+@media (max-width:700px){
+  
+  /* Three rows, each link a 44px box on its own line box, so the call link and the
+     phone number cannot overlap; the links still wrap when text is enlarged. */
+  :where(.home) .home-close .close-small{line-height:1.4;}
+  :where(.home) .home-close .cs-row{display:block;}
+  :where(.home) .home-close .cs-note{margin-top:-10px;}
+  :where(.home) .close-small a{display:inline-block;max-width:100%;min-height:44px;padding:12px 0;}
+}
+/* 701-819px: three columns too narrow for "Weddings · Engagements" on one line. */
+@media (min-width:701px) and (max-width:819px){
+  :where(.home) .fade-slot figcaption{display:flex;flex-direction:column;align-items:center;margin-top:-2px;}
+  :where(.home) .fade-slot figcaption > span{display:none;}
+  :where(.home) .fade-slot figcaption a{padding:14.5px 8px;line-height:15px;}
+  :where(.home) .fade-slot figcaption a::before{content:none;}
+}
+@media (min-width:701px) and (max-width:1023px){
+  :where(.home) .home-services h2{font-size:2.15rem;}
+  :where(.home) .home-quote blockquote{font-size:1.9rem;line-height:1.3;}
+  :where(.home) .tiles-note{margin-top:48px;}
+}
+/* Tile prices: the length on its own line up to 900px, so the three columns compare. */
+@media (max-width:900px){
+  :where(.home) .tile-price .tile-unit{display:block;}
+  :where(.home) .tile-price .tile-sep{display:none;}
+}
+@media (min-width:701px) and (max-width:1023px) and (pointer:coarse){
+  :where(.home) .home-close .cs-row{display:block;}
+  :where(.home) .close-small a{display:inline-block;min-height:44px;padding:12px 0;}
+}
+/* Later overrides: these restyle rules defined above (the frames, the about and review
+   paddings), so they have to come after them. */
+@media (min-width:701px){
+  :where(.home) .fade-gallery--feature .img-frame,:where(.home) .about-photo .img-frame{
+    border-width:clamp(6px,0.84vw,12px);
+    box-shadow:0 0 0 1px rgba(44,38,33,0.10),0 8px 18px -12px rgba(44,38,33,0.22);
+  }
+}
+/* Services details (the inquiry button, delivery times and the seasonal offer): one
+   centred column at every width (Landin, 9 Oct). */
+:where(.home) .tiles-note .btn{margin-top:0;}
+
+/* Section spacing, all in one place (mobile first). Values per band:
+               phones      701-1023    1024-1179   1180+
+   work        64 / 48     88 / 48     88 / 48     136 / 32  (136 clears the hero plate; 64 top at 701-900)
+   quote       16 / 56     16 / 64     16 / 64     16 / 64
+   services    56 / 72     80 / 56     80 / 56     80 / 56
+   about       56 / 48     80 / 64     96 / 72     96 / 72
+   reviews     0 / 72      0 / 80      0 / 88      0 / 88    (divider gap 48 / 64 / 72 / 72)
+   close       80 / 80     80 / 80     112 / 112   112 / 112 */
+:where(.home) .home-work{padding:64px 0 48px;}
+:where(.home) .home-quote{padding:16px 0 56px;}
+:where(.home) .home-services{padding:56px 0 72px;}
+:where(.home) .home-about{padding:56px 0 48px;}
+:where(.home) .home-reviews{padding:0 0 72px;}
+:where(.home) .home-close{padding:80px 0;}
+:where(.home) .work-more{margin-top:28px;}
+:where(.home) .home-reviews .container::before{margin-bottom:48px;}
+@media (min-width:701px){
+  :where(.home) .home-work{padding:88px 0 48px;}
+  :where(.home) .home-quote{padding:16px 0 64px;}
+  :where(.home) .home-services{padding:80px 0 56px;}
+  :where(.home) .home-about{padding:80px 0 64px;}
+  :where(.home) .home-reviews{padding-bottom:80px;}
+  :where(.home) .work-more{margin-top:40px;}
+  :where(.home) .home-reviews .container::before{margin-bottom:64px;}
+}
+@media (min-width:1024px){
+  :where(.home) .tiles-note{margin-top:48px;}
+  :where(.home) .home-about{padding:96px 0 72px;}
+  :where(.home) .home-reviews{padding-bottom:88px;}
+  :where(.home) .home-close{padding:112px 0;}
+  :where(.home) .work-more{margin-top:32px;}
+  :where(.home) .home-reviews .container::before{margin-bottom:72px;}
+}
+@media (min-width:1180px){
+  :where(.home) .home-work{padding:136px 0 32px;}
+}
+@media (min-width:701px) and (max-width:900px){
+  :where(.home) .home-work{padding-top:64px;}
+  :where(.home) .work-more{margin-top:28px;}
+}
+/* == end Homepage 2026-10 == */
