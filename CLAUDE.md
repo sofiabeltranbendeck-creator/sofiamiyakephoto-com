@@ -48,6 +48,29 @@ Then add a `301!` line to `_redirects` for the old path, so links and crawled UR
 Verify with a case-sensitive resolve of every reference against the files on disk before opening the PR.
 `tools/dev-server.mjs` is case-sensitive and will surface a miss that Windows and Netlify both hide.
 
+## Every PR regenerates the sitemap
+
+**Rule (Landin, 10 Oct 2026): every time a PR is pushed, `sitemap.xml` is regenerated and committed in that
+PR.** This applies to every PR, including one that seems not to touch pages. A PR that changes a page or a photo
+and ships a stale sitemap tells Google the wrong images and the wrong dates.
+
+The order matters, because `lastmod` comes from git:
+
+1. Commit all page, CSS and image changes first. `tools/gen-sitemap.py` takes each page's `lastmod` from its last
+   commit, and falls back to file mtime for uncommitted files, which is not an honest date.
+2. Run `python tools/gen-sitemap.py` on the clean tree, then commit `sitemap.xml` as the PR's last commit. If
+   anything is pushed after that, regenerate again.
+3. Check the diff before pushing:
+   - URL count is unchanged unless a page was added or removed.
+   - Every `<image:loc>` exists on disk with exact case.
+   - No image dropped out of an entry without a reason.
+4. Push, then confirm the PR's head commit contains the regenerated file.
+
+The generator reads each page's HTML plus the page's own linked stylesheets (`css/home.css`, `css/families.css`,
+and so on). It does not read `css/style.css`: that file is shared by every page, and reading it would attach every
+hero to every URL. A photo set only in `style.css` is therefore not attributed to any page. Put page-specific
+background photos in the page's own stylesheet or in its HTML, and they will be listed.
+
 **Alt text still matters more than the filename.** Never weaken alt text to make a filename look tidier.
 
 ## Every multi-package workflow ends with a change-review dashboard
