@@ -17,7 +17,7 @@
    pages keep the main.js path. */
 html.promo-on .promo-bar[hidden]{display:block;}
 html.promo-on{--promo-h:44px;}
-@media (max-width:359px){html.promo-on{--promo-h:60px;}}   /* the bar wraps to two lines */
+@media (max-width:388px){html.promo-on{--promo-h:60px;}}   /* the bar wraps to two lines (measured 10 Oct: 388px and below) */
 /* Focus scrolled into view clears the sticky header (Shift+Tab could hide it). */
 :where(.home) .hero-cover a,:where(.home) .home-work a,:where(.home) .home-quote a,:where(.home) .home-services a,:where(.home) .home-about a,:where(.home) .home-reviews a,:where(.home) .home-close a{scroll-margin-top:88px;}
 
@@ -126,16 +126,19 @@ html.promo-on{--promo-h:44px;}
   :where(.home) .hero-plate{margin-top:-40px;}
 }
 /* Phones: the tall crop from its top edge. The photo is sized from the screen height
-   minus everything under it (--stack: header, promo bar when it shows, the plate down
-   to the button, and 12px to spare), so the main button is on the first screen (fold.mjs
-   checks 24 phone sizes, with and without the promo bar).
+   minus everything under it (--stack: header, the plates down to the lowest of the three
+   buttons, less the 16px they overlap the photo, plus 12px to spare; the promo bar is
+   --promo-h), so every slide's button is on the first screen. The values are measured,
+   every width from 320 to 700 (10 Oct, after the lead plate's wording came back): the
+   old 425/397/391 kept 50-77px more than any plate needed, which on an iPhone in Safari
+   (390x664) left a 223px strip and cut the minis girl and the wedding couple out.
    The 800px file serves every phone up to 2x density (1200px only at 3x): on a
    Slow 4G phone at 1.75x the 1200px file added 48 KB and about 0.9s to LCP.
    It is also capped at 95.8vw + 12px, where the plate's top edge sits just above the
    father's hairline: the girl and her bow stay whole, and his face is either under the
    plate or, on no phone, cut through by its edge. */
 @media (max-width:700px){
-  :where(.home) .hero-cover{--stack:425px;}
+  :where(.home) .hero-cover{--stack:366px;}
   :where(.home) .hero-cover .hero-bg-lead{
     background-image:url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=800');
     background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=800') 2x,url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=1200') 3x);
@@ -151,7 +154,7 @@ html.promo-on{--promo-h:44px;}
   :where(.home) .hero-plate .hero-actions{margin-top:18px;}
 }
 @media (max-width:700px) and (max-height:740px){
-  :where(.home) .hero-cover{--stack:397px;}
+  :where(.home) .hero-cover{--stack:324px;}
   :where(.home) .hero-plate{padding:18px 20px 20px;}
   :where(.home) .hero-plate .rule{display:none;}
   :where(.home) .hero-kicker{margin-bottom:10px;}
@@ -163,9 +166,19 @@ html.promo-on{--promo-h:44px;}
 @media (max-width:700px) and (max-height:600px){
   :where(.home) .hero-kicker{font-size:0.68rem;line-height:1.35;margin-bottom:8px;}
   :where(.home) .hero-photo{height:clamp(130px,min(calc(100svh - var(--stack) - var(--promo-h, 0px)),calc(95.8vw + 12px)),420px);}
-  :where(.home) .hero-cover{--stack:391px;}
+  :where(.home) .hero-cover{--stack:314px;}
   :where(.home) .hero-plate h1,:where(.home) .hero-plate .hero-title{font-size:1.65rem;}
 }
+/* Narrower phones set the plates in more lines (the wedding sub takes four lines below
+   389px), so they keep a larger stack. Below 360px the lead's credit line wraps too, and
+   since every plate stretches to the tallest slide, that pushes the other buttons down;
+   422 is for 320-327px, where the 95.8vw cap decides the photo on any screen over 740. */
+@media (max-width:388px){:where(.home) .hero-cover{--stack:392px;}}
+@media (max-width:359px){:where(.home) .hero-cover{--stack:422px;}}
+@media (max-width:388px) and (max-height:740px){:where(.home) .hero-cover{--stack:345px;}}
+@media (max-width:359px) and (max-height:740px){:where(.home) .hero-cover{--stack:366px;}}
+@media (max-width:388px) and (max-height:600px){:where(.home) .hero-cover{--stack:335px;}}
+@media (max-width:359px) and (max-height:600px){:where(.home) .hero-cover{--stack:354px;}}
 @media (min-width:501px) and (max-width:700px){
   :where(.home) .hero-cover .hero-bg-lead{
     background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=800') 1x,url('/.netlify/images?url=/images/roseville-family-photographer-hero-tall.jpg&w=1200') 2x);
@@ -196,18 +209,25 @@ html.promo-on{--promo-h:44px;}
 :where(.home) .hero-rotator p.hero-kicker{margin-top:0;}
 /* Slides two and three fetch their photographs once the page has loaded (main.js adds
    .is-armed), so they never compete with the lead photo, and the rotation waits for each.
-   Each uses the same density scheme as the lead at every breakpoint and sits 1px in from
-   the screen's side edges: Chrome's largest-contentful-paint only counts a later image that
-   is strictly larger, and without this the minis photo (a plain 1x file) measured a hair
-   larger than the lead and moved a phone's LCP from 1.5s to whenever it first rotated in. */
-:where(.home) .hero-rotator .hero-slide:not(.hero-slide--lead) .hero-bg{left:1px;right:1px;}
+   Each uses the same density scheme as the lead at every breakpoint and stops 1px short of
+   the photo's foot: Chrome's largest-contentful-paint only counts a later image that is
+   strictly larger, and without this the minis photo (a plain 1x file) measured a hair
+   larger than the lead and moved a phone's LCP from 1.5s to whenever it first rotated in.
+   The inset used to be 1px at each side, which showed the dark placeholder as a hairline
+   down both edges of the screen; at the foot the spare row is left clear, so it shows the
+   linen the photo already meets there. */
+:where(.home) .hero-rotator .hero-slide:not(.hero-slide--lead) .hero-bg{bottom:1px;}
+:where(.home) .hero-rotator .hero-slide:not(.hero-slide--lead) .hero-photo{background:linear-gradient(#2a2620,#2a2620) top / 100% calc(100% - 1px) no-repeat;}
 :where(.home) .hero-slide.is-armed .hero-bg-minis-slide{background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=1600');background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=1600') 1x,url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=2400') 2x);background-image:image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=1600') 1x,url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=2400') 2x);background-position:center 90%;}
 :where(.home) .hero-slide.is-armed .hero-bg-wedding-slide{background-image:url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=1600');background-position:center 58%;}
 @media (min-width:1601px){
   :where(.home) .hero-slide.is-armed .hero-bg-minis-slide{background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-triptych.jpg&w=2400');}
 }
+/* Phones: the minis frame is centred, which keeps the parents' faces and the girl swinging
+   between them clear of the plate from a 375x553 screen to a 430x932 one; at 30% a short
+   screen showed the parents holding up hands with the girl behind the plate. */
 @media (max-width:700px){
-  :where(.home) .hero-slide.is-armed .hero-bg-minis-slide{background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800');background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800') 2x,url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=1100') 3x);background-image:image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800') 2x,url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=1100') 3x);background-position:center 30%;}
+  :where(.home) .hero-slide.is-armed .hero-bg-minis-slide{background-image:url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800');background-image:-webkit-image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800') 2x,url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=1100') 3x);background-image:image-set(url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=800') 2x,url('/.netlify/images?url=/images/roseville-mini-sessions-tall.jpg&w=1100') 3x);background-position:center 50%;}
   :where(.home) .hero-slide.is-armed .hero-bg-wedding-slide{background-image:url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=800');background-image:-webkit-image-set(url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=800') 2x,url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=1066') 3x);background-image:image-set(url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=800') 2x,url('/.netlify/images?url=/images/sacramento-wedding-ceremony-wooden-arch.jpg&w=1066') 3x);background-position:center 60%;}
 }
 @media (min-width:501px) and (max-width:700px){
