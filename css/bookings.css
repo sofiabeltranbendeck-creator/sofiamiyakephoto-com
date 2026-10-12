@@ -172,55 +172,86 @@ html.sheet-open{overflow:hidden;scrollbar-gutter:stable;}
 .booking-sheet.is-compact .booking-sheet-title{font-size:1.1rem;}
 .booking-sheet.is-compact .booking-sheet-note{display:none;}
 
-/* HoneyBook contact form embed */
+/* == Inquiry form (#inquire on /bookings) == */
+/* Phones and tablets stack the heading, the form, then the aside (a photo of Sofia,
+   starting prices, call/text/email), so the form comes first. From 1024px the heading
+   and the aside share a left column beside the form. HoneyBook's frame keeps its
+   desktop layout only while it is at least 502px wide (measured 10 Oct 2026; narrower,
+   it switches to its phone layout and grows 23-158px taller), so the form's track
+   never drops below 556px there: 556 - 2px of border - 2 x 14px of padding leaves a
+   526px frame, with room for a desktop scrollbar. */
+.inquire-intro{text-align:center;}
+.inquire-intro h2{margin-bottom:10px;text-wrap:balance;}
 .hb-embed{
+  --pad:28px;
   position:relative;background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:2px;
-  max-width:720px;margin:0 auto;padding:6px 28px;
+  max-width:720px;margin:0 auto;padding:0 var(--pad);
 }
 .hb-embed iframe{display:block;width:100%;border:none;}
-/* The card's own header, above HoneyBook's fields: prices for the sessions this form
-   is for, and email or phone for anyone who would rather not fill in a form; then a
-   hint for dates that are not fixed, since the form's date field wants one. */
-.hb-embed-head{
-  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:0 20px;
-  padding:4px 0;border-bottom:1px solid var(--line);font-size:0.85rem;font-weight:400;color:var(--ink-soft);
+/* The card's head and foot run edge to edge. Their text lines up with HoneyBook's
+   field labels, which sit 18px inside the frame. Head: the one hint the form needs
+   (its date field looks required and its message box is blank), set as a note in
+   the serif. Foot: where the message goes, with the site's privacy page. */
+.hb-embed-hint,.hb-embed-privacy{margin:0 calc(var(--pad) * -1);padding-left:calc(var(--pad) + 18px);padding-right:calc(var(--pad) + 18px);}
+.hb-embed-hint{
+  padding-top:22px;padding-bottom:20px;background:var(--cream);border-bottom:1px solid var(--line);
+  font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.4;font-weight:400;color:var(--ink);text-wrap:pretty;
 }
-.hb-embed-head p{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:0 14px;}
-.hb-embed-prices,.hb-embed-contact,.hb-embed-hint{font-size:0.875rem;line-height:1.5;}
-.hb-embed-prices{display:flex;flex-wrap:wrap;align-items:center;gap:0 14px;}
-.hb-embed-prices[hidden]{display:none !important;}
-@media (max-width:480px){
-  .hb-embed-head .hb-embed-prices-wide{display:grid;grid-template-columns:1fr 1fr;column-gap:12px;flex-basis:100%;padding-top:6px;}
-  .hb-embed-head .hb-embed-prices-wide .hb-embed-label{grid-column:1 / -1;}
-}
-.hb-embed-label{font-size:0.875rem;letter-spacing:0;text-transform:none;color:var(--gold-text);}
-.hb-embed-prices b{font-weight:500;}
-.hb-embed-head .hb-embed-contact{font-size:0.8125rem;}
-.hb-embed-head{background:var(--cream);margin:-6px -28px 0;padding:8px 28px;row-gap:8px;}
-.hb-embed-head .hb-embed-prices-wide a{font-size:0.9375rem;}
-.hb-embed-contact{color:var(--ink-soft);}
-.hb-embed-head .hb-embed-contact a{color:var(--ink-soft);min-width:44px;justify-content:center;}
-.hb-embed-head a,.hb-embed-fallback a{
+.hb-embed-privacy{padding-top:14px;padding-bottom:14px;border-top:1px solid var(--line);font-size:0.8125rem;line-height:1.6;font-weight:400;color:var(--ink-soft);}
+.hb-embed-privacy a,.hb-embed-fallback a,.inquire-contact-links a{
   display:inline-flex;align-items:center;min-height:44px;
   color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;
 }
-.hb-embed-head a:hover,.hb-embed-fallback a:hover{color:var(--gold-text);}
-.hb-embed-hint{margin:18px 0 0;font-weight:400;color:var(--ink-soft);text-wrap:pretty;}
-/* Under the form: the site's privacy page, a full-size target on the fields' inset. */
-.hb-embed-privacy{margin:0 0 6px;font-size:0.8125rem;}
-.hb-embed-privacy a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-soft);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
-.hb-embed-privacy a:hover{color:var(--gold-text);}
-@media (min-width:701px){.hb-embed-privacy{margin-left:18px;margin-right:18px;}}
-@media (max-width:480px){.hb-embed-privacy{padding:0 18px;}}
-/* HoneyBook insets its field labels about 18px inside the frame; the header and hint
-   line up with them on the wide layout. */
-@media (min-width:701px){.hb-embed-hint{margin-left:18px;margin-right:18px;}.hb-embed-head{padding:6px 46px;row-gap:0;}}
+.hb-embed-privacy a{margin:-12px 0;color:var(--ink-soft);}
+.hb-embed-via{display:block;}  /* the privacy link always takes the second line, rather than wrapping there at some widths */
+.hb-embed.is-failed .hb-embed-via,html:not(.js) .hb-embed-via{display:none;}  /* nothing goes through HoneyBook then */
+.hb-embed-privacy a:hover,.hb-embed-fallback a:hover,.inquire-contact-links a:hover{color:var(--gold-text);}
+/* The aside */
+.inquire-aside{max-width:720px;margin:48px auto 0;}
+.inquire-portrait{margin:0;}
+/* The crop leans in on Sofia: less of the blue sky, which would otherwise be the
+   brightest thing beside the form. The img sizes attribute asks for the zoomed
+   width (1.15-1.2x the frame), so the enlarged crop stays sharp. */
+.inquire-portrait img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:70% 60%;transform:scale(1.15);transform-origin:62% 82%;}
+.inquire-portrait figcaption{margin-top:14px;font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.4;color:var(--ink);}
+.inquire-portrait figcaption span{white-space:nowrap;color:var(--gold-text);}
+.inquire-details{margin-top:32px;}
+.inquire-label{margin:0 0 8px;font-family:var(--sans);font-size:0.78rem;line-height:1.5;letter-spacing:0.16em;text-transform:uppercase;font-weight:400;color:var(--gold-text);}
+.inquire-prices ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);}
+.inquire-prices li{border-bottom:1px solid var(--line);}
+.inquire-prices a{display:flex;align-items:center;gap:12px;min-height:44px;padding:6px 0;font-size:0.9375rem;font-weight:400;color:var(--ink);text-decoration:none;}
+.inquire-prices a span{text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
+.inquire-prices a b{margin-left:auto;font-weight:500;font-variant-numeric:tabular-nums;}
+.inquire-prices a:hover{color:var(--gold-text);}
+.inquire-contact{margin-top:28px;}
+.inquire-contact-links{margin:0;display:flex;flex-wrap:wrap;gap:0 20px;font-size:0.9375rem;font-weight:400;}
+.inquire-contact-links a{min-width:44px;justify-content:center;}  /* "Text" alone is narrower than a fingertip */
+@media (min-width:701px) and (max-width:1023px){
+  .inquire-aside{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 40px;align-items:start;}
+  .inquire-portrait img{aspect-ratio:1/1;object-position:68% 50%;transform:scale(1.2);transform-origin:58% 86%;}
+  .inquire-details{margin-top:0;}
+}
+@media (min-width:1024px){
+  .inquire-layout{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(556px,1.6fr);grid-template-rows:auto 1fr;
+    grid-template-areas:"intro card" "aside card";column-gap:64px;align-items:start;
+  }
+  .inquire-intro{grid-area:intro;text-align:left;}
+  .inquire-intro .section-label{text-align:left;}
+  .inquire-intro .booking-lede{max-width:none;margin:0 0 36px;text-wrap:pretty;}
+  .hb-embed{grid-area:card;max-width:none;margin:6px 0 0;}  /* the 6px sets its gold rule level with the label above the heading */
+  .inquire-aside{grid-area:aside;max-width:none;margin:0;}
+  .inquire-portrait img{aspect-ratio:1/1;object-position:68% 50%;transform:scale(1.2);transform-origin:58% 86%;}
+}
+@media (min-width:1024px) and (max-width:1179px){.inquire-layout{column-gap:48px;}.hb-embed{--pad:14px;}.inquire-intro .booking-lede{text-wrap:balance;}}
+@media (max-width:700px){.hb-embed{--pad:12px;}.hb-embed-hint{padding-top:18px;padding-bottom:16px;font-size:1.15rem;}}
+@media (max-width:480px){.hb-embed{--pad:4px;}}
 /* bookings.js: a quiet line in the reserved space until HoneyBook says the form is ready;
    if its script never arrives, the space collapses to a fallback with email and phone.
    Without JavaScript the form cannot load at all, so the space is not reserved. */
-.hb-embed-frame{position:relative;}
+.hb-embed-frame{position:relative;container-type:inline-size;--skel:rgba(44,38,33,0.07);--rule:rgba(44,38,33,0.16);}  /* size container: see the reserve below */
 .hb-embed-status{
-  position:absolute;left:0;right:0;top:110px;margin:0;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;
+  position:absolute;z-index:1;left:0;right:0;top:46px;margin:0;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;
   font-family:var(--sans);font-style:normal;font-size:0.9375rem;font-weight:400;color:var(--ink-soft);pointer-events:none;
 }
 .hb-embed.is-loading .hb-embed-status::before{
@@ -228,35 +259,69 @@ html.sheet-open{overflow:hidden;scrollbar-gutter:stable;}
   background:linear-gradient(var(--gold),var(--gold)) no-repeat var(--line);background-size:40% 100%;
   animation:hb-progress 1.1s ease-in-out infinite;
 }
+/* While it loads: the loading line where the first field will land, then a still
+   sketch of the rest of the form at HoneyBook's rhythm (measured on the 986px desktop
+   layout: a field every 105px from 50px down, label then rule; the message label at
+   670px and its box at 695-789), so the wait reads as the form arriving rather than
+   an empty box. The frame stays transparent until HoneyBook says it is ready, so a
+   half-drawn form never shows through the sketch, then fades in. */
+.hb-embed.is-loading .hb-embed-frame::before,.hb-embed.is-loading .hb-embed-frame::after{content:"";position:absolute;left:18px;right:18px;pointer-events:none;}
+.hb-embed.is-loading .hb-embed-frame::before{
+  top:155px;height:525px;
+  background:
+    linear-gradient(to bottom, var(--skel) 0 12px, transparent 12px) 0 0 / 34% 105px repeat-y,
+    repeating-linear-gradient(to bottom, transparent 0 54px, var(--rule) 54px 55px, transparent 55px 105px);
+}
+.hb-embed.is-loading .hb-embed-frame::after{
+  top:670px;height:119px;
+  background:
+    linear-gradient(var(--skel), var(--skel)) 0 0 / 34% 12px no-repeat,
+    linear-gradient(var(--rule), var(--rule)) 0 25px / 100% 1px no-repeat,
+    linear-gradient(var(--rule), var(--rule)) 0 100% / 100% 1px no-repeat,
+    linear-gradient(var(--rule), var(--rule)) 0 25px / 1px 94px no-repeat,
+    linear-gradient(var(--rule), var(--rule)) 100% 25px / 1px 94px no-repeat;
+}
+.hb-embed-frame iframe{transition:opacity 0.4s ease;}
+.hb-embed.is-loading .hb-embed-frame iframe{opacity:0;pointer-events:none;}  /* bookings.js also makes it inert */
+.hb-embed-status[hidden]{display:none;}  /* display:flex above would otherwise win over the hidden attribute */
 @keyframes hb-progress{from{background-position:-60% 0;}to{background-position:160% 0;}}
 @media (prefers-reduced-motion: reduce){.hb-embed.is-loading .hb-embed-status::before{animation:none;background-size:100% 100%;opacity:0.5;}}
 html:not(.js) .hb-embed-status{display:none;}
-.hb-embed.is-failed .hb-embed-status{position:static;padding:28px 8px 0;}
+.hb-embed.is-failed .hb-embed-status{position:static;padding:36px 8px 0;}
+.hb-embed.is-failed .hb-embed-hint,html:not(.js) .hb-embed-hint{display:none;}  /* a note about the form's fields, with no form (back if it arrives late) */
 .hb-embed-fallback{padding:12px 8px 28px;text-align:center;}
-.hb-embed-fallback p{margin:0 auto 8px;max-width:440px;color:var(--ink-soft);}
+.hb-embed-fallback p{margin:0 auto 8px;max-width:440px;color:var(--ink-soft);text-wrap:balance;}
+.hb-embed-fallback .hb-embed-fallback-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:20px;max-width:none;}
+.hb-embed-fallback .btn{margin:0;min-height:48px;padding:0 22px;font-size:0.875rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;}
+.hb-embed-fallback .btn-dark{color:#fff;}
+.hb-embed-fallback .btn-dark:hover{background:var(--gold-text);color:#fff;}
+.hb-embed-fallback .btn-outline:hover{color:#fff;}
 /* Reserve the real form height, or everything below jumps when HoneyBook injects
-   the iframe, on the one page that exists to convert. Measured 8 Oct 2026 with the
-   current padding and phone gutters: 986px from 481px wide up (1037px at 481),
-   1009-1037px at 431-480, 1037-1054px at 391-430, 1082px at 360-390, 1127px at 320.
-   Each reserve is the smallest height in its range, so no gap opens below the form;
-   the 320px phone still shifts 45px. The heights follow the form's fields and fonts:
+   the iframe, on the one page that exists to convert. The height depends only on the
+   frame's own width, so the frame is a size container and each tier is a width range
+   of the frame, whatever the page layout around it (container-type is set on
+   .hb-embed-frame above). Measured 10 Oct 2026 (sweep.mjs,
+   measure-hb.mjs): 971 from a 680px frame, 986 from 502, 1009 from 396, 1037 from
+   374, 1054 from 362, 1082 from 314, 1099 from 284, 1127 from 276, 1144 below. Where
+   a threshold falls between two measured widths, the tier takes the smaller height,
+   so no gap opens under the form. The heights follow the form's fields and fonts:
    re-measure if the HoneyBook form changes, including a restyle in its editor.
    On failure the wrapper folds away but keeps its frame, so a form that arrives late
    can still say it is ready and come back. */
-.hb-embed-frame > div[class^="hb-p-"]{min-height:986px;}
-@media (max-width:480px){.hb-embed-frame > div[class^="hb-p-"]{min-height:1009px;}}
-@media (max-width:430px){.hb-embed-frame > div[class^="hb-p-"]{min-height:1037px;}}
-@media (max-width:390px){.hb-embed-frame > div[class^="hb-p-"]{min-height:1082px;}}
-.hb-embed.is-failed .hb-embed-frame > div[class^="hb-p-"]{height:0;min-height:0;overflow:hidden;}
-html:not(.js) .hb-embed-frame > div[class^="hb-p-"]{min-height:0;}
-@media (max-width:700px){.hb-embed{padding:4px 12px;}.hb-embed-head{margin:-4px -12px 0;padding:4px 12px;row-gap:0;}.hb-embed-hint{margin-top:12px;}}
-@media (max-width:480px){
-  .hb-embed{padding:4px;}
-  .hb-embed-head{margin:-4px -4px 0;padding:4px 22px;}  /* text lines up with HoneyBook's labels */
-  .hb-embed-hint{padding-left:18px;padding-right:18px;}
-}
+.hb-embed-frame > [data-hb-mount]{min-height:971px;}
+@container (max-width:679px){.hb-embed-frame > [data-hb-mount]{min-height:986px;}}
+@container (max-width:501px){.hb-embed-frame > [data-hb-mount]{min-height:1009px;}}
+@container (max-width:391px){.hb-embed-frame > [data-hb-mount]{min-height:1037px;}}
+@container (max-width:372px){.hb-embed-frame > [data-hb-mount]{min-height:1054px;}}
+@container (max-width:360px){.hb-embed-frame > [data-hb-mount]{min-height:1082px;}}
+@container (max-width:310px){.hb-embed-frame > [data-hb-mount]{min-height:1099px;}}
+@container (max-width:280px){.hb-embed-frame > [data-hb-mount]{min-height:1127px;}}
+@container (max-width:270px){.hb-embed-frame > [data-hb-mount]{min-height:1144px;}}
+.hb-embed.is-failed .hb-embed-frame > [data-hb-mount]{height:0;min-height:0;overflow:hidden;}
+html:not(.js) .hb-embed-frame > [data-hb-mount]{min-height:0;}
+/* == end Inquiry form == */
 /* Text, call and email on /fall-minis as real tap targets under its booking card, in
-   the same quiet link style as the inquiry form's header on /bookings. */
+   the same quiet link style as the inquiry form's contact links on /bookings. */
 .contact-alt{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 24px;margin:0 auto 24px;font-weight:400;font-size:0.92rem;color:var(--ink-soft);}
 .contact-alt a{
   display:inline-flex;align-items:center;min-height:44px;
@@ -309,7 +374,7 @@ html:not(.js) .hb-embed-frame > div[class^="hb-p-"]{min-height:0;}
 .booking-card .pb-features li::before{top:0.75em;transform:none;}
 .booking-card .pb-features a,.booking-card .pb-links a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold-light);text-underline-offset:4px;}
 .booking-card .pb-features a:hover,.booking-card .pb-links a:hover{color:var(--gold-text);}
-/* Onward links (extended family, galleries, collections) get a second row under the
+/* Onward links (recent minis, galleries, collections) get a second row under the
    summary and details. They follow the action in the markup, and the action's column
    starts in the first row, so tab order matches reading order: summary, details,
    button, then these. No session facts carry links, so nothing in the details column

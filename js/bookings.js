@@ -487,9 +487,22 @@
   if (!embed) return;
   var line = embed.querySelector('.hb-embed-status');
   var fallback = embed.querySelector('.hb-embed-fallback');
-  var wrapper = embed.querySelector('[class^="hb-p-"]');
+  var wrapper = embed.querySelector('[data-hb-mount]');  // HoneyBook's mount div (its class is HoneyBook's)
   var ready = false;
   embed.classList.add('is-loading');
+  // The frame is see-through until it is ready (css/bookings.css), so it is inert too:
+  // no tap or Tab lands in fields nobody can see yet.
+  if (wrapper) wrapper.inert = true;
+  // HoneyBook's frame arrives with no title, and a screen reader names a frame by it.
+  var nameFrame = function () {
+    var f = embed.querySelector('iframe');
+    if (f && !f.title) f.title = 'Inquiry form';
+    return !!f;
+  };
+  if (wrapper && !nameFrame() && 'MutationObserver' in window) {
+    var titler = new MutationObserver(function () { if (nameFrame()) titler.disconnect(); });
+    titler.observe(wrapper, { childList: true, subtree: true });
+  }
   // Someone is at the form: focus is in the card, or the card is on screen.
   var here = function () {
     var r = embed.getBoundingClientRect();
@@ -502,20 +515,29 @@
   var markReady = function () {
     if (ready) return;
     ready = true;
-    // Announced when someone is at the form (focus in the card, or the card on screen).
-    setTimeout(function () { if (here()) said.textContent = 'Inquiry form loaded.'; }, 100);
+    // Announced when someone is at the form (focus in the card, or the card on screen),
+    // judged now: the focus rescue below can scroll the card out of view.
+    // An earlier "Loading..." or "didn't load" is cleared either way, so a screen reader
+    // coming back later never finds a status that is no longer true.
+    var announce = here();
+    said.textContent = '';
+    setTimeout(function () { if (announce) said.textContent = 'Inquiry form loaded.'; }, 100);
     // A late form: give it back its space and interactivity, and if the visitor was
-    // on a fallback link, put them on the card's own contact link instead of nowhere.
+    // on a fallback link, put them on the matching contact link beside the form
+    // instead of nowhere. That link moves when the form takes its space back (by a
+    // whole form's height on a phone), so focus goes there once the layout has
+    // settled, and the link is scrolled just into view.
     var onFallback = fallback && fallback.contains(document.activeElement) ? document.activeElement : null;
+    var alt = null;
     if (onFallback || document.activeElement === line) {
       var scheme = onFallback && onFallback.href ? onFallback.href.split(':')[0] + ':' : 'mailto:';
-      var alt = embed.querySelector('.hb-embed-contact a[href^="' + scheme + '"]') || embed.querySelector('.hb-embed-contact a[href^="mailto:"]');
-      if (alt) alt.focus({ preventScroll: true });
+      alt = document.querySelector('.inquire-contact-links a[href^="' + scheme + '"]') || document.querySelector('.inquire-contact-links a[href^="mailto:"]');
     }
     embed.classList.remove('is-loading', 'is-failed');
     if (wrapper) wrapper.inert = false;
     if (line) { line.textContent = ''; line.hidden = true; }
     if (fallback) fallback.hidden = true;
+    if (alt) requestAnimationFrame(function () { alt.focus({ preventScroll: true }); alt.scrollIntoView({ block: 'nearest' }); });
   };
   window.addEventListener('message', function (e) {
     var type = e.data && e.data.hbEvent && e.data.hbEvent.type;
@@ -548,36 +570,14 @@
     // was inside it moves to the status line.
     if (wrapper && wrapper.contains(document.activeElement) && line) { line.tabIndex = -1; line.focus({ preventScroll: true }); }
     if (wrapper) wrapper.inert = true;
-    if (here()) {
-      said.textContent = 'The inquiry form didn’t load. You can email or call instead.';
-    }
+    // Said only to someone at the form; otherwise the region is emptied, so "Loading..."
+    // does not linger.
+    said.textContent = here() ? 'The inquiry form didn’t load. You can email or call instead.' : '';
     embed.classList.remove('is-loading');
     embed.classList.add('is-failed');
     if (line) line.textContent = 'The inquiry form didn’t load.';
     if (fallback) fallback.hidden = false;
   }, 12000);
-})();
-
-// Arriving at the inquiry form from "Ask about extended family" (a mini-session card)
-// keeps that question in view instead of switching to full-session framing.
-(function () {
-  var section = document.getElementById('inquire');
-  if (!section || !document.getElementById('extended-family')) return;
-  var label = section.querySelector('.section-label'), head = section.querySelector('h2'), lede = section.querySelector('.booking-lede');
-  var hint = section.querySelector('.hb-embed-hint');
-  var original = [label.textContent, head.textContent, lede.innerHTML, hint ? hint.innerHTML : ''];
-  var prices = section.querySelectorAll('.hb-embed-prices');  // the wide list and the phone disclosure
-  var apply = function () {
-    var on = location.hash === '#extended-family';
-    [].forEach.call(prices, function (p) { p.hidden = on; });  // full-session prices would read as an upgrade from a $200 mini
-    label.textContent = on ? 'Mini sessions' : original[0];
-    head.textContent = on ? 'Ask about extended family' : original[1];
-    lede.innerHTML = on ? 'Tell me who would join your mini session, and I\u2019ll confirm what fits. I\u2019ll reply within 1\u20132 business days.' : original[2];
-    // The form cannot be told which offer this is, so the visitor is asked to say it.
-    if (hint) hint.innerHTML = on ? 'In your message, mention the fall mini session and who would join, adults and children.' : original[3];
-  };
-  apply();
-  window.addEventListener('hashchange', apply);
 })();
 
 // HoneyBook embed engagement.
